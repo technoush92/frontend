@@ -74,6 +74,7 @@ const Placead = () => {
   return (
     <div
       style={{
+        backgroundColor: "#FFFFFF",
         height: `${
           section === 1 ||
           section === 4 ||
