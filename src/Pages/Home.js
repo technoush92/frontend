@@ -4,6 +4,7 @@ import Homecard from "../Components/Homecard";
 import Banner from "../Assets/banner.jpg";
 import Map from "../Assets/map.png";
 import Cityselect from "../Components/Cityselect";
+import { Link, NavLink, useHistory } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -35,13 +36,20 @@ const Home = () => {
       </div>
       <br />
       <div>
-        <button
-          className="btn ml-3"
-          style={{ color: "white", backgroundColor: "#FF6E14" }}
+        <NavLink
+          style={{ textDecoration: "none", color: "black" }}
+          class="nav-link"
+          to="/placead"
+          href="#"
         >
-          <i class="far fa-plus-square mr-2"></i>
-          Place an ad
-        </button>
+          <button
+            className="btn ml-3"
+            style={{ color: "white", backgroundColor: "#FF6E14" }}
+          >
+            <i class="far fa-plus-square mr-2"></i>
+            Place an ad
+          </button>
+        </NavLink>
       </div>
       <br />
       <div className="container" style={{ marginTop: "", color: "black" }}>
