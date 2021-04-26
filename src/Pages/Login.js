@@ -73,8 +73,9 @@ const Login = () => {
                 <NavLink to="/signup">Create Account</NavLink>
               </p>
               <p className="d-inline mb-2">OR</p>
+              <br />
               <div className="d-flex justify-content-center">
-                <div
+                {/* <div
                   className="fb-login-button"
                   data-width=""
                   data-size="medium"
@@ -82,7 +83,10 @@ const Login = () => {
                   data-layout="default"
                   data-auto-logout-link="false"
                   data-use-continue-as="false"
-                ></div>
+                ></div> */}
+                <button className="btn-sm btn-primary">
+                  continue with Facebook
+                </button>
               </div>
             </div>
           </div>

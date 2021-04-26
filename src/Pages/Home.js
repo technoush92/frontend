@@ -99,7 +99,7 @@ const Home = () => {
         <div className="row">
           {featureAds.map((prod) => {
             return (
-              <div className="col-12 col-md-3 d-flex justify-content-center">
+              <div className="col-6 col-md-3 d-flex justify-content-center">
                 <Searchprocard
                   image={prod.image}
                   title={prod.title}
