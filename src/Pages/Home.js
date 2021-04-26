@@ -124,10 +124,10 @@ const Home = () => {
         <div>
           <img
             className="img-fluid shadow-xs map"
-            src={originalMap}
+            src={Map}
             style={{ width: "350px" }}
-            onMouseEnter={handleMap}
-            onMouseLeave={handleMapLeave}
+            // onMouseEnter={handleMap}
+            // onMouseLeave={handleMapLeave}
           />
         </div>
         <br />
