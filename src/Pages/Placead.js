@@ -230,6 +230,9 @@ const Placead = () => {
                       />
                     </div>
                     <div className="col-12 col-md-6"></div>
+                    <div className="col-12">
+                      <Switchbutton label="Nigotiable" />
+                    </div>
                   </div>
                   <br />
                   <div className="d-flex justify-content-between">

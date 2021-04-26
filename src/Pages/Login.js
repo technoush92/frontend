@@ -54,7 +54,6 @@ const Login = () => {
                   />
                 </div>
                 <div className="">
-                  <NavLink to="/forgot">Forgot Password?</NavLink>
                   <p>
                     <NavLink to="/login">
                       <span onClick={handlePhone}>
@@ -62,6 +61,7 @@ const Login = () => {
                       </span>
                     </NavLink>
                   </p>
+                  <NavLink to="/forgot">Forgot Password?</NavLink>
                 </div>
                 <button type="submit" class="btn btn-primary w-100 mt-1">
                   Submit

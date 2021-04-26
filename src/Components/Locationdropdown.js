@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { withStyles } from "@material-ui/core/styles";
+import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 
 const top100Films = [
   { title: "The Shawshank Redemption", year: 1994 },
@@ -130,6 +131,7 @@ const Locationdropdown = () => {
             InputProps={{
               ...params.InputProps,
               type: "search",
+              endAdornment: <LocationOnOutlinedIcon />,
             }}
           />
         )}

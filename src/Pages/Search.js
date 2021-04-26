@@ -4,6 +4,8 @@ import Searchcard from "../Components/Searchcard";
 import Searchprocard from "../Components/Searchprocard";
 import Ad from "../Assets/ad.PNG";
 
+import "../Styles/Home.css";
+
 import "../Styles/filters.css";
 
 var products = [
@@ -64,8 +66,9 @@ const Search = () => {
   return (
     <div>
       <div
+        className="homecarddiv"
         style={{
-          backgroundColor: "#FF6E14",
+          // backgroundColor: "#FF6E14",
           width: "100%",
           height: "214px",
           color: "white",
@@ -172,10 +175,10 @@ const Search = () => {
         </div>
       </section>
       <br />
-      <section>
-        <div className="container">
+      <section className="mx-5">
+        <div className=" ">
           <div className="row">
-            <div className="col-12 col-md-9">
+            <div className="col-12 col-md-9 col-lg-6 col-xl-8">
               {products.map((prod) => (
                 <Searchcard
                   image={prod.image}
@@ -184,16 +187,31 @@ const Search = () => {
                 />
               ))}
             </div>
-            <div className="col-12 col-md-3 d-none d-md-block">
-              {products.map((prod) => {
-                return (
-                  <Searchprocard
-                    title={prod.title}
-                    image={prod.image}
-                    description={prod.description}
-                  />
-                );
-              })}
+            <div className="col-12 col-md-6 col-xl-4 d-none d-lg-block">
+              <div className="row">
+                <div className="col-6">
+                  {products.map((prod) => {
+                    return (
+                      <Searchprocard
+                        title={prod.title}
+                        image={prod.image}
+                        description={prod.description}
+                      />
+                    );
+                  })}
+                </div>
+                <div className="col-6">
+                  {products.map((prod) => {
+                    return (
+                      <Searchprocard
+                        title={prod.title}
+                        image={prod.image}
+                        description={prod.description}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>

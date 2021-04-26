@@ -112,7 +112,7 @@ const Homecard = () => {
       </div>
       <div className="mt-2 d-none d-md-block">
         <div className="d-flex">
-          <Switchbutton label="See Ads Availible for delivery" />
+          <Switchbutton label="Nigotiable Ads" />
         </div>
       </div>
     </div>

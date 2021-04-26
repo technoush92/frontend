@@ -1,17 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "../Components/Slider";
 import Homecard from "../Components/Homecard";
-import Banner from "../Assets/banner.jpg";
-import Map from "../Assets/map.png";
+import Banner from "../Assets/banner2.jpg";
+import Map from "../Assets/map2.png";
+import Maphover from "../Assets/map3.png";
 import Cityselect from "../Components/Cityselect";
+import Searchprocard from "../Components/Searchprocard";
+import "../Styles/Home.css";
 import { Link, NavLink, useHistory } from "react-router-dom";
 
+const featureAds = [
+  {
+    image:
+      "https://images.unsplash.com/photo-1507089872327-8fdb6ebba93c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGNoYWlyc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
+    title: "chair",
+    description: "Good chair ",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjF8fGNhcnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
+    description: "Very fast car",
+    title: "Buggati",
+  },
+  {
+    image:
+      "https://images.pexels.com/photos/733745/pexels-photo-733745.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    title: "Balck Mate Car",
+    description: "Very Hot black car",
+  },
+];
+
 const Home = () => {
+  const [originalMap, setOriginalMap] = useState(Map);
+
+  const handleMap = () => {
+    setOriginalMap(Maphover);
+  };
+
+  const handleMapLeave = () => {
+    setOriginalMap(Map);
+  };
   return (
     <div>
       <div
+        className="homecarddiv"
         style={{
-          backgroundColor: "#FF6E14",
+          // backgroundColor: "#FF6E14",
           width: "100%",
           height: "214px",
           color: "white",
@@ -52,9 +86,29 @@ const Home = () => {
         </NavLink>
       </div>
       <br />
+
+      <div className="container">
+        <h2>Feature Ads</h2>
+        <br />
+        <div className="row">
+          {featureAds.map((prod) => {
+            return (
+              <div className="col-12 col-md-4 d-flex justify-content-center">
+                <Searchprocard
+                  image={prod.image}
+                  title={prod.title}
+                  description={prod.description}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <br />
+      <br />
       <div className="container" style={{ marginTop: "", color: "black" }}>
         <div className="d-flex">
-          <h3>Feature Ads</h3>
+          <h3>Top Categories</h3>
         </div>
         <Slider />
       </div>
@@ -62,7 +116,13 @@ const Home = () => {
       <br />
       <div>
         <div>
-          <img className="img-fluid" src={Map} style={{ width: "350px" }} />
+          <img
+            className="img-fluid"
+            src={originalMap}
+            style={{ width: "350px" }}
+            onMouseEnter={handleMap}
+            onMouseLeave={handleMapLeave}
+          />
         </div>
 
         <div className="d-flex justify-content-center">

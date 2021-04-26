@@ -1,6 +1,8 @@
 import React from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
 
+import Logo from "../Assets/Logo.png";
+
 const Navbar = () => {
   return (
     <div className="shadow-lg">
@@ -14,7 +16,7 @@ const Navbar = () => {
             class="nav-link"
             to="/"
           >
-            Logo
+            <img className="img-fluid" style={{ height: "30px" }} src={Logo} />
           </NavLink>
           {/* <a class="navbar-brand" href="/">
             Logo
