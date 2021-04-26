@@ -85,7 +85,7 @@ const Login = () => {
                   data-use-continue-as="false"
                 ></div> */}
                 <button className="btn-sm btn-primary">
-                  continue with Facebook
+                  <i class="fab fa-facebook"></i> continue with Facebook
                 </button>
               </div>
             </div>

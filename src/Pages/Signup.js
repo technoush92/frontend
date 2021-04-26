@@ -72,7 +72,7 @@ const Signup = () => {
               <br />
               <p className="d-inline mb-2">OR</p>
               <div>
-                <div
+                {/* <div
                   className="fb-login-button"
                   data-width=""
                   data-size="medium"
@@ -80,7 +80,10 @@ const Signup = () => {
                   data-layout="default"
                   data-auto-logout-link="false"
                   data-use-continue-as="false"
-                ></div>
+                ></div> */}
+                <button className="btn-sm btn-primary">
+                  <i class="fab fa-facebook"></i> continue with Facebook
+                </button>
               </div>
             </div>
           </div>
