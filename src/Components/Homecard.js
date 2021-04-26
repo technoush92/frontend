@@ -10,7 +10,7 @@ const Homecard = () => {
       className="border shadow-sm rounded-lg p-4"
       style={{ height: "240px", backgroundColor: "white" }}
     >
-      <div className="d-none d-md-block">
+      {/* <div className="d-none d-md-block">
         <div className="  d-flex mb-4">
           <div class="custom-control custom-radio custom-control-inline">
             <input
@@ -35,7 +35,7 @@ const Homecard = () => {
             </label>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div>
         <div className="row  ">

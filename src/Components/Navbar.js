@@ -10,13 +10,17 @@ const Navbar = () => {
         style={{ backgroundColor: "white" }}
         class=" navbar navbar-expand-lg navbar-light bg-white "
       >
-        <div class="container">
+        <div className="container-fluid">
           <NavLink
             style={{ textDecoration: "none", color: "black" }}
             class="nav-link"
             to="/"
           >
-            <img className="img-fluid" style={{ height: "30px" }} src={Logo} />
+            <img
+              className="img-fluid"
+              style={{ height: "30px", marginLeft: "-50px" }}
+              src={Logo}
+            />
           </NavLink>
           {/* <a class="navbar-brand" href="/">
             Logo
@@ -55,7 +59,7 @@ const Navbar = () => {
                 </button>
               </NavLink>
 
-              <li className="nav-item ml-0 ml-lg-3 text-left">
+              <li className="nav-item ml-0 ml-lg-3 mt-0 mt-lg-2 text-left">
                 <NavLink
                   style={{ textDecoration: "none", color: "black" }}
                   class="nav-link"

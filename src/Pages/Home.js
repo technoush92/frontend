@@ -28,6 +28,12 @@ const featureAds = [
     title: "Balck Mate Car",
     description: "Very Hot black car",
   },
+  {
+    image:
+      "https://images.unsplash.com/photo-1507089872327-8fdb6ebba93c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGNoYWlyc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
+    title: "chair",
+    description: "Good chair ",
+  },
 ];
 
 const Home = () => {
@@ -93,7 +99,7 @@ const Home = () => {
         <div className="row">
           {featureAds.map((prod) => {
             return (
-              <div className="col-12 col-md-4 d-flex justify-content-center">
+              <div className="col-12 col-md-3 d-flex justify-content-center">
                 <Searchprocard
                   image={prod.image}
                   title={prod.title}
@@ -117,14 +123,14 @@ const Home = () => {
       <div>
         <div>
           <img
-            className="img-fluid"
+            className="img-fluid shadow-xs map"
             src={originalMap}
             style={{ width: "350px" }}
             onMouseEnter={handleMap}
             onMouseLeave={handleMapLeave}
           />
         </div>
-
+        <br />
         <div className="d-flex justify-content-center">
           <Cityselect />
         </div>

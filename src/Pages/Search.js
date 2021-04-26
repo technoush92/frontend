@@ -60,6 +60,12 @@ const featureAds = [
     title: "Balck Mate Car",
     description: "Very Hot black car",
   },
+  {
+    image:
+      "https://images.unsplash.com/photo-1507089872327-8fdb6ebba93c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGNoYWlyc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
+    title: "chair",
+    description: "Good chair ",
+  },
 ];
 
 const Search = () => {
@@ -92,7 +98,7 @@ const Search = () => {
           <div className="row">
             {featureAds.map((prod) => {
               return (
-                <div className="col-12 col-md-4 d-flex justify-content-center">
+                <div className="col-6 col-md-3 d-flex justify-content-center">
                   <Searchprocard
                     image={prod.image}
                     title={prod.title}
@@ -175,7 +181,7 @@ const Search = () => {
         </div>
       </section>
       <br />
-      <section className="mx-5">
+      <section className="mx-0 mx-md-5">
         <div className=" ">
           <div className="row">
             <div className="col-12 col-md-9 col-lg-6 col-xl-8">
