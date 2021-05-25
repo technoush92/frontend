@@ -43,13 +43,14 @@ const marks = [
   },
 ];
 
-export default function Range() {
+export default function Range({handlePrice}) {
   const classes = useStyles();
   const [value, setValue] = React.useState([0, 15000]);
   const [show, setShow] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    handlePrice(newValue);
   };
 
   const handleShow = () => {

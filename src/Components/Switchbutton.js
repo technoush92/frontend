@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { purple } from "@material-ui/core/colors";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -60,17 +60,18 @@ const IOSSwitch = withStyles((theme) => ({
   );
 });
 
-const Switchbutton = ({ label }) => {
+const Switchbutton = ({ label, func, checked, name }) => {
+  // const [check, setCheck] = useState(checked);
+  const handleChange = () => {
+    func(!checked, name);
+  };
   return (
     <FormControlLabel
       control={
-        <IOSSwitch
-          checked={true}
-          // onChange={handleChange}
-          name="checkedB"
-        />
+        <IOSSwitch checked={checked} onChange={handleChange} name={name} />
       }
       label={label}
+      className="mt-2"
     />
   );
 };

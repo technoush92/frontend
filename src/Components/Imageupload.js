@@ -59,6 +59,8 @@ const Imageupload = (props) => {
       i = i + 1;
     }
     setFile(images);
+    console.log(images);
+    props.selectedImages(images);
 
     // props.onInput(props.id, images);
   };
@@ -81,7 +83,9 @@ const Imageupload = (props) => {
       <div>
         <div>
           <div>
-            {file ? <Carousal image={file} /> : null}
+            {props.images || file ? (
+              <Carousal image={file ? file : props.images} />
+            ) : null}
 
             {/* {previewUrl && (
               <img src={previewUrl} alt="Preview" className="img-thumbnail" />

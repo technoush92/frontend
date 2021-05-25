@@ -1,23 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Avatarimage from "../Components/Avatarimage";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import Profiledetails from "../Components/Profiledetails";
 import Settings from "../Components/Settings";
+import { useAuth } from "../Context/Auth-Context";
+import { ToastContainer, toast } from "react-toastify";
 
 const Profile = () => {
   const [openProfileDetails, setOpenProfileDetails] = React.useState(false);
   const [openSettings, setOpenSettings] = React.useState(false);
-
+  const { logout } = useAuth();
+  const history = useHistory();
   const handleClickOpenProfileDetails = () => {
     setOpenProfileDetails(!openProfileDetails);
   };
+
+  const [userData, setUserData] = useState();
 
   const handleClickOpenSettings = () => {
     setOpenSettings(!openSettings);
   };
 
+  const handleLogout = () => {
+    logout();
+    history.push("/");
+    toast.success("logged out successfully", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
+  useEffect(() => {
+    let data = {
+      username: window.localStorage.getItem("username"),
+      email: window.localStorage.getItem("email"),
+      id: window.localStorage.getItem("id"),
+      phone: window.localStorage.getItem("phone"),
+    };
+    setUserData(data);
+  }, []);
+
   return (
     <div style={{ backgroundColor: "#ffffff" }}>
+      {console.log("user data", userData)}
       <div>
         <br />
         <div className="container">
@@ -31,9 +55,12 @@ const Profile = () => {
             }}
           >
             <div className="col-12 px-0 px-md-3 d-flex justify-content-between  ">
-              <div>
-                <Avatarimage />
-              </div>
+              {userData ? (
+                <div>
+                  <Avatarimage username={userData.username} />
+                </div>
+              ) : null}
+
               <div>
                 <button
                   className="btn ml-3 mt-4 d-none d-md-block"
@@ -46,7 +73,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <br />
+
         <br />
         <div className="container ">
           <div className="row">
@@ -69,8 +96,8 @@ const Profile = () => {
                   ></i>
                   <br />
                   <br />
-                  <h4>Manage Orders</h4>
-                  <p>Manage Your Orders Here</p>
+                  <h4>Manage Ads</h4>
+                  <p>Manage Your Ads Here</p>
                 </div>
               </NavLink>
             </div>
@@ -134,8 +161,14 @@ const Profile = () => {
                 <br />
                 <h4>Profile</h4>
                 <p>Manage Your Details Here</p>
-                <Profiledetails open={openProfileDetails} />
               </div>
+              {userData ? (
+                <Profiledetails
+                  open={openProfileDetails}
+                  data={userData}
+                  handleClose={handleClickOpenProfileDetails}
+                />
+              ) : null}
             </div>
             <div className="col-12 col-md-6 col-lg-4 my-4">
               <div
@@ -152,7 +185,29 @@ const Profile = () => {
                 <br />
                 <h4>Settings</h4>
                 <p>Change your Password or Location</p>
-                <Settings open={openSettings} />
+              </div>
+              {userData ? (
+                <Settings
+                  open={openSettings}
+                  data={userData}
+                  handleClose={handleClickOpenSettings}
+                />
+              ) : null}
+            </div>
+            <div className="col-12 col-md-6 col-lg-4 my-4">
+              <div
+                style={{
+                  height: "175px",
+                  border: "3px solid #F4F6F7",
+                  borderRadius: "12px",
+                }}
+                onClick={handleLogout}
+                className="text-left p-4 shadow-sm"
+              >
+                <i style={{ fontSize: "28px" }} class="fas fa-sign-out-alt"></i>
+                <br />
+                <br />
+                <h4>Logout</h4>
               </div>
             </div>
           </div>

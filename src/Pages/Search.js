@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Homecard from "../Components/Homecard";
 import Searchcard from "../Components/Searchcard";
 import Searchprocard from "../Components/Searchprocard";
 import Ad from "../Assets/ad.PNG";
+import { getAds } from "../Connection/Placead";
+import { saveFavourite } from "../Connection/Users";
+import { ToastContainer, toast } from "react-toastify";
+import { useAuth } from "../Context/Auth-Context";
 
 import "../Styles/Home.css";
 
@@ -68,7 +72,64 @@ const featureAds = [
   },
 ];
 
-const Search = () => {
+const Search = ({ location }) => {
+  const [adsYoo, setAdsYoo] = useState();
+  const [searchResults, setSearchResults] = useState();
+  const { ads, setAds } = useAuth();
+
+  const handleFavourite = async (id) => {
+    console.log(id);
+    let res = await saveFavourite({
+      id,
+      userId: window.localStorage.getItem("id"),
+    });
+    if (res.data.success === true) {
+      toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      window.localStorage.setItem("favourites", res.data.favs);
+    } else {
+      toast.error(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
+
+  const handleSearch = (search) => {
+    // setAdsYoo(search);
+    setAds(search);
+  };
+
+  const handleSort = (type) => {
+    if (type === "new") {
+      let yoo = ads.sort(function (a, b) {
+        var c = new Date(a.created);
+        var d = new Date(b.created);
+        console.log(c, d);
+        return d - c;
+      });
+
+      console.log(yoo);
+    } else if (type === "old") {
+      let yoo = ads.sort(function (a, b) {
+        var c = new Date(a.created);
+        var d = new Date(b.created);
+        console.log(c, d);
+        return c - d;
+      });
+    }
+  };
+
+  useEffect(() => {
+    // const fetchAds = async () => {
+    //   let foundAds = await getAds();
+    //   console.log(foundAds);
+    //   setAds(foundAds.data.ads);
+    // };
+    // fetchAds();
+
+    setAdsYoo(ads);
+  }, [ads]);
   return (
     <div>
       <div
@@ -80,14 +141,17 @@ const Search = () => {
           color: "white",
         }}
       ></div>
+      {/* {console.log(props)} */}
       <div style={{ marginTop: "-175px" }} className="container">
-        <Homecard />
+        <Homecard handleSearch={handleSearch} />
       </div>
 
       <div style={{ marginTop: "-20px" }}>
-        <button className="btn btn-primary  ">
-          Search(42,929,888 results)
-        </button>
+        {ads && (
+          <button className="btn btn-primary  ">
+            {`Search ( ${ads.length} results )`}
+          </button>
+        )}
       </div>
       <br />
       <br />
@@ -116,7 +180,7 @@ const Search = () => {
       <section>
         <div className=" container">
           <div className="row">
-            <div className="col-6 col-md-2 mb-3 ">
+            {/* <div className="col-6 col-md-2 mb-3 ">
               Advertisement : <span style={{ color: "#FF6E14" }}>5</span>
             </div>
             <div className="col-6 col-md-2 mb-3">
@@ -151,28 +215,33 @@ const Search = () => {
                   </p>{" "}
                 </span>
               </label>
-            </div>
-            <div className="col-6 col-md-2 mb-3">
-              <div class="dropdown " style={{ marginTop: "-8px" }}>
+            </div> */}
+            <div className="col-6 col-md-12 mb-3 d-flex justify-content-end">
+              <div class="dropdown ">
                 <button
-                  class="btn border dropdown-toggle"
+                  class="btn border dropdown-toggle w-100 text-left"
                   type="button"
                   id="dropdownMenuButton"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  Sort : Most Recent
+                  Sort By : Date
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">
-                    Action
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    onClick={() => handleSort("new")}
+                  >
+                    New to Old
                   </a>
-                  <a class="dropdown-item" href="#">
-                    Another action
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    Something else here
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    onClick={() => handleSort("old")}
+                  >
+                    Old to New
                   </a>
                 </div>
               </div>
@@ -185,13 +254,23 @@ const Search = () => {
         <div className=" ">
           <div className="row">
             <div className="col-12 col-md-9 col-lg-6 col-xl-8">
-              {products.map((prod) => (
-                <Searchcard
-                  image={prod.image}
-                  title={prod.title}
-                  description={prod.description}
-                />
-              ))}
+              {adsYoo && (
+                <div>
+                  {adsYoo.map((ad) => (
+                    <Searchcard
+                      image={ad.images[0]}
+                      title={ad.title}
+                      description={ad.description}
+                      price={ad.price}
+                      date={ad.created}
+                      id={ad._id}
+                      handleFavourite={handleFavourite}
+                      contactDetails={ad.contactDetails}
+                      images={ad.images}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
             <div className="col-12 col-md-6 col-xl-4 d-none d-lg-block">
               <div className="row">

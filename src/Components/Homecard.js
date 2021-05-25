@@ -3,8 +3,47 @@ import "../Styles/Homecard.css";
 import Locationdropdown from "./Locationdropdown";
 import Range from "./Range";
 import Switchbutton from "./Switchbutton";
+import { searchQuery } from "../Connection/Placead";
+import { Link, NavLink, useHistory } from "react-router-dom";
 
-const Homecard = () => {
+const Homecard = ({ handleSearch, Home }) => {
+  const [search, setSearch] = useState({
+    searchValue: "",
+    location: "",
+    category: "",
+    price: [],
+    negotiable: false,
+  });
+  const history = useHistory();
+
+  const handlePrice = (price) => {
+    console.log(price);
+    setSearch({
+      ...search,
+      price: price,
+    });
+  };
+
+  const handleNegotiable = (checked) => {
+    console.log(checked);
+    setSearch({ ...search, negotiable: checked });
+  };
+
+  const handleChange = (evt) => {
+    setSearch({ ...search, searchValue: evt.target.value });
+  };
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    // if (Home) {
+    //   history.push("/search");
+    // }
+    let res = await searchQuery({ search: search });
+    if (res.data.success === true) {
+      handleSearch(res.data.ads);
+      history.push("/search");
+    }
+  };
   return (
     <div
       className="border shadow-sm rounded-lg p-4"
@@ -53,6 +92,7 @@ const Homecard = () => {
                   width: "100%",
                   backgroundColor: "#F4F6F7",
                 }}
+                // onClick={Home ? history.push("/search") : ""}
               >
                 <i class="fas fa-list-ul mr-2"></i>
                 Categories
@@ -81,15 +121,16 @@ const Homecard = () => {
                 color: "black",
               }}
             /> */}
-            <div class="input-group mb-3">
+            <div class="input-group mb-3 ">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">
                   <i class="fas fa-search"></i>
                 </span>
               </div>
+
               <input
                 type="text"
-                class="form-control"
+                className="form-control "
                 placeholder="What are you looking for?"
                 aria-describedby="basic-addon1"
                 style={{
@@ -97,7 +138,21 @@ const Homecard = () => {
                   backgroundColor: "#F4F6F7",
                   color: "black",
                 }}
+                value={search.searchValue}
+                onChange={handleChange}
               />
+              <button
+                className="btn "
+                style={{
+                  backgroundColor: "#FF6E14",
+                  color: "white",
+                  border: "1px solid grey",
+                }}
+                onClick={handleSubmit}
+                type="submit"
+              >
+                Search
+              </button>
             </div>
           </div>
           <div className="col-12 col-md-4 px-1 ">
@@ -107,12 +162,16 @@ const Homecard = () => {
       </div>
       <div className="d-none d-md-block">
         <div>
-          <Range />
+          <Range handlePrice={handlePrice} />
         </div>
       </div>
       <div className="mt-2 d-none d-md-block">
         <div className="d-flex">
-          <Switchbutton label="Nigotiable Ads" />
+          <Switchbutton
+            label="Nigotiable Ads"
+            func={handleNegotiable}
+            checked={search.negotiable}
+          />
         </div>
       </div>
     </div>

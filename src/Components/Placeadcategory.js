@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Placeadcategory = ({ categories }) => {
+const Placeadcategory = ({ categories, selectCategory }) => {
+  const [values, setValues] = useState("");
+
+  const handleChange = (evt) => {
+    console.log(evt.target.value);
+    selectCategory(evt.target.value);
+  };
+
   return (
     <div>
       <div>
@@ -17,9 +24,13 @@ const Placeadcategory = ({ categories }) => {
                     <select
                       class="form-control form-control-lg"
                       id="exampleFormControlSelect1"
+                      value={values}
+                      onChange={handleChange}
                     >
                       {categ.sub.map((sub) => (
-                        <option>{sub}</option>
+                        <option value={sub} onClick={handleChange}>
+                          {sub}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -40,9 +51,13 @@ const Placeadcategory = ({ categories }) => {
                       //   style={{ border: "none" }}
                       class="form-control form-control-lg"
                       id="exampleFormControlSelect1"
+                      value={values}
+                      onChange={handleChange}
                     >
                       {categ.sub.map((sub) => (
-                        <option>{sub}</option>
+                        <option value={sub} onClick={handleChange}>
+                          {sub}
+                        </option>
                       ))}
                     </select>
                   </div>

@@ -1,10 +1,111 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../Styles/Manageorders.css";
+import { getUserAds, deleteAd, activeAd } from "../Connection/Placead";
+import Tableads from "../Components/Tableads";
+import { ToastContainer, toast } from "react-toastify";
+import { Redirect, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+// import { set } from "mongoose";
 
 const Manageorders = () => {
+  const [userData, setUserData] = useState();
+  const [ads, setAds] = useState();
+  const [update, setUpdate] = useState(false);
+  const [search, setSearch] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const history = useHistory();
+
+  const handleSort = (type) => {
+    if (type === "new") {
+      let yoo = ads.sort(function (a, b) {
+        var c = new Date(a.created);
+        var d = new Date(b.created);
+        console.log(c, d);
+        return d - c;
+      });
+
+      console.log(yoo);
+    } else if (type === "old") {
+      let yoo = ads.sort(function (a, b) {
+        var c = new Date(a.created);
+        var d = new Date(b.created);
+        console.log(c, d);
+        return c - d;
+      });
+    }
+  };
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    let res = await deleteAd({ id });
+    if (res.data.success === true) {
+      toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else {
+      toast.error(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
+
+  const handleActive = async (checked, id) => {
+    console.log(checked);
+    let res = await activeAd({ checked: checked, id });
+    console.log(res);
+    if (res.data.success === true) {
+      toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else {
+      toast.error(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+    setUpdate(true);
+  };
+
+  const handleChange = (evt) => {
+    let yoo;
+    setSearchValue(evt.target.value);
+    yoo = ads.filter((ad) => {
+      return ad.title.toLowerCase().includes(evt.target.value.toLowerCase());
+    });
+    // console.log(yoo);
+    setSearch(yoo);
+  };
+
+  const handleEdit = (data) => {
+    console.log(data);
+    history.push({
+      pathname: "/editad",
+      state: data,
+    });
+  };
+
+  useEffect(() => {
+    let data = {
+      username: window.localStorage.getItem("username"),
+      email: window.localStorage.getItem("email"),
+      id: window.localStorage.getItem("id"),
+      phone: window.localStorage.getItem("phone"),
+    };
+    setUserData(data);
+
+    const fetchAds = async () => {
+      let userAds = await getUserAds({ id: window.localStorage.getItem("id") });
+
+      console.log(userAds);
+      setAds(userAds.data.ads);
+    };
+
+    fetchAds();
+    setUpdate(false);
+  }, [update]);
   return (
     <div style={{ backgroundColor: "#ffffff" }}>
       <div>
+        {console.log(search)}
         <br />
         <div className="container">
           <div className="jumbotron jumbotron-orders ">
@@ -25,6 +126,8 @@ const Manageorders = () => {
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default"
                     Placeholder="Search your listings"
+                    value={searchValue}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -78,14 +181,19 @@ const Manageorders = () => {
                   Sort By : Date
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">
-                    Action
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    onClick={() => handleSort("new")}
+                  >
+                    New to Old
                   </a>
-                  <a class="dropdown-item" href="#">
-                    Another action
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    Something else here
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    onClick={() => handleSort("old")}
+                  >
+                    Old to New
                   </a>
                 </div>
               </div>
@@ -98,19 +206,35 @@ const Manageorders = () => {
                 }}
               >
                 <div className="col-12">
-                  <div>
-                    <i style={{ fontSize: "35px" }} class="fas fa-box-open"></i>
-                    <br />
-                    You Have no Ads Online
-                    <br />
-                    <button
-                      className="btn mt-3 "
-                      style={{ color: "white", backgroundColor: "#FF6E14" }}
-                    >
-                      <i class="far fa-plus-square mr-2"></i>
-                      Place an ad
-                    </button>
-                  </div>
+                  {!ads && (
+                    <div>
+                      <i
+                        style={{ fontSize: "35px" }}
+                        class="fas fa-box-open"
+                      ></i>
+                      <br />
+                      You Have no Ads Online
+                      <br />
+                      <Link to="/placead">
+                        <button
+                          className="btn mt-3 "
+                          style={{ color: "white", backgroundColor: "#FF6E14" }}
+                        >
+                          <i class="far fa-plus-square mr-2"></i>
+                          Place an ad
+                        </button>
+                      </Link>
+                    </div>
+                  )}
+
+                  {ads && (
+                    <Tableads
+                      data={searchValue.length > 0 ? search : ads}
+                      handleDelete={handleDelete}
+                      handleActive={handleActive}
+                      handleEdit={handleEdit}
+                    />
+                  )}
                 </div>
               </div>
             </div>

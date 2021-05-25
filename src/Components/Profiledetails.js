@@ -6,8 +6,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { editUser } from "../Connection/Users";
 
-export default function Profiledetails({ open }) {
+export default function Profiledetails({ open, data, handleClose }) {
   return (
     <div>
       {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -17,6 +18,7 @@ export default function Profiledetails({ open }) {
         <DialogTitle id="form-dialog-title">Your Details</DialogTitle>
         <DialogContent>
           <DialogContentText></DialogContentText>
+
           <TextField
             autoFocus
             margin="dense"
@@ -24,6 +26,8 @@ export default function Profiledetails({ open }) {
             label="Email Address"
             type="email"
             fullWidth
+            disabled
+            value={data.email}
           />
           <TextField
             autoFocus
@@ -32,11 +36,15 @@ export default function Profiledetails({ open }) {
             label="Phone Number"
             type="number"
             fullWidth
+            disabled
+            value={data.phone}
           />
         </DialogContent>
         <DialogActions>
-          <Button color="primary">Cancel</Button>
-          <Button color="primary">Update</Button>
+          <Button color="primary" onClick={handleClose}>
+            Close
+          </Button>
+          {/* <Button color="primary">Update</Button> */}
         </DialogActions>
       </Dialog>
     </div>

@@ -20,13 +20,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Avatarimage() {
+export default function Avatarimage({ username }) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <Avatar src="/broken-image.jpg" className={classes.large} />
-      <h3 className="mt-4">User Name</h3>
+      <h3 className="mt-4">{username}</h3>
     </div>
   );
 }

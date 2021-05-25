@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Placeadcategory from "../Components/Placeadcategory";
 import Imageupload from "../Components/Imageupload";
 import Switchbutton from "../Components/Switchbutton";
-import { placeAd } from "../Connection/Placead";
+import { editAd } from "../Connection/Placead";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -64,27 +64,22 @@ const categories = [
   },
 ];
 
-const Placead = () => {
+const Editad = ({ location }) => {
   const history = useHistory();
   const [user, setUser] = useState();
   const [section, setSection] = useState(1);
   const [carryOnDisabled, setCarryOnDisabled] = useState(true);
   const [values, setValues] = useState({
-    title: "",
-    category: "",
-    description: "",
-    price: "",
-    images: [],
-    location: "",
-    contactDetails: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-    },
-    negotiable: false,
-    hideNumber: false,
-    reviewed: false,
+    title: location.state.title,
+    category: location.state.category,
+    description: location.state.description,
+    price: location.state.price,
+    images: location.state.images,
+    location: location.state.location,
+    contactDetails: location.state.contactDetails,
+    negotiable: location.state.negotiable,
+    hideNumber: location.state.hideNumber,
+    reviewed: location.state.reviewed,
     user: user,
   });
 
@@ -130,31 +125,17 @@ const Placead = () => {
     setCategoryOn(false);
   };
 
-  function validateEmail(email) {
-    const re =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  }
-
   const handleSubmit = async () => {
     setCarryOnDisabled(false);
-
-    let validEmail = validateEmail(values.contactDetails.email);
-
-    if (validEmail) {
-      let res = await placeAd(values);
-      if (res.data.success === true) {
-        history.push("/");
-        toast.success(res.data.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      } else {
-        toast.error(res.data.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      }
+    let data = { ...values, id: location.state._id };
+    let res = await editAd(data);
+    if (res.data.success === true) {
+      history.push("/");
+      toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     } else {
-      toast.error("Enter a valid Email Address", {
+      toast.error(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
@@ -187,13 +168,14 @@ const Placead = () => {
         }`,
       }}
     >
+      {console.log(location)}
       {console.log(user)}
       {console.log(values)}
       <div>
         <br />
         <br />
         <div className="text-left container">
-          <h2>Place an Ad</h2>
+          <h2>Edit Your Ad</h2>
         </div>
         <br />
         <br />
@@ -204,7 +186,7 @@ const Placead = () => {
                 <div
                   className={`Section1 ${section === 1 ? "d-block" : "d-none"}`}
                 >
-                  <h4>Lets Start With Basics</h4>
+                  <h4>Edit the Title</h4>
                   <br />
                   <div className="row">
                     <div className="col-12 col-md-6">
@@ -226,14 +208,9 @@ const Placead = () => {
                   </div>
                   <br />
                   <div className="d-flex justify-content-end">
-                    {carryOnDisabled ? null : (
-                      <button
-                        className="btn btn-primary"
-                        onClick={handleForward}
-                      >
-                        Carry On
-                      </button>
-                    )}
+                    <button className="btn btn-primary" onClick={handleForward}>
+                      Carry On
+                    </button>
                   </div>
                   <br />
                 </div>
@@ -270,14 +247,10 @@ const Placead = () => {
                     >
                       Return
                     </button>
-                    {carryOnDisabled ? null : (
-                      <button
-                        className="btn btn-primary"
-                        onClick={handleForward}
-                      >
-                        Carry On
-                      </button>
-                    )}
+
+                    <button className="btn btn-primary" onClick={handleForward}>
+                      Carry On
+                    </button>
                   </div>
                   <br />
                 </div>
@@ -347,14 +320,10 @@ const Placead = () => {
                     >
                       Return
                     </button>
-                    {carryOnDisabled ? null : (
-                      <button
-                        className="btn btn-primary"
-                        onClick={handleForward}
-                      >
-                        Carry On
-                      </button>
-                    )}
+
+                    <button className="btn btn-primary" onClick={handleForward}>
+                      Carry On
+                    </button>
                   </div>
                   <br />
                 </div>
@@ -392,14 +361,10 @@ const Placead = () => {
                     >
                       Return
                     </button>
-                    {carryOnDisabled ? null : (
-                      <button
-                        className="btn btn-primary"
-                        onClick={handleForward}
-                      >
-                        Carry On
-                      </button>
-                    )}
+
+                    <button className="btn btn-primary" onClick={handleForward}>
+                      Carry On
+                    </button>
                   </div>
                   <br />
                 </div>
@@ -410,7 +375,10 @@ const Placead = () => {
                   <br />
                   <div className="row">
                     <div>
-                      <Imageupload selectedImages={handleSelectedImages} />
+                      <Imageupload
+                        selectedImages={handleSelectedImages}
+                        images={values.images}
+                      />
                     </div>
                   </div>
                   <br />
@@ -421,14 +389,10 @@ const Placead = () => {
                     >
                       Return
                     </button>
-                    {carryOnDisabled ? null : (
-                      <button
-                        className="btn btn-primary"
-                        onClick={handleForward}
-                      >
-                        Carry On
-                      </button>
-                    )}
+
+                    <button className="btn btn-primary" onClick={handleForward}>
+                      Carry On
+                    </button>
                   </div>
                   <br />
                 </div>
@@ -529,14 +493,10 @@ const Placead = () => {
                     >
                       Return
                     </button>
-                    {carryOnDisabled ? null : (
-                      <button
-                        className="btn btn-primary"
-                        onClick={handleSubmit}
-                      >
-                        Send ad For Review
-                      </button>
-                    )}
+
+                    <button className="btn btn-primary" onClick={handleSubmit}>
+                      Update Ad
+                    </button>
                   </div>
                   <br />
                 </div>
@@ -550,4 +510,4 @@ const Placead = () => {
   );
 };
 
-export default Placead;
+export default Editad;

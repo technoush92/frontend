@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
 
 import Logo from "../Assets/Logo.png";
+import { useAuth } from "../Context/Auth-Context";
+import { ToastContainer, toast } from "react-toastify";
+import { getAds } from "../Connection/Placead";
 
 const Navbar = () => {
+  const { loggedIn, logout } = useAuth();
+  const [ads, setAds] = useState();
+
+  const history = useHistory();
+
+  const handleRedirection = () => {
+    if (loggedIn === false) {
+      toast.error("Your need to Login", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
+
+  console.log(loggedIn);
+
+  // useEffect(() => {
+  //   const fetchAds = async () => {
+  //     let foundAds = await getAds();
+
+  //     console.log(foundAds);
+  //     setAds(foundAds.data.ads);
+  //   };
+
+  //   fetchAds();
+  // }, []);
   return (
     <div className="shadow-lg">
       <nav
@@ -49,6 +77,7 @@ const Navbar = () => {
                 class="nav-link"
                 to="/placead"
                 href="#"
+                onClick={handleRedirection}
               >
                 <button
                   className="btn ml-3"
@@ -63,7 +92,10 @@ const Navbar = () => {
                 <NavLink
                   style={{ textDecoration: "none", color: "black" }}
                   class="nav-link"
-                  to="/search"
+                  to={{
+                    pathname: "/search",
+                    // state: ads,
+                  }}
                   href="#"
                 >
                   <i class="fas fa-search mr-2"></i>
@@ -85,6 +117,7 @@ const Navbar = () => {
                 to="/login"
                 // className="mx-4 mt-2 "
                 className="mr-3"
+                onClick={handleRedirection}
               >
                 <i class="far fa-bell mr-2"></i>
                 <br className="d-none d-lg-block" />
@@ -97,6 +130,7 @@ const Navbar = () => {
                 to="/signin"
                 // className="mx-4 mt-2 "
                 className="mr-3"
+                onClick={handleRedirection}
               >
                 <i class="far fa-heart mr-2"></i>
                 <br className="d-none d-lg-block" />
@@ -110,6 +144,7 @@ const Navbar = () => {
                 to="/signin"
                 // className="mx-4 mt-2 "
                 className="mr-3"
+                onClick={handleRedirection}
               >
                 <i class="far fa-envelope-open mr-2"></i>
                 <br className="d-none d-lg-block" />
@@ -118,16 +153,31 @@ const Navbar = () => {
             </div>
 
             <div className="mb-2 mb-lg-0 d-flex justify-content-start">
-              <NavLink
-                style={{ textDecoration: "none", color: "black" }}
-                to="/login"
-                // className="mx-4 mt-2 "
-                className="mr-3"
-              >
-                <i class="far fa-user mr-2"></i>
-                <br className="d-none d-lg-block" />
-                Login
-              </NavLink>
+              {loggedIn === false && (
+                <NavLink
+                  style={{ textDecoration: "none", color: "black" }}
+                  to="/login"
+                  // className="mx-4 mt-2 "
+                  className="mr-3"
+                >
+                  <i class="far fa-user mr-2"></i>
+                  <br className="d-none d-lg-block" />
+                  Login
+                </NavLink>
+              )}
+              {loggedIn === true && (
+                <NavLink
+                  style={{ textDecoration: "none", color: "black" }}
+                  to="/profile"
+                  // className="mx-4 mt-2 "
+                  className="mr-3"
+                  onClick={handleRedirection}
+                >
+                  <i class="far fa-user mr-2"></i>
+                  <br className="d-none d-lg-block" />
+                  Profile
+                </NavLink>
+              )}
             </div>
 
             {/* <div className="mr-3">

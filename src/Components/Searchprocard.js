@@ -6,7 +6,7 @@ const Searchprocard = ({ title, image, description, price }) => {
       class="card my-2 rounded-lg"
       style={{ width: "14rem", border: "1px solid #FF6E14" }}
     >
-      {console.log(image)}
+      {/* {console.log(image)} */}
       <img src={image} class="card-img-top" alt="..." />
       <div class="card-body text-start ">
         <h4>{title}</h4>

@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "../Components/Slider";
 import Homecard from "../Components/Homecard";
-import Banner from "../Assets/banner2.jpg";
+import Banner from "../Assets/new.png";
 import Map from "../Assets/map2.png";
 import Maphover from "../Assets/map3.png";
 import Cityselect from "../Components/Cityselect";
 import Searchprocard from "../Components/Searchprocard";
 import "../Styles/Home.css";
 import { Link, NavLink, useHistory } from "react-router-dom";
+import { useAuth } from "../Context/Auth-Context";
 
 const featureAds = [
   {
@@ -38,6 +39,8 @@ const featureAds = [
 
 const Home = () => {
   const [originalMap, setOriginalMap] = useState(Map);
+  const history = useHistory();
+  const { ads, setAds } = useAuth();
 
   const handleMap = () => {
     setOriginalMap(Maphover);
@@ -46,6 +49,13 @@ const Home = () => {
   const handleMapLeave = () => {
     setOriginalMap(Map);
   };
+
+  const handleSearch = (search) => {
+    setAds(search);
+
+    // history.push("./search");
+  };
+
   return (
     <div>
       <div
@@ -57,6 +67,7 @@ const Home = () => {
           color: "white",
         }}
       >
+        {console.log(ads)}
         <h4 className=" pt-3">
           With delivery at your house pickup point everything is at your
           fingertips!
@@ -66,7 +77,7 @@ const Home = () => {
         </p>
       </div>
       <div style={{ marginTop: "-100px" }} className="container">
-        <Homecard />
+        <Homecard Home={true} handleSearch={handleSearch} />
       </div>
 
       <div style={{ marginTop: "-20px" }}>
@@ -147,6 +158,8 @@ const Home = () => {
         <div className="container">
           <div className="row  " style={{ backgroundColor: "#FEF2E6" }}>
             <div className="col-12 col-md-6 mt-5">
+              <br />
+              <br />
               <h4>Having a Passion is good</h4>
               <h4>Sharing it with others is even better</h4>
               <br />

@@ -10,22 +10,35 @@ import Favourites from "../Pages/Favourites";
 import Search from "../Pages/Search";
 import Placead from "../Pages/Placead";
 import Navbar from "../Components/Navbar";
+import Editad from "../Pages/EditAd";
+import Showad from "../Pages/Showad";
+import Sendmessage from "../Pages/Sendmessage";
 import { Switch, Route } from "react-router-dom";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Redirect } from "react-router-dom";
 // import Footer from "../Components/Footer";
-// import { ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 // import { useAuth } from "../Contexts/Auth-Context";
-// import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
 
 export const AuthenticatedRoutes = () => {
   return (
     <div className="App">
       <Router>
-        {/* <Navbar /> */}
-
+        <Navbar />
+        <ToastContainer
+          style={{
+            width: "400px",
+            textAlign: "center",
+            fontSize: "1.3em",
+          }}
+        />
         <Switch>
           <Route exact path="/" render={(routeProps) => <Home />} />
-          <Route exact path="/search" render={(routeProps) => <Search />} />
+          <Route
+            exact
+            path="/search"
+            render={(routeProps) => <Search {...routeProps} />}
+          />
           <Route exact path="/profile" render={(routeProps) => <Profile />} />
           <Route
             exact
@@ -42,7 +55,24 @@ export const AuthenticatedRoutes = () => {
             path="/favourites"
             render={(routeProps) => <Favourites />}
           />
+
           <Route exact path="/placead" render={(routeProps) => <Placead />} />
+          <Route
+            exact
+            path="/editad"
+            render={(routeProps) => <Editad {...routeProps} />}
+          />
+          <Route
+            exact
+            path="/showad/:id"
+            render={(routeProps) => <Showad {...routeProps} />}
+          />
+          <Route
+            exact
+            path="/sendmessage"
+            render={(routeProps) => <Sendmessage {...routeProps} />}
+          />
+          <Route render={() => <Redirect to="/" />} />
         </Switch>
         {/* <Footer /> */}
       </Router>
@@ -55,18 +85,23 @@ export const UnAuthenticatedRoutes = () => {
     <div className="App">
       <Router>
         <Navbar />
-
+        <ToastContainer
+          style={{
+            width: "400px",
+            textAlign: "center",
+            fontSize: "1.3em",
+          }}
+        />
         <Switch>
           <Route exact path="/" render={(routeProps) => <Home />} />
           <Route exact path="/signup" render={(routeProps) => <Signup />} />
           <Route exact path="/login" render={(routeProps) => <Login />} />
-          <Route exact path="/search" render={(routeProps) => <Search />} />
-          <Route exact path="/profile" render={(routeProps) => <Profile />} />
           <Route
             exact
-            path="/manageorders"
-            render={(routeProps) => <Manageorders />}
+            path="/search"
+            render={(routeProps) => <Search {...routeProps} />}
           />
+
           <Route
             exact
             path="/searchactivity"
@@ -74,10 +109,10 @@ export const UnAuthenticatedRoutes = () => {
           />
           <Route
             exact
-            path="/favourites"
-            render={(routeProps) => <Favourites />}
+            path="/showad/:id"
+            render={(routeProps) => <Showad {...routeProps} />}
           />
-          <Route exact path="/placead" render={(routeProps) => <Placead />} />
+          <Route render={() => <Redirect to="/login" />} />
         </Switch>
         {/* <Footer /> */}
       </Router>
