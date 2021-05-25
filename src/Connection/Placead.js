@@ -1,6 +1,6 @@
 import axios from "axios";
 let url = "http://localhost:3001";
-let liveUrl = "https://adsbackendapp.herokuapp.com/";
+let liveUrl = "https://adsbackendapp.herokuapp.com";
 
 const placeAd = async (data) => {
   console.log(data);
