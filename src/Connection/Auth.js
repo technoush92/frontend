@@ -1,10 +1,11 @@
 import axios from "axios";
 let url = "http://localhost:3001";
+let liveUrl = "https://adsbackendapp.herokuapp.com/";
 
 const signupUser = async (data) => {
   console.log(data);
   let res;
-  res = await axios.post(`${url}/api/users/register`, data);
+  res = await axios.post(`${liveUrl}/api/users/register`, data);
   console.log(res);
   return res;
 };
@@ -12,7 +13,7 @@ const signupUser = async (data) => {
 const emailVerification = async (otp, email) => {
   console.log(otp, email);
 
-  let res = await axios.post(`${url}/api/users/register/emailverify`, {
+  let res = await axios.post(`${liveUrl}/api/users/register/emailverify`, {
     otp,
     email,
   });
@@ -22,7 +23,7 @@ const emailVerification = async (otp, email) => {
 
 const phoneVerification = async (otp, phone) => {
   console.log(otp, phone);
-  let res = await axios.post(`${url}/api/users/register/phoneverify`, {
+  let res = await axios.post(`${liveUrl}/api/users/register/phoneverify`, {
     otp,
     phone,
   });
@@ -32,7 +33,7 @@ const phoneVerification = async (otp, phone) => {
 
 const loginUser = async (data) => {
   console.log(data);
-  let res = await axios.post(`${url}/api/users/login`, data);
+  let res = await axios.post(`${liveUrl}/api/users/login`, data);
   console.log(res);
   return res;
 };
