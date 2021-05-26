@@ -21,14 +21,16 @@ const Searchcard = ({
     setColor(!color);
   };
   return (
-    <div className="border rounded-lg m-2">
+    <div className="border  m-2" style={{ borderRadius: "12px" }}>
       <div className="row ">
         <div className="col-5 px-0">
-          <img
-            src={image}
-            className="  img-fluid "
-            style={{ height: "100%", width: "100%" }}
-          />
+          <div>
+            <img
+              src={image}
+              className="  img-fluid my-2 ml-3"
+              style={{ height: "90%", width: "90%" }}
+            />
+          </div>
         </div>
         <div className="col-7 py-1 px-2 text-left d-flex justify-content-between ">
           <Link

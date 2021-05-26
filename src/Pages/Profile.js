@@ -5,6 +5,8 @@ import Profiledetails from "../Components/Profiledetails";
 import Settings from "../Components/Settings";
 import { useAuth } from "../Context/Auth-Context";
 import { ToastContainer, toast } from "react-toastify";
+import Imagepicker from "../Components/Imagepicker";
+import { updateImage } from "../Connection/Users";
 
 const Profile = () => {
   const [openProfileDetails, setOpenProfileDetails] = React.useState(false);
@@ -29,13 +31,39 @@ const Profile = () => {
     });
   };
 
+  const handleSelectedImage = async (image) => {
+    console.log(image);
+
+    setUserData({ ...userData, image: image });
+
+    let res = await updateImage({
+      image,
+      userId: window.localStorage.getItem("id"),
+    });
+
+    if (res.data.success === true) {
+      console.log("hello i am working");
+      console.log(userData.image);
+      window.localStorage.setItem("image", userData.image);
+      toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else {
+      toast.error(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
+
   useEffect(() => {
     let data = {
       username: window.localStorage.getItem("username"),
       email: window.localStorage.getItem("email"),
       id: window.localStorage.getItem("id"),
       phone: window.localStorage.getItem("phone"),
+      image: window.localStorage.getItem("image"),
     };
+    console.log(data);
     setUserData(data);
   }, []);
 
@@ -57,18 +85,32 @@ const Profile = () => {
             <div className="col-12 px-0 px-md-3 d-flex justify-content-between  ">
               {userData ? (
                 <div>
-                  <Avatarimage username={userData.username} />
+                  <Avatarimage
+                    username={userData.username}
+                    image={userData.image}
+                  />
+                  {/* <button className="btn btn-primary btn-sm  mr-5">
+                    {" "}
+                    Update <i class="fas fa-arrow-up"></i>
+                  </button> */}
+                  <Imagepicker selectedImages={handleSelectedImage} />
                 </div>
               ) : null}
 
               <div>
-                <button
-                  className="btn ml-3 mt-4 d-none d-md-block"
-                  style={{ color: "white", backgroundColor: "#FF6E14" }}
+                <NavLink
+                  style={{ textDecoration: "none", color: "black" }}
+                  class="nav-link"
+                  to="/placead"
                 >
-                  <i class="far fa-plus-square mr-2"></i>
-                  Place an ad
-                </button>
+                  <button
+                    className="btn ml-3"
+                    style={{ color: "white", backgroundColor: "#FF6E14" }}
+                  >
+                    <i class="far fa-plus-square mr-2"></i>
+                    Place an ad
+                  </button>
+                </NavLink>
               </div>
             </div>
           </div>

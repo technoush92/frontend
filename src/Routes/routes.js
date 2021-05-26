@@ -13,6 +13,7 @@ import Navbar from "../Components/Navbar";
 import Editad from "../Pages/EditAd";
 import Showad from "../Pages/Showad";
 import Sendmessage from "../Pages/Sendmessage";
+import Messages from "../Pages/Messages";
 import { Switch, Route } from "react-router-dom";
 import { BrowserRouter as Router, Redirect } from "react-router-dom";
 // import Footer from "../Components/Footer";
@@ -72,6 +73,11 @@ export const AuthenticatedRoutes = () => {
             path="/sendmessage"
             render={(routeProps) => <Sendmessage {...routeProps} />}
           />
+          <Route
+            exact
+            path="/messages"
+            render={(routeProps) => <Messages {...routeProps} />}
+          />
           <Route render={() => <Redirect to="/" />} />
         </Switch>
         {/* <Footer /> */}
@@ -102,11 +108,6 @@ export const UnAuthenticatedRoutes = () => {
             render={(routeProps) => <Search {...routeProps} />}
           />
 
-          <Route
-            exact
-            path="/searchactivity"
-            render={(routeProps) => <Searchactivity />}
-          />
           <Route
             exact
             path="/showad/:id"

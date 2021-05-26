@@ -15,18 +15,18 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: deepOrange[500],
   },
   large: {
-    width: theme.spacing(11),
-    height: theme.spacing(11),
+    width: theme.spacing(8),
+    height: theme.spacing(8),
   },
 }));
 
-export default function Avatarimage({ username }) {
+export default function Avatarimage({ username, image }) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Avatar src="/broken-image.jpg" className={classes.large} />
-      <h3 className="mt-4">{username}</h3>
+      <Avatar src={image ? image : "/broken-image.jpg"} className={classes.large} />
+      <h4 className="mt-3">{username}</h4>
     </div>
   );
 }

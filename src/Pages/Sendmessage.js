@@ -2,18 +2,23 @@ import React, { useState, useEffect } from "react";
 import { sendMessage } from "../Connection/Placead";
 import { ToastContainer, toast } from "react-toastify";
 import { Link, NavLink, useHistory } from "react-router-dom";
+import Loader from "../Components/Loader";
 
 const Sendmessage = ({ location }) => {
   const [data, setData] = useState(location.state.data);
   const history = useHistory();
+  const [loader, setLoader] = useState(false);
 
   const [message, setMessage] = useState({
     phone: "",
     message: "",
+    adData: location.state.data,
+    userId: window.localStorage.getItem("id"),
   });
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    setLoader(true);
     let res = await sendMessage({
       ...message,
       email: data.contactDetails.email,
@@ -83,12 +88,16 @@ const Sendmessage = ({ location }) => {
                       name="message"
                     ></textarea>
                   </div>
-                  <button
-                    className="btn btn-primary w-100"
-                    onClick={handleSubmit}
-                  >
-                    <i class="far fa-paper-plane"></i> Send
-                  </button>
+                  {loader ? (
+                    <Loader />
+                  ) : (
+                    <button
+                      className="btn btn-primary w-100"
+                      onClick={handleSubmit}
+                    >
+                      <i class="far fa-paper-plane"></i> Send
+                    </button>
+                  )}
                 </div>
               </div>
               <div className="col-12 col-md-6 my-3">

@@ -37,24 +37,38 @@ const Signup = () => {
     setPhoneOtp(evt.target.value);
   };
 
-  const handleEmailVerify = () => {
-    emailVerification(emailOtp, email);
-    setEmailVerify(false);
-    setPhoneVerify(true);
+  const handleEmailVerify = async () => {
+    let res = await emailVerification(emailOtp, email);
+    if (res.data.success === true) {
+      toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setEmailVerify(false);
+      setPhoneVerify(true);
+    } else {
+      toast.error(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
 
   const handlePhoneVerify = async () => {
     let res = await phoneVerification(phoneOtp, phone);
-    if (res.data.status === "success") {
-      login();
-      window.localStorage.setItem("username", res.data.username);
-      window.localStorage.setItem("accessToken", res.data.access_token);
-      window.localStorage.setItem("email", res.data.email);
-      window.localStorage.setItem("id", res.data.id);
-      window.localStorage.setItem("phone", res.data.phone);
-      window.localStorage.setItem("favourites", res.data.favourites);
-      history.push("/");
+    console.log(res);
+    if (res.data.success === true) {
+      // login();
+      // window.localStorage.setItem("username", res.data.user.username);
+      // window.localStorage.setItem("accessToken", res.data.user.access_token);
+      // window.localStorage.setItem("email", res.data.user.email);
+      // window.localStorage.setItem("id", res.data.user.id);
+      // window.localStorage.setItem("phone", res.data.user.phone);
+      // window.localStorage.setItem("favourites", res.data.user.favourites);
+      history.push("/login");
       toast.success("Welcome to VINTED.CI", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else {
+      toast.error(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
@@ -86,7 +100,7 @@ const Signup = () => {
         setEmailVerify(true);
         setEmail(res.data.email);
         setPhone(res.data.phone);
-      } else {
+      } else if (res.data.success === false) {
         toast.error(res.data.message, {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -245,6 +259,14 @@ const Signup = () => {
                     >
                       Verify Phone
                     </button>
+                    {/* <p>
+                      {" "}
+                      <i
+                        style={{ color: "#0275d8" }}
+                        class="fas fa-arrow-left mt-2"
+                      ></i>{" "}
+                      back
+                    </p> */}
                   </div>
                 </div>
               )}

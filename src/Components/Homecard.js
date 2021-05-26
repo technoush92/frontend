@@ -5,6 +5,7 @@ import Range from "./Range";
 import Switchbutton from "./Switchbutton";
 import { searchQuery } from "../Connection/Placead";
 import { Link, NavLink, useHistory } from "react-router-dom";
+import Loader from "../Components/Loader";
 
 const Homecard = ({ handleSearch, Home }) => {
   const [search, setSearch] = useState({
@@ -15,6 +16,7 @@ const Homecard = ({ handleSearch, Home }) => {
     negotiable: false,
   });
   const history = useHistory();
+  const [loader, setLoader] = useState(false);
 
   const handlePrice = (price) => {
     console.log(price);
@@ -31,15 +33,21 @@ const Homecard = ({ handleSearch, Home }) => {
 
   const handleChange = (evt) => {
     setSearch({ ...search, searchValue: evt.target.value });
+    setLoader(false);
   };
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    setLoader(true);
     // if (Home) {
     //   history.push("/search");
     // }
-    let res = await searchQuery({ search: search });
+    let res = await searchQuery({
+      search: search,
+      userId: window.localStorage.getItem("id"),
+    });
     if (res.data.success === true) {
+      setLoader(false);
       handleSearch(res.data.ads);
       history.push("/search");
     }
@@ -141,18 +149,22 @@ const Homecard = ({ handleSearch, Home }) => {
                 value={search.searchValue}
                 onChange={handleChange}
               />
-              <button
-                className="btn "
-                style={{
-                  backgroundColor: "#FF6E14",
-                  color: "white",
-                  border: "1px solid grey",
-                }}
-                onClick={handleSubmit}
-                type="submit"
-              >
-                Search
-              </button>
+              {loader ? (
+                <Loader />
+              ) : (
+                <button
+                  className="btn "
+                  style={{
+                    backgroundColor: "#FF6E14",
+                    color: "white",
+                    border: "1px solid grey",
+                  }}
+                  onClick={handleSubmit}
+                  type="submit"
+                >
+                  Search
+                </button>
+              )}
             </div>
           </div>
           <div className="col-12 col-md-4 px-1 ">

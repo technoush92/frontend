@@ -5,6 +5,7 @@ import Tableads from "../Components/Tableads";
 import { ToastContainer, toast } from "react-toastify";
 import { Redirect, useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Loader from "../Components/Loader";
 // import { set } from "mongoose";
 
 const Manageorders = () => {
@@ -14,6 +15,7 @@ const Manageorders = () => {
   const [search, setSearch] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const history = useHistory();
+  const [loading, setLoading] = useState(true);
 
   const handleSort = (type) => {
     if (type === "new") {
@@ -97,6 +99,7 @@ const Manageorders = () => {
 
       console.log(userAds);
       setAds(userAds.data.ads);
+      setLoading(false);
     };
 
     fetchAds();

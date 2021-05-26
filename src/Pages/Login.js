@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Loginback1 from "../Assets/loginback.jpg";
 import Loginback2 from "../Assets/loginback2.jpg";
 import { Link, NavLink, useHistory } from "react-router-dom";
-import { loginUser } from "../Connection/Auth";
+import { loginUser, fbLogin } from "../Connection/Auth";
 import { useAuth } from "../Context/Auth-Context";
 import Toast from "../Components/Toast";
+import ReactDOM from "react-dom";
 import { ToastContainer, toast } from "react-toastify";
+import Facebook from "../Components/Facebook";
 
 const Login = () => {
   const [phone, setPhone] = useState(false);
@@ -22,6 +24,30 @@ const Login = () => {
       ...state,
       [name]: value,
     });
+  };
+
+  const handleFbLogin = async (data) => {
+    console.log(data);
+    let res = await fbLogin(data);
+
+    if ((res.data.success = true)) {
+      toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      login();
+      window.localStorage.setItem("username", res.data.username);
+      window.localStorage.setItem("accessToken", res.data.access_token);
+      window.localStorage.setItem("email", res.data.email);
+      window.localStorage.setItem("id", res.data.id);
+      window.localStorage.setItem("phone", res.data.phone);
+      window.localStorage.setItem("favourites", res.data.favourites);
+      window.localStorage.setItem("image", res.data.profileImage);
+      history.push("/");
+    } else {
+      toast.error(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
 
   const handleSubmit = async (type) => {
@@ -45,6 +71,7 @@ const Login = () => {
           window.localStorage.setItem("id", res.data.id);
           window.localStorage.setItem("phone", res.data.phone);
           window.localStorage.setItem("favourites", res.data.favourites);
+          window.localStorage.setItem("image", res.data.profileImage);
           history.push("/");
         } else {
           toast.error("Your Phone is not verified", {
@@ -151,18 +178,7 @@ const Login = () => {
               <p className="d-inline mb-2">OR</p>
               <br />
               <div className="d-flex justify-content-center">
-                {/* <div
-                  className="fb-login-button"
-                  data-width=""
-                  data-size="medium"
-                  data-button-type="continue_with"
-                  data-layout="default"
-                  data-auto-logout-link="false"
-                  data-use-continue-as="false"
-                ></div> */}
-                <button className="btn-sm btn-primary">
-                  <i class="fab fa-facebook"></i> continue with Facebook
-                </button>
+                <Facebook handleFbLogin={handleFbLogin} />
               </div>
             </div>
           </div>

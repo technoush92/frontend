@@ -5,6 +5,7 @@ import Switchbutton from "../Components/Switchbutton";
 import { placeAd } from "../Connection/Placead";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import Loader from "../Components/Loader";
 
 const categories = [
   {
@@ -69,6 +70,8 @@ const Placead = () => {
   const [user, setUser] = useState();
   const [section, setSection] = useState(1);
   const [carryOnDisabled, setCarryOnDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
+  const [loader, setLoader] = useState(false);
   const [values, setValues] = useState({
     title: "",
     category: "",
@@ -76,12 +79,7 @@ const Placead = () => {
     price: "",
     images: [],
     location: "",
-    contactDetails: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-    },
+
     negotiable: false,
     hideNumber: false,
     reviewed: false,
@@ -137,27 +135,56 @@ const Placead = () => {
   }
 
   const handleSubmit = async () => {
-    setCarryOnDisabled(false);
+    setDisabled(true);
+    setCarryOnDisabled(true);
+    setLoader(true);
 
-    let validEmail = validateEmail(values.contactDetails.email);
+    console.log(values);
 
-    if (validEmail) {
-      let res = await placeAd(values);
-      if (res.data.success === true) {
-        history.push("/");
-        toast.success(res.data.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      } else {
-        toast.error(res.data.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      }
+    let data = {
+      ...values,
+      contactDetails: {
+        firstName: window.localStorage.getItem("username"),
+        email: window.localStorage.getItem("email"),
+        phone: window.localStorage.getItem("phone"),
+      },
+    };
+
+    console.log(data);
+
+    let res = await placeAd(data);
+    if (res.data.success === true) {
+      history.push("/");
+      toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     } else {
-      toast.error("Enter a valid Email Address", {
+      toast.error(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
+
+    // let validEmail = validateEmail(values.contactDetails.email);
+
+    // if (validEmail) {
+    // } else {
+    //   toast.error("Enter a valid Email Address", {
+    //     position: toast.POSITION.TOP_RIGHT,
+    //   });
+    // }
+  };
+
+  const handleMaps = () => {
+    setValues({
+      ...values,
+      contactDetails: {
+        firstName: window.localStorage.getItem("username"),
+        email: window.localStorage.getItem("email"),
+        phone: window.localStorage.getItem("phone"),
+      },
+    });
+
+    handleSubmit();
   };
 
   const handleForward = () => {
@@ -197,6 +224,7 @@ const Placead = () => {
         </div>
         <br />
         <br />
+
         <div className="container text-left " style={{}}>
           <div className="row">
             <div className="col-12 col-lg-9">
@@ -452,13 +480,23 @@ const Placead = () => {
                     >
                       Return
                     </button>
-                    <button onClick={handleForward} className="btn btn-primary">
-                      Carry On
-                    </button>
+                    {disabled ? null : (
+                      <button
+                        className="btn btn-primary"
+                        onClick={handleSubmit}
+                      >
+                        Send ad For Review
+                      </button>
+                    )}
+                    {loader && (
+                      <button className="btn btn-primary">
+                        <Loader />
+                      </button>
+                    )}
                   </div>
                   <br />
                 </div>
-                <div
+                {/* <div
                   className={`Section7 ${section === 7 ? "d-block" : "d-none"}`}
                 >
                   <h4>Your Contact Details</h4>
@@ -517,9 +555,9 @@ const Placead = () => {
                         checked={values.hideNumber}
                       />
                     </div>
-                    {/* <div className="col-12">
+                    <div className="col-12">
                       <Switchbutton label="Refuse Any Commercial" />
-                    </div> */}
+                    </div>
                   </div>
                   <br />
                   <div className="d-flex justify-content-between">
@@ -539,7 +577,7 @@ const Placead = () => {
                     )}
                   </div>
                   <br />
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="col-12 col-lg-3"></div>

@@ -59,7 +59,7 @@ const Slider = () => {
         { img: p4, text: "Real Estate Sales" },
         { img: p5, text: "Cars" },
         { img: p6, text: "Furnishing" },
-        { img: p7, text: "Home Applicances" },
+        { img: p7, text: "Applicances" },
         { img: p8, text: "Decoration" },
       ].map((obj) => {
         return (

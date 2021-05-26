@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
 
-import Logo from "../Assets/Logo.png";
+import Logo from "../Assets/2nd hand logo 3.png";
 import { useAuth } from "../Context/Auth-Context";
 import { ToastContainer, toast } from "react-toastify";
 import { getAds } from "../Connection/Placead";
@@ -46,7 +46,7 @@ const Navbar = () => {
           >
             <img
               className="img-fluid"
-              style={{ height: "30px", marginLeft: "-50px" }}
+              style={{ height: "50px", width: "250px", marginLeft: "-50px" }}
               src={Logo}
             />
           </NavLink>
@@ -114,7 +114,7 @@ const Navbar = () => {
               {" "}
               <NavLink
                 style={{ textDecoration: "none", color: "black" }}
-                to="/login"
+                to="/searchactivity"
                 // className="mx-4 mt-2 "
                 className="mr-3"
                 onClick={handleRedirection}
@@ -127,7 +127,7 @@ const Navbar = () => {
             <div className="mb-2 mb-lg-0 d-flex justify-content-start">
               <NavLink
                 style={{ textDecoration: "none", color: "black" }}
-                to="/signin"
+                to="/favourites"
                 // className="mx-4 mt-2 "
                 className="mr-3"
                 onClick={handleRedirection}
@@ -141,7 +141,7 @@ const Navbar = () => {
             <div className="mb-2 mb-lg-0 d-flex justify-content-start">
               <NavLink
                 style={{ textDecoration: "none", color: "black" }}
-                to="/signin"
+                to="/messages"
                 // className="mx-4 mt-2 "
                 className="mr-3"
                 onClick={handleRedirection}
