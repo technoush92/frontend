@@ -8,7 +8,7 @@ import {
 import Geocode from "react-geocode";
 import AutoComplete from "react-google-autocomplete";
 
-Geocode.setApiKey("AIzaSyAKGQRdEsRkOqWwwuk1e2N_5ypkrZEYmD0");
+Geocode.setApiKey("AIzaSyAQLhbqMNW1j54RhL_uDM5yvCXJTFSObE8");
 
 const Maps = ({ handleAddress }) => {
   const [state, setState] = useState({
@@ -94,6 +94,7 @@ const Maps = ({ handleAddress }) => {
           position={state.markerPosition}
         />
         <AutoComplete
+          apiKey="AIzaSyAQLhbqMNW1j54RhL_uDM5yvCXJTFSObE8"
           style={{
             width: "100%",
             heoght: "40px",
@@ -109,7 +110,7 @@ const Maps = ({ handleAddress }) => {
   );
   return (
     <MapWithAMarker
-      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKGQRdEsRkOqWwwuk1e2N_5ypkrZEYmD0&v=3.exp&libraries=geometry,drawing,places"
+      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQLhbqMNW1j54RhL_uDM5yvCXJTFSObE8&v=3.exp&libraries=geometry,drawing,places"
       loadingElement={<div style={{ height: `100%` }} />}
       containerElement={<div style={{ height: `400px` }} />}
       mapElement={<div style={{ height: `100%` }} />}

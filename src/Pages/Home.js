@@ -157,7 +157,7 @@ const Home = () => {
         <div className="d-flex justify-content-center">
           {/* <Cityselect /> */}
           <AutoComplete
-            apiKey="AIzaSyAKGQRdEsRkOqWwwuk1e2N_5ypkrZEYmD0"
+            apiKey="AIzaSyAQLhbqMNW1j54RhL_uDM5yvCXJTFSObE8"
             style={{
               height: "40px",
               backgroundColor: "#F4F6F7",

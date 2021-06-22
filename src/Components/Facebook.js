@@ -14,7 +14,7 @@ const Facebook = ({ handleFbLogin }) => {
 
   let fbContent = (
     <FacebookLogin
-      appId="328256982116143"
+      appId="498468578057807"
       // autoLoad={true}
       fields="name,email,picture"
       onClick={componentClicked}
