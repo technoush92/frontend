@@ -56,26 +56,28 @@ const Searchactivity = () => {
               )}
             </div>
 
-            <div className="col-12">
-              {searchActivity.map((search) => {
-                return (
-                  <div
-                    className="my-2 py-3 px-5  text-left d-flex justify-content-between"
-                    style={{
-                      height: "90px",
-                      width: "100%",
-                      border: "1px solid gray",
-                      borderRadius: "12px",
-                    }}
-                  >
-                    <h3>{search}</h3>
-                    {/* <p>
+            {searchActivity && (
+              <div className="col-12">
+                {searchActivity.map((search) => {
+                  return (
+                    <div
+                      className="my-2 py-3 px-5  text-left d-flex justify-content-between"
+                      style={{
+                        height: "90px",
+                        width: "100%",
+                        border: "1px solid gray",
+                        borderRadius: "12px",
+                      }}
+                    >
+                      <h3>{search}</h3>
+                      {/* <p>
                       Visit <i class="fas fa-location-arrow"></i>
                     </p> */}
-                  </div>
-                );
-              })}
-            </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>

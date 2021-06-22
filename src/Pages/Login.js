@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Loginback1 from "../Assets/loginback.jpg";
 import Loginback2 from "../Assets/loginback2.jpg";
 import { Link, NavLink, useHistory } from "react-router-dom";
@@ -11,6 +11,7 @@ import Facebook from "../Components/Facebook";
 
 const Login = () => {
   const [phone, setPhone] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const { login, loggedIn } = useAuth();
   const history = useHistory();
   const [state, setState] = useState({
@@ -29,8 +30,9 @@ const Login = () => {
   const handleFbLogin = async (data) => {
     console.log(data);
     let res = await fbLogin(data);
+    console.log(res);
 
-    if ((res.data.success = true)) {
+    if (res.data.success === true) {
       toast.success(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -93,6 +95,10 @@ const Login = () => {
   const handlePhone = () => {
     setPhone(!phone);
   };
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
   return (
     <div style={{ backgroundColor: "#ffffff" }}>
       <div className="row">
@@ -177,9 +183,12 @@ const Login = () => {
               </p>
               <p className="d-inline mb-2">OR</p>
               <br />
-              <div className="d-flex justify-content-center">
-                <Facebook handleFbLogin={handleFbLogin} />
-              </div>
+              {loaded && (
+                <div className="d-flex justify-content-center">
+                  <Facebook handleFbLogin={handleFbLogin} />
+                </div>
+              )}
+              {/* <Facebook handleFbLogin={handleFbLogin} /> */}
             </div>
           </div>
         </div>

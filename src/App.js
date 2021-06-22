@@ -8,18 +8,36 @@ import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import { UnAuthenticatedRoutes, AuthenticatedRoutes } from "./Routes/routes";
 import { useAuth } from "./Context/Auth-Context";
-import { getAds } from "./Connection/Placead";
+import { getAds, getFeatureAds, getActiveAds } from "./Connection/Placead";
+import { getCategories } from "./Connection/Categories";
 
 function App() {
-  const { loggedIn, login, logout, setAds, ads } = useAuth();
+  const {
+    loggedIn,
+    login,
+    logout,
+    setAds,
+    ads,
+    categories,
+    setCategories,
+    setFeatureAds,
+  } = useAuth();
   // const [ads, setAds] = useState();
   useEffect(() => {
     const fetchAds = async () => {
-      let foundAds = await getAds();
+      let foundAds = await getActiveAds();
       console.log(foundAds);
       setAds(foundAds.data.ads);
     };
     fetchAds();
+
+    const fetchFeatureAds = async () => {
+      let foundAds = await getFeatureAds();
+      console.log(foundAds);
+      setFeatureAds(foundAds.data.ads);
+    };
+
+    fetchFeatureAds();
 
     // setAds(location.state);
   }, []);

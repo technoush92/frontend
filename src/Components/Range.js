@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
+import "../Styles/range.css";
 
 const useStyles = makeStyles({
   root: {
@@ -43,7 +44,7 @@ const marks = [
   },
 ];
 
-export default function Range({handlePrice}) {
+export default function Range({ handlePrice }) {
   const classes = useStyles();
   const [value, setValue] = React.useState([0, 15000]);
   const [show, setShow] = useState(false);
@@ -58,44 +59,46 @@ export default function Range({handlePrice}) {
   };
 
   return (
-    <div className={classes.root}>
-      {console.log(value)}
-      <button
-        className="btn "
-        style={{
-          border: "1px solid black",
-          borderRadius: "25px",
-        }}
-        onClick={handleShow}
-      >
-        Price{" "}
-      </button>
-      {show && (
-        <div
-          className="border shadow-sm mt-2"
+    <div>
+      <div className={classes.root}>
+        {console.log(value)}
+        <button
+          className="btn range"
           style={{
-            width: "300px",
-            padding: "35px",
-            backgroundColor: "white",
+            border: "1px solid black",
+            borderRadius: "25px",
           }}
+          onClick={handleShow}
         >
-          <Typography id="range-slider" gutterBottom>
-            Price range
-          </Typography>
-          <ThemeProvider theme={muiTheme}>
-            <Slider
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
-              aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
-              marks={marks}
-              min={0}
-              max={15000}
-            />
-          </ThemeProvider>
-        </div>
-      )}
+          Price{" "}
+        </button>
+        {show && (
+          <div
+            className="border shadow-sm mt-2 dropdown-btn"
+            style={{
+              width: "300px",
+              padding: "35px",
+              backgroundColor: "white",
+            }}
+          >
+            <Typography id="range-slider" gutterBottom>
+              Price range
+            </Typography>
+            <ThemeProvider theme={muiTheme}>
+              <Slider
+                value={value}
+                onChange={handleChange}
+                valueLabelDisplay="auto"
+                aria-labelledby="range-slider"
+                getAriaValueText={valuetext}
+                marks={marks}
+                min={0}
+                max={15000}
+              />
+            </ThemeProvider>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

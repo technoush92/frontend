@@ -9,6 +9,8 @@ const AuthContext = createContext({});
 const AuthProvider = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [ads, setAds] = useState([]);
+  const [featureAds, setFeatureAds] = useState([]);
+  const [categories, setCategories] = useState([]);
   console.log(loggedIn);
   useEffect(() => {
     if (window.localStorage.getItem("accessToken")) {
@@ -30,7 +32,17 @@ const AuthProvider = (props) => {
     // });
   };
 
-  const authContextValue = { loggedIn, login, logout, ads, setAds };
+  const authContextValue = {
+    loggedIn,
+    login,
+    logout,
+    ads,
+    setAds,
+    categories,
+    setCategories,
+    featureAds,
+    setFeatureAds,
+  };
 
   return <AuthContext.Provider value={authContextValue} {...props} />;
 };

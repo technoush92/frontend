@@ -12,70 +12,70 @@ import "../Styles/Home.css";
 
 import "../Styles/filters.css";
 
-var products = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1507089872327-8fdb6ebba93c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGNoYWlyc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
-    title: "chair",
-    description: "Good chair ",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjF8fGNhcnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
-    description: "Very fast car",
-    title: "Buggati",
-  },
-  {
-    image:
-      "https://images.pexels.com/photos/733745/pexels-photo-733745.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-    title: "Balck Mate Car",
-    description: "Very Hot black car",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1606170033648-5d55a3edf314?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8bGlnaHRzJTIwbGFtcHN8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
-    title: "Minimal Lamps",
-    description: "Minimal style light lamps for home use",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1523437275713-4dbf723f62c1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8Ym9vayUyMHNoZWxmfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
-    title: "Books Shelf",
-    description: "Old Book shelf for sale",
-  },
-];
+// var products = [
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1507089872327-8fdb6ebba93c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGNoYWlyc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
+//     title: "chair",
+//     description: "Good chair ",
+//   },
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjF8fGNhcnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
+//     description: "Very fast car",
+//     title: "Buggati",
+//   },
+//   {
+//     image:
+//       "https://images.pexels.com/photos/733745/pexels-photo-733745.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+//     title: "Balck Mate Car",
+//     description: "Very Hot black car",
+//   },
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1606170033648-5d55a3edf314?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8bGlnaHRzJTIwbGFtcHN8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
+//     title: "Minimal Lamps",
+//     description: "Minimal style light lamps for home use",
+//   },
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1523437275713-4dbf723f62c1?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8Ym9vayUyMHNoZWxmfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
+//     title: "Books Shelf",
+//     description: "Old Book shelf for sale",
+//   },
+// ];
 
-const featureAds = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1507089872327-8fdb6ebba93c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGNoYWlyc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
-    title: "chair",
-    description: "Good chair ",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjF8fGNhcnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
-    description: "Very fast car",
-    title: "Buggati",
-  },
-  {
-    image:
-      "https://images.pexels.com/photos/733745/pexels-photo-733745.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-    title: "Balck Mate Car",
-    description: "Very Hot black car",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1507089872327-8fdb6ebba93c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGNoYWlyc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
-    title: "chair",
-    description: "Good chair ",
-  },
-];
+// const featureAds = [
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1507089872327-8fdb6ebba93c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGNoYWlyc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
+//     title: "chair",
+//     description: "Good chair ",
+//   },
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjF8fGNhcnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
+//     description: "Very fast car",
+//     title: "Buggati",
+//   },
+//   {
+//     image:
+//       "https://images.pexels.com/photos/733745/pexels-photo-733745.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+//     title: "Balck Mate Car",
+//     description: "Very Hot black car",
+//   },
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1507089872327-8fdb6ebba93c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGNoYWlyc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
+//     title: "chair",
+//     description: "Good chair ",
+//   },
+// ];
 
 const Search = ({ location }) => {
   const [adsYoo, setAdsYoo] = useState();
   const [searchResults, setSearchResults] = useState();
-  const { ads, setAds } = useAuth();
+  const { ads, setAds, featureAds, setFeatureAds } = useAuth();
 
   const handleFavourite = async (id) => {
     console.log(id);
@@ -159,19 +159,29 @@ const Search = ({ location }) => {
       <section className="">
         <div className="container">
           <h2>Feature Ads</h2>
-          <div className="row">
-            {featureAds.map((prod) => {
-              return (
-                <div className="col-6 col-md-3 d-flex justify-content-center">
-                  <Searchprocard
-                    image={prod.image}
-                    title={prod.title}
-                    description={prod.description}
-                  />
-                </div>
-              );
-            })}
-          </div>
+          {featureAds && (
+            <div className="row">
+              {featureAds.map((prod, i) => {
+                if (i < 4) {
+                  return (
+                    <div className="col-6 col-md-3 d-flex justify-content-center">
+                      <Searchprocard
+                        image={prod.images}
+                        title={prod.title}
+                        description={prod.description}
+                        date={new Date(prod.created).toDateString()}
+                        id={prod._id}
+                        contactDetails={prod.contactDetails}
+                        images={prod.images}
+                        price={prod.price}
+                        location={prod.location}
+                      />
+                    </div>
+                  );
+                }
+              })}
+            </div>
+          )}
         </div>
       </section>
       <br />
@@ -262,11 +272,12 @@ const Search = ({ location }) => {
                       title={ad.title}
                       description={ad.description}
                       price={ad.price}
-                      date={ad.created}
+                      date={new Date(ad.created).toDateString()}
                       id={ad._id}
                       handleFavourite={handleFavourite}
                       contactDetails={ad.contactDetails}
                       images={ad.images}
+                      location={ad.location}
                     />
                   ))}
                 </div>
@@ -275,23 +286,35 @@ const Search = ({ location }) => {
             <div className="col-12 col-md-6 col-xl-4 d-none d-lg-block">
               <div className="row">
                 <div className="col-6">
-                  {products.map((prod) => {
+                  {featureAds.map((prod) => {
                     return (
                       <Searchprocard
+                        image={prod.images}
                         title={prod.title}
-                        image={prod.image}
                         description={prod.description}
+                        date={new Date(prod.created).toDateString()}
+                        id={prod._id}
+                        contactDetails={prod.contactDetails}
+                        images={prod.images}
+                        price={prod.price}
+                        location={prod.location}
                       />
                     );
                   })}
                 </div>
                 <div className="col-6">
-                  {products.map((prod) => {
+                  {featureAds.map((prod) => {
                     return (
                       <Searchprocard
+                        image={prod.images}
                         title={prod.title}
-                        image={prod.image}
                         description={prod.description}
+                        date={new Date(prod.created).toDateString()}
+                        id={prod._id}
+                        contactDetails={prod.contactDetails}
+                        images={prod.images}
+                        price={prod.price}
+                        location={prod.location}
                       />
                     );
                   })}

@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../Styles/Manageorders.css";
-import { getUserAds, deleteAd, activeAd } from "../Connection/Placead";
+import {
+  getUserAds,
+  deleteAd,
+  activeAd,
+  featureAdRequest,
+  soldAd,
+} from "../Connection/Placead";
 import Tableads from "../Components/Tableads";
 import { ToastContainer, toast } from "react-toastify";
 import { Redirect, useHistory } from "react-router-dom";
@@ -54,6 +60,38 @@ const Manageorders = () => {
   const handleActive = async (checked, id) => {
     console.log(checked);
     let res = await activeAd({ checked: checked, id });
+    console.log(res);
+    if (res.data.success === true) {
+      toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else {
+      toast.error(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+    setUpdate(true);
+  };
+
+  const handleFeature = async (checked, id) => {
+    console.log(checked, id);
+    let res = await featureAdRequest({ checked: checked, id });
+    console.log(res);
+    if (res.data.success === true) {
+      toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else {
+      toast.error(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+    setUpdate(true);
+  };
+
+  const handleSold = async (checked, id) => {
+    console.log(checked, id);
+    let res = await soldAd({ checked: checked, id });
     console.log(res);
     if (res.data.success === true) {
       toast.success(res.data.message, {
@@ -236,6 +274,8 @@ const Manageorders = () => {
                       handleDelete={handleDelete}
                       handleActive={handleActive}
                       handleEdit={handleEdit}
+                      handleFeature={handleFeature}
+                      handleSold={handleSold}
                     />
                   )}
                 </div>

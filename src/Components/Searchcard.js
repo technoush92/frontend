@@ -12,6 +12,7 @@ const Searchcard = ({
   handleFavourite,
   contactDetails,
   images,
+  location,
 }) => {
   const history = useHistory();
   const [color, setColor] = useState(false);
@@ -44,6 +45,7 @@ const Searchcard = ({
                 date,
                 id,
                 contactDetails,
+                location,
               },
             }}
           >

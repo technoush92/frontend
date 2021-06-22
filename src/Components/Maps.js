@@ -1,31 +1,120 @@
-import React, { Component } from "react";
-import GoogleMapReact from "google-map-react";
+import React, { useState } from "react";
+import {
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Marker,
+} from "react-google-maps";
+import Geocode from "react-geocode";
+import AutoComplete from "react-google-autocomplete";
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+Geocode.setApiKey("AIzaSyAKGQRdEsRkOqWwwuk1e2N_5ypkrZEYmD0");
 
-class Maps extends Component {
-  static defaultProps = {
-    center: {
-      lat: 59.95,
-      lng: 30.33,
+const Maps = ({ handleAddress }) => {
+  const [state, setState] = useState({
+    address: "",
+    zoom: 15,
+    height: 500,
+    mapPosition: {
+      lat: 6.82147,
+      lng: -5.27985,
     },
-    zoom: 11,
+    markerPosition: {
+      lat: 6.82147,
+      lng: -5.27985,
+    },
+  });
+
+  const onMarkerDragEnd = (evt) => {
+    let newLat = evt.latLng.lat();
+    let newLng = evt.latLng.lng();
+    console.log(newLat, newLng);
+    Geocode.fromLatLng(newLat, newLng).then((res, err) => {
+      console.log(res);
+      setState({
+        ...state,
+        address: res.results[0].formatted_address,
+        markerPosition: {
+          lat: res.results[0].geometry.location.lat,
+          lng: res.results[0].geometry.location.lng,
+        },
+        mapPosition: {
+          lat: res.results[0].geometry.location.lat,
+          lng: res.results[0].geometry.location.lng,
+        },
+      });
+      handleAddress({
+        address: res.results[0].formatted_address,
+        markerPosition: {
+          lat: res.results[0].geometry.location.lat,
+          lng: res.results[0].geometry.location.lng,
+        },
+        mapPosition: {
+          lat: res.results[0].geometry.location.lat,
+          lng: res.results[0].geometry.location.lng,
+        },
+      });
+    });
   };
 
-  render() {
-    return (
-      // Important! Always set the container height explicitly
-      <div style={{ height: "100vh", width: "100%" }}>
-        <GoogleMapReact
-          //   bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-        >
-          <AnyReactComponent lat={59.955413} lng={30.337844} text="My Marker" />
-        </GoogleMapReact>
-      </div>
-    );
-  }
-}
+  const handlePlaceSelected = (res) => {
+    console.log(res);
+    setState({
+      ...state,
+      address: res.formatted_address,
+      markerPosition: {
+        lat: res.geometry.location.lat(),
+        lng: res.geometry.location.lng(),
+      },
+      mapPosition: {
+        lat: res.geometry.location.lat(),
+        lng: res.geometry.location.lng(),
+      },
+    });
+    handleAddress({
+      address: res.formatted_address,
+      markerPosition: {
+        lat: res.geometry.location.lat(),
+        lng: res.geometry.location.lng(),
+      },
+      mapPosition: {
+        lat: res.geometry.location.lat(),
+        lng: res.geometry.location.lng(),
+      },
+    });
+  };
+
+  const MapWithAMarker = withScriptjs(
+    withGoogleMap((props) => (
+      <GoogleMap defaultZoom={8} defaultCenter={state.mapPosition}>
+        {console.log(state)}
+        <Marker
+          draggable={true}
+          onDragEnd={onMarkerDragEnd}
+          position={state.markerPosition}
+        />
+        <AutoComplete
+          style={{
+            width: "100%",
+            heoght: "40px",
+            paddingLeft: 16,
+            marginTop: "1rem",
+            marginBottom: "2rem",
+          }}
+          type={["(regions)"]}
+          onPlaceSelected={handlePlaceSelected}
+        />
+      </GoogleMap>
+    ))
+  );
+  return (
+    <MapWithAMarker
+      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKGQRdEsRkOqWwwuk1e2N_5ypkrZEYmD0&v=3.exp&libraries=geometry,drawing,places"
+      loadingElement={<div style={{ height: `100%` }} />}
+      containerElement={<div style={{ height: `400px` }} />}
+      mapElement={<div style={{ height: `100%` }} />}
+    />
+  );
+};
 
 export default Maps;

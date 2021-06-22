@@ -6,72 +6,76 @@ import { placeAd } from "../Connection/Placead";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../Components/Loader";
+import { getCategories } from "../Connection/Categories";
+import Maps from "../Components/Maps";
 
-const categories = [
-  {
-    icon: <i class="far fa-sun px-2"></i>,
-    name: "Vacation",
-    sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
-  },
-  {
-    icon: <i class="fas fa-toolbox px-2"></i>,
-    name: "Employment",
-    sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
-  },
-  {
-    icon: <i class="fas fa-car px-2"></i>,
-    name: "Vehicle",
-    sub: ["rentals", "Guest Rooms", "Campasites"],
-  },
-  {
-    icon: <i class="fas fa-tshirt px-2"></i>,
-    name: "Fashion",
-    sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
-  },
-  {
-    icon: <i class="fas fa-home px-2"></i>,
-    name: "Home",
-    sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
-  },
-  {
-    icon: <i class="fas fa-mobile px-2"></i>,
-    name: "Multimedia",
-    sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
-  },
-  {
-    icon: <i class="fas fa-basketball-ball px-2"></i>,
-    name: "Hobbies",
-    sub: ["rentals", "Guest Rooms", "Camp"],
-  },
-  {
-    icon: <i class="fas fa-paw px-2"></i>,
-    name: "Animals",
-    sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
-  },
-  {
-    icon: <i class="fas fa-video px-2"></i>,
-    name: "Professional equipment",
-    sub: ["rentals", "Guest Rooms", "Campasites"],
-  },
-  {
-    icon: <i class="far fa-handshake px-2"></i>,
-    name: "Services",
-    sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
-  },
-  {
-    icon: <i class="fas fa-ellipsis-h px-2"></i>,
-    name: "Various",
-    sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
-  },
-];
+// const categories = [
+//   {
+//     icon: <i class="far fa-sun px-2"></i>,
+//     name: "Vacation",
+//     sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
+//   },
+//   {
+//     icon: <i class="fas fa-toolbox px-2"></i>,
+//     name: "Employment",
+//     sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
+//   },
+//   {
+//     icon: <i class="fas fa-car px-2"></i>,
+//     name: "Vehicle",
+//     sub: ["rentals", "Guest Rooms", "Campasites"],
+//   },
+//   {
+//     icon: <i class="fas fa-tshirt px-2"></i>,
+//     name: "Fashion",
+//     sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
+//   },
+//   {
+//     icon: <i class="fas fa-home px-2"></i>,
+//     name: "Home",
+//     sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
+//   },
+//   {
+//     icon: <i class="fas fa-mobile px-2"></i>,
+//     name: "Multimedia",
+//     sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
+//   },
+//   {
+//     icon: <i class="fas fa-basketball-ball px-2"></i>,
+//     name: "Hobbies",
+//     sub: ["rentals", "Guest Rooms", "Camp"],
+//   },
+//   {
+//     icon: <i class="fas fa-paw px-2"></i>,
+//     name: "Animals",
+//     sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
+//   },
+//   {
+//     icon: <i class="fas fa-video px-2"></i>,
+//     name: "Professional equipment",
+//     sub: ["rentals", "Guest Rooms", "Campasites"],
+//   },
+//   {
+//     icon: <i class="far fa-handshake px-2"></i>,
+//     name: "Services",
+//     sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
+//   },
+//   {
+//     icon: <i class="fas fa-ellipsis-h px-2"></i>,
+//     name: "Various",
+//     sub: ["rentals", "Guest Rooms", "Campasites", "Unusual Acommodation"],
+//   },
+// ];
 
 const Placead = () => {
   const history = useHistory();
   const [user, setUser] = useState();
+  const [categories, setCategories] = useState();
   const [section, setSection] = useState(1);
   const [carryOnDisabled, setCarryOnDisabled] = useState(true);
   const [disabled, setDisabled] = useState(false);
   const [loader, setLoader] = useState(false);
+
   const [values, setValues] = useState({
     title: "",
     category: "",
@@ -88,6 +92,7 @@ const Placead = () => {
 
   const [categoryOn, setCategoryOn] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSubCategory, setSelectedSubCategory] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -99,7 +104,9 @@ const Placead = () => {
   };
 
   const handleSelectCategory = (cate) => {
-    setSelectedCategory(cate);
+    console.log(cate);
+    setSelectedCategory(cate.category.title);
+    setSelectedSubCategory(cate.subcategory.subTitle);
     setCategoryOn(true);
     // const { name, value } = e.target;
     setValues({ ...values, category: cate });
@@ -162,6 +169,9 @@ const Placead = () => {
       toast.error(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
+      setDisabled(false);
+      setCarryOnDisabled(false);
+      setLoader(false);
     }
 
     // let validEmail = validateEmail(values.contactDetails.email);
@@ -187,6 +197,14 @@ const Placead = () => {
     handleSubmit();
   };
 
+  const handleAddress = (address) => {
+    console.log(address);
+    setValues({
+      ...values,
+      location: address,
+    });
+  };
+
   const handleForward = () => {
     setSection((section) => section + 1);
     setCarryOnDisabled(true);
@@ -198,6 +216,14 @@ const Placead = () => {
 
   useEffect(() => {
     setValues({ ...values, user: window.localStorage.getItem("id") });
+
+    const fetchCategories = async () => {
+      let foundCategories = await getCategories();
+      console.log(foundCategories);
+      setCategories(foundCategories.data.categories);
+    };
+
+    fetchCategories();
   }, []);
   return (
     <div
@@ -273,19 +299,30 @@ const Placead = () => {
                   <div className="">
                     {categoryOn === false ? (
                       <div>
-                        <Placeadcategory
-                          selectCategory={handleSelectCategory}
-                          categories={categories}
-                        />
+                        {categories && (
+                          <Placeadcategory
+                            selectCategory={handleSelectCategory}
+                            categories={categories}
+                          />
+                        )}
                       </div>
                     ) : (
                       <div class="form-group">
+                        <h5>Selected Category</h5>
                         <select
                           class="form-control form-control-lg"
                           id="exampleFormControlSelect1"
                           onClick={handleResetSelectCategory}
                         >
                           <option>{selectedCategory}</option>
+                        </select>
+                        <h5>Selected Sub Category</h5>
+                        <select
+                          class="form-control form-control-lg"
+                          id="exampleFormControlSelect1"
+                          onClick={handleResetSelectCategory}
+                        >
+                          <option>{selectedSubCategory}</option>
                         </select>
                       </div>
                     )}
@@ -467,11 +504,12 @@ const Placead = () => {
                   <br />
                   <br />
                   <div>
-                    <h2 style={{ color: "orange" }}>
-                      Map would be there once We would Have Google Map Api Key
-                      and Backend Ready
-                    </h2>
+                    <h2 style={{ color: "orange" }}></h2>
+                    <Maps handleAddress={handleAddress} />
                   </div>
+                  <br />
+                  <br />
+                  <br />
                   <br />
                   <div className="d-flex justify-content-between">
                     <button

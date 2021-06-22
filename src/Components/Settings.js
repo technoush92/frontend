@@ -128,7 +128,7 @@ export default function Settings({ open, data, handleClose }) {
           </button>
           <br />
           <hr />
-          <TextField
+          {/* <TextField
             autoFocus
             margin="dense"
             id="name"
@@ -138,7 +138,7 @@ export default function Settings({ open, data, handleClose }) {
           />
           <br />
           <button className="btn btn-primary mt-3">Update Location</button>
-          <br />
+          <br /> */}
           <hr />
         </DialogContent>
         <DialogActions>

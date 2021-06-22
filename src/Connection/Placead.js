@@ -1,6 +1,6 @@
 import axios from "axios";
-// let url = "http://localhost:3001";
-let url = "https://adsbackendapp.herokuapp.com";
+let url = "http://localhost:3001";
+// let url = "https://adsbackendapp.herokuapp.com";
 
 const placeAd = async (data) => {
   console.log(data);
@@ -31,6 +31,20 @@ const activeAd = async (data) => {
   return res;
 };
 
+const featureAdRequest = async (data) => {
+  console.log(data);
+  let res = await axios.post(`${url}/api/placead/featureadrequest`, data);
+  console.log(res);
+  return res;
+};
+
+const soldAd = async (data) => {
+  console.log(data);
+  let res = await axios.post(`${url}/api/placead/soldad`, data);
+  console.log(res);
+  return res;
+};
+
 const editAd = async (data) => {
   console.log(data);
   let res = await axios.post(`${url}/api/placead/editad`, data);
@@ -41,6 +55,12 @@ const editAd = async (data) => {
 const getAds = async () => {
   console.log("hello");
   let res = await axios.get(`${url}/api/placead/getads`);
+  console.log(res);
+  return res;
+};
+
+const getActiveAds = async () => {
+  let res = await axios.get(`${url}/api/placead/getactiveads`);
   console.log(res);
   return res;
 };
@@ -73,6 +93,12 @@ const sendMessage = async (data) => {
   return res;
 };
 
+const getFeatureAds = async (data) => {
+  let res = await axios.get(`${url}/api/placead/getfeatureads`);
+  console.log(res);
+  return res;
+};
+
 export {
   placeAd,
   getUserAds,
@@ -84,4 +110,8 @@ export {
   searchQuery,
   getAd,
   sendMessage,
+  featureAdRequest,
+  soldAd,
+  getFeatureAds,
+  getActiveAds,
 };

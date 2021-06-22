@@ -1,0 +1,10 @@
+.range {
+  z-index: 10;
+  position: relative;
+}
+
+.dropdown-btn {
+  position: absolute;
+  z-index: 10;
+  /* top: 50%; */
+}

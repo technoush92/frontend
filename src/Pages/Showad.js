@@ -3,6 +3,7 @@ import Carousal from "../Components/Carousal";
 import Avatarimage from "../Components/Avatarimage";
 import { getAd } from "../Connection/Placead";
 import { Link } from "react-router-dom";
+import Showadmap from "../Components/Showadmap";
 
 const Showad = ({ location, match }) => {
   const [seeNumber, setSeeNumber] = useState(false);
@@ -56,11 +57,17 @@ const Showad = ({ location, match }) => {
                 <br />
                 <br />
                 <hr />
-                <div>
-                  <h2>Location</h2>
-                  <br />
-                  <p>MAP WOULD BE THERE</p>
-                </div>
+                {data.location && (
+                  <div>
+                    <h2>Location</h2>
+                    <br />
+                    <h5>{data.location.address}</h5>
+                    <br />
+                    {/* <p>MAP WOULD BE THERE</p> */}
+                    <Showadmap data={data.location} />
+                  </div>
+                )}
+
                 <br />
                 <br />
                 <hr />

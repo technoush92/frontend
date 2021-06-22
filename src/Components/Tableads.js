@@ -20,12 +20,24 @@ export default function Tableads({
   handleDelete,
   handleActive,
   handleEdit,
+  handleFeature,
+  handleSold,
 }) {
   const classes = useStyles();
 
   const handleActiveAd = (checked, id) => {
     console.log(checked);
     handleActive(checked, id);
+  };
+
+  const handleFeatureAd = (checked, id) => {
+    console.log(checked, id);
+    handleFeature(checked, id);
+  };
+
+  const handleSoldAd = (checked, id) => {
+    console.log(checked, id);
+    handleSold(checked, id);
   };
 
   return (
@@ -54,7 +66,27 @@ export default function Tableads({
             </TableCell>
             <TableCell align="center">
               {" "}
+              <strong>Approved</strong>
+            </TableCell>
+            <TableCell align="center">
+              {" "}
+              <strong>Rejected</strong>
+            </TableCell>
+            <TableCell align="center">
+              {" "}
               <strong>Active</strong>
+            </TableCell>
+            <TableCell align="center">
+              {" "}
+              <strong>Feature Ad Request</strong>
+            </TableCell>
+            <TableCell align="center">
+              {" "}
+              <strong>Feature Ad Active</strong>
+            </TableCell>
+            <TableCell align="center">
+              {" "}
+              <strong>Sold Status</strong>
             </TableCell>
             <TableCell align="center">
               {" "}
@@ -81,13 +113,55 @@ export default function Tableads({
                 {row.reviewed ? "Reviewed" : "Under Review"}
               </TableCell>
               <TableCell align="center">
+                {row.approved ? "Approved" : "Not Approved"}
+              </TableCell>
+              <TableCell align="center">
+                {row.rejected ? "Rejected" : "Not Rejected"}
+              </TableCell>
+              <TableCell align="center">
                 {/* {row.reviewed ? } */}
-                <Switchbutton
-                  func={handleActiveAd}
-                  checked={row.active}
-                  name={row._id}
-                />
+                {row.approved ? (
+                  <Switchbutton
+                    func={handleActiveAd}
+                    checked={row.active}
+                    name={row._id}
+                  />
+                ) : (
+                  ""
+                )}
+
                 {row.active ? "Active" : "Deactivated"}
+              </TableCell>
+              <TableCell align="center">
+                {/* {row.reviewed ? } */}
+
+                {row.featureAd ? null : (
+                  <Switchbutton
+                    className="ml-2"
+                    func={handleFeatureAd}
+                    checked={row.featureAdRequest}
+                    name={row._id}
+                  />
+                )}
+
+                {row.featureAd === false && row.featureAdRequest === false
+                  ? "Request for Feature Ad"
+                  : "Requested"}
+              </TableCell>
+              <TableCell align="center">
+                {row.featureAd === false ? "Not Featured" : "Featured"}
+              </TableCell>
+              <TableCell align="center">
+                {row.sold ? null : (
+                  <Switchbutton
+                    className="ml-2"
+                    func={handleSoldAd}
+                    checked={row.sold}
+                    name={row._id}
+                  />
+                )}
+
+                {row.sold === false ? "Mark as Sold" : "Sold"}
               </TableCell>
               <TableCell align="center">
                 <button

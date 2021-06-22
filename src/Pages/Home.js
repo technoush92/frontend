@@ -9,38 +9,39 @@ import Searchprocard from "../Components/Searchprocard";
 import "../Styles/Home.css";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import { useAuth } from "../Context/Auth-Context";
+import AutoComplete from "react-google-autocomplete";
 
-const featureAds = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1507089872327-8fdb6ebba93c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGNoYWlyc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
-    title: "chair",
-    description: "Good chair ",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjF8fGNhcnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
-    description: "Very fast car",
-    title: "Buggati",
-  },
-  {
-    image:
-      "https://images.pexels.com/photos/733745/pexels-photo-733745.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-    title: "Balck Mate Car",
-    description: "Very Hot black car",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1507089872327-8fdb6ebba93c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGNoYWlyc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
-    title: "chair",
-    description: "Good chair ",
-  },
-];
+// const featureAds = [
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1507089872327-8fdb6ebba93c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGNoYWlyc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
+//     title: "chair",
+//     description: "Good chair ",
+//   },
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjF8fGNhcnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
+//     description: "Very fast car",
+//     title: "Buggati",
+//   },
+//   {
+//     image:
+//       "https://images.pexels.com/photos/733745/pexels-photo-733745.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+//     title: "Balck Mate Car",
+//     description: "Very Hot black car",
+//   },
+//   {
+//     image:
+//       "https://images.unsplash.com/photo-1507089872327-8fdb6ebba93c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGNoYWlyc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60",
+//     title: "chair",
+//     description: "Good chair ",
+//   },
+// ];
 
 const Home = () => {
   const [originalMap, setOriginalMap] = useState(Map);
   const history = useHistory();
-  const { ads, setAds } = useAuth();
+  const { ads, setAds, featureAds, setFeatureAds } = useAuth();
 
   const handleMap = () => {
     setOriginalMap(Maphover);
@@ -58,6 +59,7 @@ const Home = () => {
 
   return (
     <div>
+      {console.log(featureAds)}
       <div
         className="homecarddiv"
         style={{
@@ -107,19 +109,29 @@ const Home = () => {
       <div className="container">
         <h2>Feature Ads</h2>
         <br />
-        <div className="row">
-          {featureAds.map((prod) => {
-            return (
-              <div className="col-6 col-md-3 d-flex justify-content-center">
-                <Searchprocard
-                  image={prod.image}
-                  title={prod.title}
-                  description={prod.description}
-                />
-              </div>
-            );
-          })}
-        </div>
+        {featureAds && (
+          <div className="row">
+            {featureAds.map((prod, i) => {
+              if (i < 4) {
+                return (
+                  <div className="col-6 col-md-3 d-flex justify-content-center">
+                    <Searchprocard
+                      image={prod.images}
+                      title={prod.title}
+                      description={prod.description}
+                      date={new Date(prod.created).toDateString()}
+                      id={prod._id}
+                      contactDetails={prod.contactDetails}
+                      images={prod.images}
+                      price={prod.price}
+                      location={prod.location}
+                    />
+                  </div>
+                );
+              }
+            })}
+          </div>
+        )}
       </div>
       <br />
       <br />
@@ -143,7 +155,21 @@ const Home = () => {
         </div>
         <br />
         <div className="d-flex justify-content-center">
-          <Cityselect />
+          {/* <Cityselect /> */}
+          <AutoComplete
+            apiKey="AIzaSyAKGQRdEsRkOqWwwuk1e2N_5ypkrZEYmD0"
+            style={{
+              height: "40px",
+              backgroundColor: "#F4F6F7",
+              color: "black",
+              width: "350px",
+            }}
+            type={["(regions)"]}
+            // onPlaceSelected={handlePlaceSelected}
+            componentRestrictions={{ country: ["us"] }}
+            className=" form-control mx-3"
+            // onChange={handlePlaceChange}
+          />
         </div>
       </div>
 
