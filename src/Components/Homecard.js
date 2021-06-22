@@ -47,19 +47,22 @@ const Homecard = ({ handleSearch, Home }) => {
 
   const handlePlaceSelected = (res) => {
     console.log(res);
-    setSearch({
-      ...search,
-      location: {
-        address: res.formatted_address,
-        markerPosition: {
-          lat: res.geometry.location.lat(),
-          lng: res.geometry.location.lng(),
+    setSearch((search) => {
+      console.log(search);
+      return {
+        ...search,
+        location: {
+          address: res.formatted_address,
+          markerPosition: {
+            lat: res.geometry.location.lat(),
+            lng: res.geometry.location.lng(),
+          },
+          mapPosition: {
+            lat: res.geometry.location.lat(),
+            lng: res.geometry.location.lng(),
+          },
         },
-        mapPosition: {
-          lat: res.geometry.location.lat(),
-          lng: res.geometry.location.lng(),
-        },
-      },
+      };
     });
   };
 
