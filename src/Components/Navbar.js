@@ -154,16 +154,16 @@ const Navbar = () => {
 
             <div className="mb-2 mb-lg-0 d-flex justify-content-start">
               {loggedIn === false && (
-                <NavLink
+                <a
                   style={{ textDecoration: "none", color: "black" }}
-                  to="/login"
+                  href="/login"
                   // className="mx-4 mt-2 "
                   className="mr-3"
                 >
                   <i class="far fa-user mr-2"></i>
                   <br className="d-none d-lg-block" />
                   Login
-                </NavLink>
+                </a>
               )}
               {loggedIn === true && (
                 <NavLink
