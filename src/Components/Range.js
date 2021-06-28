@@ -82,7 +82,7 @@ export default function Range({ handlePrice }) {
             }}
           >
             <Typography id="range-slider" gutterBottom>
-              Price range
+              Price range in CFA
             </Typography>
             <ThemeProvider theme={muiTheme}>
               <Slider

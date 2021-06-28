@@ -8,6 +8,8 @@ import Toast from "../Components/Toast";
 import ReactDOM from "react-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Facebook from "../Components/Facebook";
+import Phone from "../Components/Phone";
+import CurrencyFormat from "react-currency-format";
 
 const Login = () => {
   const [phone, setPhone] = useState(false);
@@ -24,6 +26,15 @@ const Login = () => {
     setState({
       ...state,
       [name]: value,
+    });
+  };
+
+  const handlePhoneValue = (phoneValues) => {
+    console.log(phoneValues);
+    const { value } = phoneValues;
+    setState({
+      ...state,
+      emailorphone: `225${value}`,
     });
   };
 
@@ -53,6 +64,7 @@ const Login = () => {
   };
 
   const handleSubmit = async (type) => {
+    console.log(state);
     console.log(type);
     let res = await loginUser({
       ...state,
@@ -94,6 +106,7 @@ const Login = () => {
 
   const handlePhone = () => {
     setPhone(!phone);
+    setState({ emailorphone: "", password: "" });
   };
 
   useEffect(() => {
@@ -116,7 +129,7 @@ const Login = () => {
               {phone ? (
                 <div class="form-group">
                   <label for="exampleInputEmail1">Phone</label>
-                  <input
+                  {/* <input
                     type="number"
                     class="form-control"
                     id="exampleInputEmail1"
@@ -124,6 +137,13 @@ const Login = () => {
                     name="emailorphone"
                     value={state.emailorphone}
                     onChange={handleState}
+                  /> */}
+                  <CurrencyFormat
+                    className="form-control  form-control-lg"
+                    format="+225 (###) ###-####"
+                    mask="_"
+                    onValueChange={(values) => handlePhoneValue(values)}
+                    placeholder="+225 _ _ _ _ _ _ _ _"
                   />
                 </div>
               ) : (

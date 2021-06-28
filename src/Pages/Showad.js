@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Carousal from "../Components/Carousal";
 import Avatarimage from "../Components/Avatarimage";
-import { getAd } from "../Connection/Placead";
+import { getAd, getFeatureAd } from "../Connection/Placead";
 import { Link } from "react-router-dom";
 import Showadmap from "../Components/Showadmap";
+import { ToastContainer, toast } from "react-toastify";
+import CurrencyFormat from "react-currency-format";
 
 const Showad = ({ location, match }) => {
   const [seeNumber, setSeeNumber] = useState(false);
@@ -20,7 +22,21 @@ const Showad = ({ location, match }) => {
       let res = await getAd({ id });
       console.log(res);
       if (res.data.success === true) {
-        setData(res.data.ad[0]);
+        if (res.data.ad.length <= 0) {
+          let newRes = await getFeatureAd({ id });
+          console.log("response of featureAd", newRes);
+          if (newRes.data.success === true) {
+            if (newRes.data.ad.length <= 0) {
+              toast.error("Ad is deleted", {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+            } else {
+              setData(newRes.data.ad[0]);
+            }
+          }
+        } else {
+          setData(res.data.ad[0]);
+        }
       }
     };
     if (location.state === undefined) {
@@ -43,7 +59,21 @@ const Showad = ({ location, match }) => {
                 <Carousal image={data.images} />
                 <br />
                 <h1>{data.title}</h1>
-                <h3 className="mt-3">{data.price}</h3>
+                <h3 className="mt-3">
+                  {" "}
+                  <CurrencyFormat
+                    value={data.price}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"CFA "}
+                    // decimalSeparator={","}
+                    // onValueChange={(values) => {
+                    //   const { formattedValue, value } = values;
+                    //   console.log(formattedValue);
+                    //   setValues({ ...values, price: formattedValue });
+                    // }}
+                  />
+                </h3>
                 <h5>{data.date}</h5>
                 <br />
                 <br />

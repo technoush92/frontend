@@ -3,6 +3,8 @@ import { sendMessage } from "../Connection/Placead";
 import { ToastContainer, toast } from "react-toastify";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import Loader from "../Components/Loader";
+import Showadmap from "../Components/Showadmap";
+import CurrencyFormat from "react-currency-format";
 
 const Sendmessage = ({ location }) => {
   const [data, setData] = useState(location.state.data);
@@ -24,10 +26,11 @@ const Sendmessage = ({ location }) => {
       email: data.contactDetails.email,
     });
     if (res.data.success === true) {
-      history.push("/");
+      // history.push("/");
       toast.success(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
+      setLoader(false);
     } else {
       toast.error(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
@@ -114,7 +117,21 @@ const Sendmessage = ({ location }) => {
                   <br />
                   <h2>{data.title}</h2>
                   <br />
-                  <h3>{data.price}</h3>
+                  <h3>
+                    {" "}
+                    <CurrencyFormat
+                      value={data.price}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"CFA "}
+                      // decimalSeparator={","}
+                      // onValueChange={(values) => {
+                      //   const { formattedValue, value } = values;
+                      //   console.log(formattedValue);
+                      //   setValues({ ...values, price: formattedValue });
+                      // }}
+                    />
+                  </h3>
                   <p className="mute">{data.date}</p>
                   <br />
                   <p>
@@ -129,9 +146,16 @@ const Sendmessage = ({ location }) => {
                   <br />
                   <hr />
                   <br />
-                  <h2>Location</h2>
-                  <br />
-                  <p>Map Would be there</p>
+                  {data.location && (
+                    <div>
+                      <h2>Location</h2>
+                      <br />
+                      <h5>{data.location.address}</h5>
+                      <br />
+                      {/* <p>MAP WOULD BE THERE</p> */}
+                      <Showadmap data={data.location} />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

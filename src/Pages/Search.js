@@ -285,7 +285,24 @@ const Search = ({ location }) => {
             </div>
             <div className="col-12 col-md-6 col-xl-4 d-none d-lg-block">
               <div className="row">
-                <div className="col-6">
+                {featureAds.map((prod) => {
+                  return (
+                    <div className="col-6">
+                      <Searchprocard
+                        image={prod.images}
+                        title={prod.title}
+                        description={prod.description}
+                        date={new Date(prod.created).toDateString()}
+                        id={prod._id}
+                        contactDetails={prod.contactDetails}
+                        images={prod.images}
+                        price={prod.price}
+                        location={prod.location}
+                      />
+                    </div>
+                  );
+                })}
+                {/* <div className="col-6">
                   {featureAds.map((prod) => {
                     return (
                       <Searchprocard
@@ -301,24 +318,7 @@ const Search = ({ location }) => {
                       />
                     );
                   })}
-                </div>
-                <div className="col-6">
-                  {featureAds.map((prod) => {
-                    return (
-                      <Searchprocard
-                        image={prod.images}
-                        title={prod.title}
-                        description={prod.description}
-                        date={new Date(prod.created).toDateString()}
-                        id={prod._id}
-                        contactDetails={prod.contactDetails}
-                        images={prod.images}
-                        price={prod.price}
-                        location={prod.location}
-                      />
-                    );
-                  })}
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

@@ -57,7 +57,7 @@ const Favourites = () => {
       <div className="container">
         <div className="jumbotron jumbotron-favourites">
           <h1 className="" style={{ color: "#FF6E14" }}>
-            Your Favourites{" "}
+            {/* Your Favourites{" "} */}
           </h1>
         </div>
       </div>
@@ -77,7 +77,7 @@ const Favourites = () => {
                   <i style={{ fontSize: "35px" }} class="far fa-heart"></i>
                   <br />
                   <br />
-                  You Have no Search Activity Right Now
+                  You Have no Favoutites Right Now
                   <br />
                   <Link to="/search">
                     <button

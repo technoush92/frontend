@@ -104,7 +104,7 @@ export default function Tableads({
               <TableCell component="th" scope="row">
                 {row.title}
               </TableCell>
-              <TableCell align="center">{row.category}</TableCell>
+              <TableCell align="center">{row.categoryName}</TableCell>
               <TableCell align="center">{row.price}</TableCell>
               <TableCell align="center">
                 {row.negotiable ? "Yes" : "No"}

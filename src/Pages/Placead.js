@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Loader from "../Components/Loader";
 import { getCategories } from "../Connection/Categories";
 import Maps from "../Components/Maps";
+import CurrencyFormat from "react-currency-format";
 
 // const categories = [
 //   {
@@ -75,6 +76,7 @@ const Placead = () => {
   const [carryOnDisabled, setCarryOnDisabled] = useState(true);
   const [disabled, setDisabled] = useState(false);
   const [loader, setLoader] = useState(false);
+  const [currentAddress, setCurrentAddress] = useState("");
 
   const [values, setValues] = useState({
     title: "",
@@ -99,6 +101,15 @@ const Placead = () => {
     setValues({
       ...values,
       [name]: value,
+    });
+    setCarryOnDisabled(false);
+  };
+
+  const handlePriceChange = (price) => {
+    console.log(price);
+    setValues({
+      ...values,
+      price: price.value,
     });
     setCarryOnDisabled(false);
   };
@@ -199,6 +210,7 @@ const Placead = () => {
 
   const handleAddress = (address) => {
     console.log(address);
+    setCurrentAddress(address.address);
     setValues({
       ...values,
       location: address,
@@ -431,12 +443,32 @@ const Placead = () => {
                   <div className="row">
                     <div className="col-12 col-md-6">
                       <label>Indicate your Price</label>
-                      <input
+                      {/* <input
                         class="form-control  form-control-lg"
                         type="number"
                         value={values.price}
                         name="price"
                         onChange={handleChange}
+                      /> */}
+                      {/* <br /> <span className="mr-2">Your Price woule be</span> */}
+                      {/* <CurrencyFormat
+                        value={values.price}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        prefix={"CFA "}
+                        // decimalSeparator={","}
+                        onValueChange={(values) => {
+                          const { formattedValue, value } = values;
+                          console.log(formattedValue);
+                          setValues({ ...values, price: formattedValue });
+                        }}
+                      /> */}
+                      <CurrencyFormat
+                        className="form-control  form-control-lg"
+                        value={values.profit}
+                        thousandSeparator={true}
+                        prefix={"CFH "}
+                        onValueChange={(values) => handlePriceChange(values)}
                       />
                     </div>
                     <div className="col-12 col-md-6"></div>
@@ -504,6 +536,9 @@ const Placead = () => {
                   <br />
                   <br />
                   <div>
+                    <p>
+                      Your Address : <strong>{currentAddress}</strong>{" "}
+                    </p>
                     <h2 style={{ color: "orange" }}></h2>
                     <Maps handleAddress={handleAddress} />
                   </div>

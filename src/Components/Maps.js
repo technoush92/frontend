@@ -102,7 +102,7 @@ const Maps = ({ handleAddress }) => {
             marginTop: "1rem",
             marginBottom: "2rem",
           }}
-          type={["(regions)"]}
+          // type={["(regions)"]}
           onPlaceSelected={handlePlaceSelected}
         />
       </GoogleMap>

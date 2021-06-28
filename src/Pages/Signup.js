@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Signupback from "../Assets/signupback.png";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import Phone from "../Components/Phone";
+import CurrencyFormat from "react-currency-format";
+
 import {
   signupUser,
   emailVerification,
@@ -82,6 +84,15 @@ const Signup = () => {
     });
   };
 
+  const handlePhoneValue = (phoneValues) => {
+    console.log(phoneValues);
+    const { value } = phoneValues;
+    setValues({
+      ...values,
+      phone: `225${value}`,
+    });
+  };
+
   function validateEmail(email) {
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -90,6 +101,8 @@ const Signup = () => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+
+    console.log(values);
 
     let validEmail = validateEmail(values.email);
 
@@ -155,7 +168,7 @@ const Signup = () => {
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Phone</label>
-                      <input
+                      {/* <input
                         type="number"
                         class="form-control"
                         id="exampleInputEmail1"
@@ -163,6 +176,25 @@ const Signup = () => {
                         name="phone"
                         value={values.phone}
                         onChange={handleChange}
+                      /> */}
+                      {/* <CurrencyFormat
+                        value={values.price}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        prefix={"CFA "}
+                        // decimalSeparator={","}
+                        onValueChange={(values) => {
+                          const { formattedValue, value } = values;
+                          console.log(formattedValue);
+                          setValues({ ...values, price: formattedValue });
+                        }}
+                      /> */}
+                      <CurrencyFormat
+                        className="form-control  form-control-lg"
+                        format="+225 (###) ###-####"
+                        mask="_"
+                        onValueChange={(values) => handlePhoneValue(values)}
+                        placeholder="+225 _ _ _ _ _ _ _ _"
                       />
                     </div>
 

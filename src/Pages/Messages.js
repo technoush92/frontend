@@ -5,6 +5,7 @@ import { getMessages } from "../Connection/Users";
 import { sendMessage } from "../Connection/Placead";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../Components/Loader";
+import Alert from "../Components/Alert";
 
 const Messages = () => {
   const [showMessage, setShowMessage] = useState(false);
@@ -15,13 +16,22 @@ const Messages = () => {
   const [newMessage, setNewMessage] = useState("");
   const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = (type) => {
+    setOpen(type);
+  };
 
   const handleClickLarge = (data) => {
+    console.log(data);
+    setSelected(data.email);
     setShowMessage(true);
     setShowMessageData(data);
     setChat(data.messages);
   };
   const handleClickMobile = (data) => {
+    setSelected(data.email);
     setShowMessage(true);
     setShowMobile(false);
     setShowMessageData(data);
@@ -39,16 +49,20 @@ const Messages = () => {
   const handleSendMessage = async () => {
     setNewMessage("");
     setChat([...chat, newMessage]);
+    console.log(showMessageData);
     let res = await sendMessage({
       email: showMessageData.email,
       message: newMessage,
       userId: window.localStorage.getItem("id"),
+      adData: showMessageData.adData,
     });
     console.log(res);
     if (res.data.success === true) {
-      toast.success(res.data.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      // toast.success(res.data.message, {
+      //   position: toast.POSITION.TOP_RIGHT,
+      // });
+      console.log("helo");
+      setOpen(true);
       setUpdate(true);
     }
   };
@@ -71,13 +85,19 @@ const Messages = () => {
       <br />
       <br />
       <div>
+        {open && <Alert handleOpen={handleOpen} openAlert={open} />}
+
         <div className="container">
           <div className="row">
             {showMobile && (
               <div className="col-12 col-lg-5 d-lg-none">
                 <div
                   className="h-100 py-4"
-                  style={{ border: "1px solid #FF6E14" }}
+                  style={{
+                    // border: "1px solid #FF6E14",
+                    // borderRadius: "12px",
+                    height: "80vh",
+                  }}
                 >
                   <br />
                   <h2>Messages</h2>
@@ -93,8 +113,13 @@ const Messages = () => {
                               <div
                                 style={{
                                   width: "92%",
-                                  height: "175px",
+                                  // height: "175px",
                                   backgroundColor: "#F4F6F7",
+                                  border: "1px solid #F4F6F7",
+                                  borderRadius: "12px",
+                                  borderLeft: `1px solid ${
+                                    msg.email === selected ? "#FF6E14" : ""
+                                  }`,
                                 }}
                                 className="p-4 m-3"
                                 onClick={() => handleClickMobile(msg)}
@@ -123,8 +148,12 @@ const Messages = () => {
 
             <div className="col-12 col-lg-5 d-none d-lg-block">
               <div
-                className="h-100 py-4 "
-                style={{ border: "1px solid #FF6E14" }}
+                className=" py-4 "
+                style={{
+                  borderRight: "1px solid #FF6E14",
+                  // borderRadius: "12px",
+                  height: "80vh",
+                }}
               >
                 <br />
                 <h2>Messages</h2>
@@ -140,16 +169,21 @@ const Messages = () => {
                             <div
                               style={{
                                 width: "92%",
-                                height: "175px",
+                                // height: "150px",
                                 backgroundColor: "#F4F6F7",
+                                border: "1px solid #F4F6F7",
+                                borderRadius: "25px",
+                                borderLeft: `1px solid ${
+                                  msg.email === selected ? "#FF6E14" : ""
+                                }`,
                               }}
-                              className="p-4 m-3"
+                              className="p-4 m-3 rounded-lg shadow-sm"
                               onClick={() => handleClickLarge(msg)}
                             >
                               <div className="row">
                                 <div className="col-5">
                                   <img
-                                    className="img-fluid"
+                                    className="img-fluid rounded"
                                     src={msg.adData.images[0]}
                                   />
                                 </div>
@@ -168,14 +202,20 @@ const Messages = () => {
             </div>
             {showMessage && (
               <div className="col-12 col-lg-7  ">
-                <div className="h-100 " style={{ border: "1px solid #FF6E14" }}>
+                <div
+                  className=" "
+                  style={{
+                    // border: "1px solid #FF6E14",
+                    borderRadius: "12px",
+                  }}
+                >
                   <div
                     className=""
                     style={{
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "space-between",
-                      height: "90vh",
+                      height: "80vh",
                     }}
                   >
                     <div
@@ -183,7 +223,7 @@ const Messages = () => {
                       style={{
                         width: "100%",
                         height: "120px",
-                        backgroundColor: "#F4F6F7",
+                        // backgroundColor: "#F4F6F7",
                       }}
                     >
                       <div className="p-2 text-left">
@@ -199,6 +239,7 @@ const Messages = () => {
                           }
                         />
                       </div>
+                      {/* {console.log(showMessageData.)} */}
                       <div className="my-3 px-3">
                         <Link to={`/showad/${showMessageData.adData.id}`}>
                           <h5 className="mt-5">Visit Ad</h5>
@@ -231,7 +272,7 @@ const Messages = () => {
                           height: "120px",
                           borderTop: "1px solid grey",
                         }}
-                        className=" text-left p-4 shadow-sm d-flex"
+                        className=" text-left p-4  d-flex"
                       >
                         <input
                           type="text"

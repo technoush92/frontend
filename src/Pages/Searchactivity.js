@@ -22,7 +22,7 @@ const Searchactivity = () => {
       <br />
       <div className="container">
         <div className="jumbotron jumbotron-search">
-          <h1 style={{ color: "#FF6E14" }}>Search Activity</h1>
+          {/* <h1 style={{ color: "#FF6E14" }}>Search Activity</h1> */}
         </div>
       </div>
       <br />

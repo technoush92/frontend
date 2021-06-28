@@ -35,6 +35,7 @@ const Profile = () => {
     console.log(image);
 
     setUserData({ ...userData, image: image });
+    // window.localStorage.setItem("image", image);
 
     let res = await updateImage({
       image,
@@ -43,8 +44,8 @@ const Profile = () => {
 
     if (res.data.success === true) {
       console.log("hello i am working");
-      console.log(userData.image);
-      window.localStorage.setItem("image", userData.image);
+      // console.log(userData.image);
+      window.localStorage.setItem("image", image);
       toast.success(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });

@@ -1,6 +1,7 @@
 .jumbotron-favourites {
-  background-image: url("https://image.freepik.com/free-vector/facebook-background-with-likes-hearts_23-2147858076.jpg");
+  /* background-image: url("https://image.freepik.com/free-vector/facebook-background-with-likes-hearts_23-2147858076.jpg"); */
+  background-image: url("https://cdn.thememylogin.com/uploads/edd/2019/03/favorites.png");
   background-repeat: "no-repeat";
-  background-size: cover;
-  background-position: top;
+  background-size: contain;
+  background-position: center;
 }

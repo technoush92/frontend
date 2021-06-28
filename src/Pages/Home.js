@@ -84,7 +84,7 @@ const Home = () => {
 
       <div style={{ marginTop: "-20px" }}>
         <button className="btn btn-primary  ">
-          Search(42,929,888 results)
+          Search from {`${ads.length} ad results`}
         </button>
       </div>
       <br />
