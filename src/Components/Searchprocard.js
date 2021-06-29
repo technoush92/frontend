@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory, Link } from "react-router-dom";
 import CurrencyFormat from "react-currency-format";
+import "../Styles/Searchprocard.css";
 
 const Searchprocard = ({
   title,
@@ -19,32 +20,40 @@ const Searchprocard = ({
 
   return (
     <div
-      class="card my-2 rounded-lg"
+      class="card my-2 rounded-lg pb-3"
       style={{
         width: "14rem",
         border: "1px solid #FF6E14",
-        // minHeight: "448px",
+        height: "360px",
       }}
     >
       {console.log(date, id, contactDetails, images, price)}
-      <Link
-        to={{
-          pathname: `/showad/${id}`,
-          state: {
-            title,
-            images,
-            description,
-            price,
-            date,
-            id,
-            contactDetails,
-            location,
-          },
-        }}
-      >
-        <img src={image[0]} class="card-img-top" alt="..." />
-      </Link>
-      <div class="card-body text-start ">
+      <div style={{ minHeight: "45%" }} className="imgcontainersearchprocard">
+        <Link
+          to={{
+            pathname: `/showad/${id}`,
+            state: {
+              title,
+              images,
+              description,
+              price,
+              date,
+              id,
+              contactDetails,
+              location,
+            },
+          }}
+        >
+          <img
+            src={image[0]}
+            class=" imgstylessearchoprocard  "
+            alt="..."
+            // style={{ height: "100%" }}
+          />
+        </Link>
+      </div>
+
+      <div class="card-body text-start  mb-4 pb-4">
         <Link
           to={{
             pathname: `/showad/${id}`,
@@ -72,29 +81,30 @@ const Searchprocard = ({
           Price :{" "}
           <CurrencyFormat
             value={price}
+            thousandSeparator={"."}
+            decimalSeparator={","}
             displayType={"text"}
-            thousandSeparator={true}
-            prefix={"CFA "}
+            // thousandSeparator={true}
+            // prefix={"CFA "}
             // decimalSeparator={","}
             // onValueChange={(values) => {
             //   const { formattedValue, value } = values;
             //   console.log(formattedValue);
             //   setValues({ ...values, price: formattedValue });
             // }}
-          />
+          />{" "}
+          CFA
         </p>
         <p className="m-0 p-0 d-block d-lg-none">
           {" "}
-          Description :
           {description.length > 75
-            ? (newDescription = `${description.slice(0, 10)}...`)
+            ? (newDescription = `${description.slice(0, 18)}...`)
             : description}
         </p>
         <p className="m-0 p-0 d-none d-lg-block">
           {" "}
-          Description :
           {description.length > 75
-            ? (newDescription = `${description.slice(0, 75)}...`)
+            ? (newDescription = `${description.slice(0, 50)}...`)
             : description}
         </p>
         <p class="card-text text-muted">{date}</p>{" "}

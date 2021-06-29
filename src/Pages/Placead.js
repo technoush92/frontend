@@ -9,6 +9,8 @@ import Loader from "../Components/Loader";
 import { getCategories } from "../Connection/Categories";
 import Maps from "../Components/Maps";
 import CurrencyFormat from "react-currency-format";
+import CurrencyInput from "react-currency-input-field";
+import NumberFormat from "react-number-format";
 
 // const categories = [
 //   {
@@ -165,6 +167,7 @@ const Placead = () => {
         firstName: window.localStorage.getItem("username"),
         email: window.localStorage.getItem("email"),
         phone: window.localStorage.getItem("phone"),
+        id: window.localStorage.getItem("id"),
       },
     };
 
@@ -202,6 +205,7 @@ const Placead = () => {
         firstName: window.localStorage.getItem("username"),
         email: window.localStorage.getItem("email"),
         phone: window.localStorage.getItem("phone"),
+        image: window.localStorage.getItem("image"),
       },
     });
 
@@ -463,11 +467,41 @@ const Placead = () => {
                           setValues({ ...values, price: formattedValue });
                         }}
                       /> */}
-                      <CurrencyFormat
+                      {/* <CurrencyFormat
                         className="form-control  form-control-lg"
                         value={values.profit}
                         thousandSeparator={true}
                         prefix={"CFH "}
+                        onValueChange={(values) => handlePriceChange(values)}
+                      /> */}
+                      {/* <CurrencyInput
+                        id="input-example"
+                        name="input-name"
+                        placeholder="Please enter a number"
+                        defaultValue={1000}
+                        // decimalsLimit={2}
+                        allowDecimals={true}
+                        onValueChange={(value, name) =>
+                          console.log(value, name)
+                        }
+                      /> */}
+                      {/* <NumberFormat
+                        className="form-control  form-control-lg  "
+                        thousandSeparator={"."}
+                        decimalSeparator={","}
+                        // prefix={"$"}
+                      /> */}
+                      <NumberFormat
+                        className="form-control  form-control-lg  "
+                        thousandSeparator={"."}
+                        decimalSeparator={","}
+                        // onValueChange={(values) => {
+                        //   const { formattedValue, value } = values;
+                        //   console.log(values);
+                        //   // formattedValue = $2,223
+                        //   // value ie, 2223
+                        //   // this.setState({profit: formattedValue})
+                        // }}
                         onValueChange={(values) => handlePriceChange(values)}
                       />
                     </div>
@@ -545,8 +579,11 @@ const Placead = () => {
                   <br />
                   <br />
                   <br />
-                  <br />
-                  <div className="d-flex justify-content-between">
+
+                  <div
+                    style={{ zIndex: -10 }}
+                    className="d-flex justify-content-between"
+                  >
                     <button
                       className="btn btn-outline-primary"
                       onClick={handleBackward}

@@ -1,10 +1,31 @@
 import React, { useState, useEffect } from "react";
 import "../Styles/Searchactivity.css";
 import { Link } from "react-router-dom";
-import { getSearchActivity } from "../Connection/Users";
+import { getSearchActivity, deleteSearchActivity } from "../Connection/Users";
+import { ToastContainer, toast } from "react-toastify";
 
 const Searchactivity = () => {
   const [searchActivity, setSearchActivity] = useState();
+  const [update, setUpdate] = useState(false);
+
+  const handleDelete = async (title) => {
+    console.log(title);
+    const res = await deleteSearchActivity({
+      title: title,
+      userId: window.localStorage.getItem("id"),
+    });
+    console.log(res);
+    if (res.data.success === true) {
+      toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setUpdate(true);
+    } else {
+      toast.error(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
   useEffect(() => {
     const fetchSearchActivity = async () => {
       let searchActivity = await getSearchActivity({
@@ -15,8 +36,9 @@ const Searchactivity = () => {
       setSearchActivity(searchActivity.data.searchActivity);
       // setLoading(false);
     };
+    setUpdate(false);
     fetchSearchActivity();
-  }, []);
+  }, [update === true]);
   return (
     <div style={{ backgroundColor: "#ffffff", height: "100vh" }}>
       <br />
@@ -58,24 +80,38 @@ const Searchactivity = () => {
 
             {searchActivity && (
               <div className="col-12">
-                {searchActivity.map((search) => {
-                  return (
-                    <div
-                      className="my-2 py-3 px-5  text-left d-flex justify-content-between"
-                      style={{
-                        height: "90px",
-                        width: "100%",
-                        border: "1px solid gray",
-                        borderRadius: "12px",
-                      }}
-                    >
-                      <h3>{search}</h3>
-                      {/* <p>
-                      Visit <i class="fas fa-location-arrow"></i>
-                    </p> */}
-                    </div>
-                  );
-                })}
+                {searchActivity
+                  .map((search) => {
+                    return (
+                      <div
+                        className="my-2 py-3 px-5  text-left d-flex justify-content-between"
+                        style={{
+                          height: "175px",
+                          width: "100%",
+                          border: "1px solid gray",
+                          borderRadius: "12px",
+                        }}
+                      >
+                        <div>
+                          {/* <h3>Search Title</h3> */}
+                          <h5>Query : {search.searchValue}</h5>
+                          <p>Category : {search.categoryName}</p>
+                          <p>Sub Category : {search.subTitle}</p>
+                          <p>Date : {new Date(search.date).toDateString()}</p>
+                        </div>
+                        <div className="mt-2">
+                          {" "}
+                          <button
+                            className="btn btn-danger btn-sm"
+                            onClick={() => handleDelete(search.searchValue)}
+                          >
+                            Delete <i class="far fa-trash-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })
+                  .reverse()}
               </div>
             )}
           </div>

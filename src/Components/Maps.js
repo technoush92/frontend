@@ -7,7 +7,7 @@ import {
 } from "react-google-maps";
 import Geocode from "react-geocode";
 import AutoComplete from "react-google-autocomplete";
-
+import Mapautocomplete from "./Mapautocomplete";
 Geocode.setApiKey("AIzaSyAQLhbqMNW1j54RhL_uDM5yvCXJTFSObE8");
 
 const Maps = ({ handleAddress }) => {
@@ -61,25 +61,25 @@ const Maps = ({ handleAddress }) => {
     console.log(res);
     setState({
       ...state,
-      address: res.formatted_address,
+      address: res.address,
       markerPosition: {
-        lat: res.geometry.location.lat(),
-        lng: res.geometry.location.lng(),
+        lat: res.lat,
+        lng: res.lng,
       },
       mapPosition: {
-        lat: res.geometry.location.lat(),
-        lng: res.geometry.location.lng(),
+        lat: res.lat,
+        lng: res.lng,
       },
     });
     handleAddress({
-      address: res.formatted_address,
+      address: res.address,
       markerPosition: {
-        lat: res.geometry.location.lat(),
-        lng: res.geometry.location.lng(),
+        lat: res.lat,
+        lng: res.lng,
       },
       mapPosition: {
-        lat: res.geometry.location.lat(),
-        lng: res.geometry.location.lng(),
+        lat: res.lat,
+        lng: res.lng,
       },
     });
   };
@@ -93,7 +93,11 @@ const Maps = ({ handleAddress }) => {
           onDragEnd={onMarkerDragEnd}
           position={state.markerPosition}
         />
-        <AutoComplete
+        <Mapautocomplete
+          handlePlaceSelected={handlePlaceSelected}
+          style={{ zIndex: "100000" }}
+        />
+        {/* <AutoComplete
           apiKey="AIzaSyAQLhbqMNW1j54RhL_uDM5yvCXJTFSObE8"
           style={{
             width: "100%",
@@ -102,9 +106,8 @@ const Maps = ({ handleAddress }) => {
             marginTop: "1rem",
             marginBottom: "2rem",
           }}
-          // type={["(regions)"]}
           onPlaceSelected={handlePlaceSelected}
-        />
+        /> */}
       </GoogleMap>
     ))
   );

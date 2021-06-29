@@ -6,10 +6,12 @@ import { Link } from "react-router-dom";
 import Showadmap from "../Components/Showadmap";
 import { ToastContainer, toast } from "react-toastify";
 import CurrencyFormat from "react-currency-format";
+import { getUserImage } from "../Connection/Users";
 
 const Showad = ({ location, match }) => {
   const [seeNumber, setSeeNumber] = useState(false);
   const [data, setData] = useState();
+  const [userImage, setUserImage] = useState("");
 
   const handleSeeNumber = () => {
     setSeeNumber(true);
@@ -18,6 +20,14 @@ const Showad = ({ location, match }) => {
   const handleMessage = () => {};
 
   useEffect(() => {
+    const fetchImage = async (id) => {
+      console.log(id);
+      let res = await getUserImage({ id });
+      console.log(res);
+      if (res.data.image) {
+        setUserImage(res.data.image);
+      }
+    };
     const fetchAd = async (id) => {
       let res = await getAd({ id });
       console.log(res);
@@ -32,10 +42,12 @@ const Showad = ({ location, match }) => {
               });
             } else {
               setData(newRes.data.ad[0]);
+              fetchImage(newRes.data.ad[0].contactDetails.id);
             }
           }
         } else {
           setData(res.data.ad[0]);
+          fetchImage(res.data.ad[0].contactDetails.id);
         }
       }
     };
@@ -43,6 +55,7 @@ const Showad = ({ location, match }) => {
       fetchAd(match.params.id);
     } else {
       setData(location.state);
+      fetchImage(location.state.contactDetails.id);
     }
   }, [location.state]);
   return (
@@ -63,16 +76,19 @@ const Showad = ({ location, match }) => {
                   {" "}
                   <CurrencyFormat
                     value={data.price}
+                    thousandSeparator={"."}
+                    decimalSeparator={","}
                     displayType={"text"}
-                    thousandSeparator={true}
-                    prefix={"CFA "}
+                    // thousandSeparator={true}
+                    // prefix={"CFA "}
                     // decimalSeparator={","}
                     // onValueChange={(values) => {
                     //   const { formattedValue, value } = values;
                     //   console.log(formattedValue);
                     //   setValues({ ...values, price: formattedValue });
                     // }}
-                  />
+                  />{" "}
+                  CFA
                 </h3>
                 <h5>{data.date}</h5>
                 <br />
@@ -102,7 +118,10 @@ const Showad = ({ location, match }) => {
                 <br />
                 <hr />
                 <div className="d-flex justify-content-between">
-                  <Avatarimage username={data.contactDetails.firstName} />
+                  <Avatarimage
+                    username={data.contactDetails.firstName}
+                    image={userImage}
+                  />
                   <div>
                     <Link
                       to={{
@@ -135,7 +154,10 @@ const Showad = ({ location, match }) => {
                 >
                   <br />
 
-                  <Avatarimage username={data.contactDetails.firstName} />
+                  <Avatarimage
+                    username={data.contactDetails.firstName}
+                    image={userImage}
+                  />
                   <br />
                   <br />
                   <div

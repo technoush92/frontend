@@ -121,16 +121,19 @@ const Sendmessage = ({ location }) => {
                     {" "}
                     <CurrencyFormat
                       value={data.price}
+                      thousandSeparator={"."}
+                      decimalSeparator={","}
                       displayType={"text"}
-                      thousandSeparator={true}
-                      prefix={"CFA "}
+                      // thousandSeparator={true}
+                      // prefix={"CFA "}
                       // decimalSeparator={","}
                       // onValueChange={(values) => {
                       //   const { formattedValue, value } = values;
                       //   console.log(formattedValue);
                       //   setValues({ ...values, price: formattedValue });
                       // }}
-                    />
+                    />{" "}
+                    CFA
                   </h3>
                   <p className="mute">{data.date}</p>
                   <br />

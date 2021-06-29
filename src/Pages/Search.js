@@ -164,7 +164,7 @@ const Search = ({ location }) => {
               {featureAds.map((prod, i) => {
                 if (i < 4) {
                   return (
-                    <div className="col-6 col-md-3 d-flex justify-content-center">
+                    <div className="col-6 col-md-6 col-lg-3 d-flex justify-content-center">
                       <Searchprocard
                         image={prod.images}
                         title={prod.title}

@@ -1,6 +1,6 @@
 import axios from "axios";
-// let url = "http://localhost:3001";
-let url = "https://adsbackendapp.herokuapp.com";
+let url = "http://localhost:3001";
+// let url = "https://adsbackendapp.herokuapp.com";
 
 const editUser = async (data) => {
   console.log(data);
@@ -56,6 +56,22 @@ const getSearchActivity = async (data) => {
   return res;
 };
 
+const deleteSearchActivity = async (data) => {
+  console.log(data);
+  let res;
+  res = await axios.post(`${url}/api/users/deletesearchactivity`, data);
+  console.log(res);
+  return res;
+};
+
+const getUserImage = async (data) => {
+  console.log(data);
+  let res;
+  res = await axios.post(`${url}/api/users/getuserimage`, data);
+  console.log(res);
+  return res;
+};
+
 export {
   editUser,
   saveFavourite,
@@ -63,4 +79,6 @@ export {
   getMessages,
   updateImage,
   getSearchActivity,
+  deleteSearchActivity,
+  getUserImage,
 };

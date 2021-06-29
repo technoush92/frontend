@@ -6,6 +6,7 @@ import { sendMessage } from "../Connection/Placead";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../Components/Loader";
 import Alert from "../Components/Alert";
+import "../Styles/Messages.css";
 
 const Messages = () => {
   const [showMessage, setShowMessage] = useState(false);
@@ -124,15 +125,22 @@ const Messages = () => {
                                 className="p-4 m-3"
                                 onClick={() => handleClickMobile(msg)}
                               >
-                                <div className="row">
+                                <div className="row py-2">
                                   <div className="col-5">
                                     <img
-                                      className="img-fluid"
+                                      className="imgstylemessages"
                                       src={msg.adData.images[0]}
                                     />
                                   </div>
                                   <div className="col-7">
-                                    <h3>{msg.adData.title}</h3>
+                                    <h5>
+                                      {msg.adData.title.length > 10
+                                        ? (msg.adData.title = `${msg.adData.title.slice(
+                                            0,
+                                            12
+                                          )}...`)
+                                        : msg.adData.title}
+                                    </h5>
                                   </div>
                                 </div>
                               </div>
@@ -169,7 +177,7 @@ const Messages = () => {
                             <div
                               style={{
                                 width: "92%",
-                                // height: "150px",
+                                height: "100px",
                                 backgroundColor: "#F4F6F7",
                                 border: "1px solid #F4F6F7",
                                 borderRadius: "25px",
@@ -180,15 +188,22 @@ const Messages = () => {
                               className="p-4 m-3 rounded-lg shadow-sm"
                               onClick={() => handleClickLarge(msg)}
                             >
-                              <div className="row">
-                                <div className="col-5">
+                              <div className="row py-2">
+                                <div className="col-5 imgcontainermessages">
                                   <img
-                                    className="img-fluid rounded"
+                                    className="imgstylemessages "
                                     src={msg.adData.images[0]}
                                   />
                                 </div>
                                 <div className="col-7">
-                                  <h3>{msg.adData.title}</h3>
+                                  <h5>
+                                    {msg.adData.title.length > 10
+                                      ? (msg.adData.title = `${msg.adData.title.slice(
+                                          0,
+                                          12
+                                        )}...`)
+                                      : msg.adData.title}
+                                  </h5>
                                 </div>
                               </div>
                             </div>
