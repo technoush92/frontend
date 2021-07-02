@@ -36,6 +36,7 @@ const Messages = () => {
     setShowMessage(true);
     setShowMobile(false);
     setShowMessageData(data);
+    setChat(data.messages);
   };
 
   const handleBack = () => {
@@ -217,6 +218,7 @@ const Messages = () => {
             </div>
             {showMessage && (
               <div className="col-12 col-lg-7  ">
+                {console.log(chat)}
                 <div
                   className=" "
                   style={{
@@ -275,6 +277,7 @@ const Messages = () => {
                             }}
                             className="mx-4 my-4 p-4"
                           >
+                            {console.log(msg)}
                             <p> {msg}</p>
                           </div>
                         );

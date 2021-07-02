@@ -9,6 +9,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Maps from "../Components/Maps";
 import { editUser } from "../Connection/Users";
 import { ToastContainer, toast } from "react-toastify";
+import Mapsautocompletesettings from "../Components/Mapsautocompletesettings";
+import { updateUserLocation } from "../Connection/Users";
 
 export default function Settings({ open, data, handleClose }) {
   const [username, setUserName] = useState();
@@ -16,6 +18,7 @@ export default function Settings({ open, data, handleClose }) {
     oldPassword: "",
     newPassword: "",
   });
+  const [location, setLocation] = useState();
 
   const handleChangeUsername = (evt) => {
     setUserName(evt.target.value);
@@ -56,6 +59,45 @@ export default function Settings({ open, data, handleClose }) {
         position: toast.POSITION.TOP_RIGHT,
       });
       handleClose();
+    } else {
+      toast.error(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
+
+  const handlePlaceSelected = (res) => {
+    console.log(res);
+
+    setLocation((location) => {
+      console.log(location);
+      return {
+        address: res.address,
+        markerPosition: {
+          lat: res.lat,
+          lng: res.lng,
+        },
+        mapPosition: {
+          lat: res.lat,
+          lng: res.lng,
+        },
+      };
+    });
+  };
+
+  const handleUpdateLocation = async () => {
+    console.log("clicked");
+    const res = await updateUserLocation({
+      location: { ...location },
+      id: data.id,
+    });
+    console.log(res);
+    if (res.data.success === true) {
+      toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      handleClose();
+      window.localStorage.setItem("location", location.address);
     } else {
       toast.error(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
@@ -135,10 +177,20 @@ export default function Settings({ open, data, handleClose }) {
             label="Location"
             type="Text"
             fullWidth
+          /> */}
+
+          <Mapsautocompletesettings
+            handlePlaceSelected={handlePlaceSelected}
+            // style={{ zIndex: "100000" }}
           />
           <br />
-          <button className="btn btn-primary mt-3">Update Location</button>
-          <br /> */}
+          <button
+            className="btn btn-primary mt-3"
+            onClick={handleUpdateLocation}
+          >
+            Update Location
+          </button>
+          <br />
           <hr />
         </DialogContent>
         <DialogActions>

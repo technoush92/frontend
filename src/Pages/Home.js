@@ -10,6 +10,7 @@ import "../Styles/Home.css";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import { useAuth } from "../Context/Auth-Context";
 import AutoComplete from "react-google-autocomplete";
+import Mapsautocompletehome from "../Components/Mapsautocompletehome";
 
 // const featureAds = [
 //   {
@@ -55,6 +56,33 @@ const Home = () => {
     setAds(search);
 
     // history.push("./search");
+  };
+
+  const handlePlaceSelected = (res) => {
+    console.log(res);
+    // setState({
+    //   ...state,
+    //   address: res.address,
+    //   markerPosition: {
+    //     lat: res.lat,
+    //     lng: res.lng,
+    //   },
+    //   mapPosition: {
+    //     lat: res.lat,
+    //     lng: res.lng,
+    //   },
+    // });
+    // handleAddress({
+    //   address: res.address,
+    //   markerPosition: {
+    //     lat: res.lat,
+    //     lng: res.lng,
+    //   },
+    //   mapPosition: {
+    //     lat: res.lat,
+    //     lng: res.lng,
+    //   },
+    // });
   };
 
   return (
@@ -156,7 +184,7 @@ const Home = () => {
         <br />
         <div className="d-flex justify-content-center">
           {/* <Cityselect /> */}
-          <AutoComplete
+          {/* <AutoComplete
             apiKey="AIzaSyAQLhbqMNW1j54RhL_uDM5yvCXJTFSObE8"
             style={{
               height: "40px",
@@ -169,6 +197,10 @@ const Home = () => {
             componentRestrictions={{ country: ["us"] }}
             className=" form-control mx-3"
             // onChange={handlePlaceChange}
+          /> */}
+          <Mapsautocompletehome
+            handlePlaceSelected={handlePlaceSelected}
+            // style={{ zIndex: "100000" }}
           />
         </div>
       </div>

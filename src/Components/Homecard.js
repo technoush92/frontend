@@ -10,6 +10,7 @@ import Choosecategory from "./Choosecategory";
 import { useAuth } from "../Context/Auth-Context";
 import AutoComplete from "react-google-autocomplete";
 import { Input, TextField } from "@material-ui/core";
+import Mapsautocompletehomecard from "../Components/Mapsautocompletehomecard";
 
 const Homecard = ({ handleSearch, Home }) => {
   const [search, setSearch] = useState({
@@ -45,25 +46,69 @@ const Homecard = ({ handleSearch, Home }) => {
     setSearch({ ...search, category: { category, subCategory } });
   };
 
+  // const handlePlaceSelected = (res) => {
+  //   console.log(res);
+  //   setSearch((search) => {
+  //     console.log(search);
+  //     return {
+  //       ...search,
+  //       location: {
+  //         address: res.formatted_address,
+  //         markerPosition: {
+  //           lat: res.geometry.location.lat(),
+  //           lng: res.geometry.location.lng(),
+  //         },
+  //         mapPosition: {
+  //           lat: res.geometry.location.lat(),
+  //           lng: res.geometry.location.lng(),
+  //         },
+  //       },
+  //     };
+  //   });
+  // };
+
   const handlePlaceSelected = (res) => {
     console.log(res);
+    // setState({
+    //   ...state,
+    //   address: res.address,
+    //   markerPosition: {
+    //     lat: res.lat,
+    //     lng: res.lng,
+    //   },
+    //   mapPosition: {
+    //     lat: res.lat,
+    //     lng: res.lng,
+    //   },
+    // });
     setSearch((search) => {
       console.log(search);
       return {
         ...search,
         location: {
-          address: res.formatted_address,
+          address: res.address,
           markerPosition: {
-            lat: res.geometry.location.lat(),
-            lng: res.geometry.location.lng(),
+            lat: res.lat,
+            lng: res.lng,
           },
           mapPosition: {
-            lat: res.geometry.location.lat(),
-            lng: res.geometry.location.lng(),
+            lat: res.lat,
+            lng: res.lng,
           },
         },
       };
     });
+    // handleAddress({
+    //   address: res.address,
+    //   markerPosition: {
+    //     lat: res.lat,
+    //     lng: res.lng,
+    //   },
+    //   mapPosition: {
+    //     lat: res.lat,
+    //     lng: res.lng,
+    //   },
+    // });
   };
 
   const handlePlaceChange = (evt) => {
@@ -111,48 +156,50 @@ const Homecard = ({ handleSearch, Home }) => {
             )}
           </div>
           <div className="col-12 col-md-5 px-1 d-flex ">
-            <div class="input-group mb-3 ">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">
-                  <i class="fas fa-search"></i>
-                </span>
-              </div>
+            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+              <div class="input-group mb-3 ">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">
+                    <i class="fas fa-search"></i>
+                  </span>
+                </div>
 
-              <input
-                type="text"
-                className="form-control "
-                placeholder="What are you looking for?"
-                aria-describedby="basic-addon1"
-                style={{
-                  height: "40px",
-                  backgroundColor: "#F4F6F7",
-                  color: "black",
-                }}
-                value={search.searchValue}
-                onChange={handleChange}
-              />
-              {loader ? (
-                <Loader />
-              ) : (
-                <button
-                  className="btn "
+                <input
+                  type="text"
+                  className="form-control "
+                  placeholder="What are you looking for?"
+                  aria-describedby="basic-addon1"
                   style={{
-                    backgroundColor: "#FF6E14",
-                    color: "white",
-                    border: "1px solid grey",
+                    height: "40px",
+                    backgroundColor: "#F4F6F7",
+                    color: "black",
                   }}
-                  onClick={handleSubmit}
-                  type="submit"
-                >
-                  Search
-                </button>
-              )}
-            </div>
+                  value={search.searchValue}
+                  onChange={handleChange}
+                />
+                {loader ? (
+                  <Loader />
+                ) : (
+                  <button
+                    className="btn "
+                    style={{
+                      backgroundColor: "#FF6E14",
+                      color: "white",
+                      border: "1px solid grey",
+                    }}
+                    onClick={handleSubmit}
+                    type="submit"
+                  >
+                    Search
+                  </button>
+                )}
+              </div>
+            </form>
           </div>
           <div className="col-12 col-md-4 px-1 wrapper">
             {/* <Locationdropdown /> */}
             {/* <i class="fa fa-icon"></i> */}
-            <AutoComplete
+            {/* <AutoComplete
               apiKey="AIzaSyAQLhbqMNW1j54RhL_uDM5yvCXJTFSObE8"
               style={{
                 height: "40px",
@@ -164,6 +211,10 @@ const Homecard = ({ handleSearch, Home }) => {
               componentRestrictions={{ country: ["us"] }}
               className=" form-control"
               onChange={handlePlaceChange}
+            /> */}
+            <Mapsautocompletehomecard
+              handlePlaceSelected={handlePlaceSelected}
+              // style={{ zIndex: "100000" }}
             />
           </div>
         </div>

@@ -64,9 +64,9 @@ const Favourites = () => {
       <br />
       <br />
       <div>
-        <div className="container">
+        <div className="">
           <div
-            className="p-5 row "
+            className="p-0 p-md-5 row "
             style={{
               border: "1px solid #F4F6F7",
             }}

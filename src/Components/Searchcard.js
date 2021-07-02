@@ -29,7 +29,7 @@ const Searchcard = ({
       style={{ borderRadius: "12px", height: "200px" }}
     >
       <div className="row ">
-        <div className="col-4 col-md-5 d-flex align-items-center px-0">
+        <div className="col-5 col-md-5 d-flex align-items-center px-0">
           <div className="imgcontainersearchcard" style={{}}>
             <Link
               to={{
@@ -61,7 +61,7 @@ const Searchcard = ({
             </Link>
           </div>
         </div>
-        <div className="col-8 col-md-7 py-1  px-2 text-left d-flex justify-content-between ">
+        <div className="col-7 col-md-7 py-1  px-2 text-left d-flex justify-content-between ">
           <div>
             <div
               // style={{
@@ -94,19 +94,18 @@ const Searchcard = ({
                       <h5 className="mt-2">
                         {" "}
                         {title.length > 10
-                          ? (title = `${title.slice(0, 12)}...`)
+                          ? (title = `${title.slice(0, 10)}...`)
                           : title}
                       </h5>
                     )}
                     <h5 className="m-0 p-0">
-                      Price :{" "}
                       <CurrencyFormat
                         value={price}
                         thousandSeparator={"."}
                         decimalSeparator={","}
                         displayType={"text"}
                         // thousandSeparator={true}
-                        prefix={"CFA "}
+                        // prefix={"CFA "}
                         // decimalSeparator={","}
                         // onValueChange={(values) => {
                         //   const { formattedValue, value } = values;
@@ -121,7 +120,7 @@ const Searchcard = ({
               </div>
 
               <div
-                className="text-muted mt-5 mt-lg-4 mt-xl-5"
+                className="text-muted mt-3  mt-lg-4 mt-xl-5"
                 // style={{
                 //   height: "100%",
                 //   position: "absolute",
@@ -141,7 +140,7 @@ const Searchcard = ({
                     : description}
                 </p>
 
-                <p className="m-0 p-0">{date}</p>
+                <p className="m-0 p-0 d-none d-md-block">{date}</p>
               </div>
             </div>
           </div>

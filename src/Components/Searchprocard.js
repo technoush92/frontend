@@ -72,7 +72,7 @@ const Searchprocard = ({
           {title && (
             <h5 className="mt-2">
               {" "}
-              {title.length > 10 ? (title = `${title.slice(0, 18)}...`) : title}
+              {title.length > 10 ? (title = `${title.slice(0, 12)}...`) : title}
             </h5>
           )}
         </Link>
@@ -107,7 +107,7 @@ const Searchprocard = ({
             ? (newDescription = `${description.slice(0, 50)}...`)
             : description}
         </p>
-        <p class="card-text text-muted">{date}</p>{" "}
+        <p class=" d-none d-sm-block card-text text-muted">{date}</p>{" "}
       </div>
     </div>
   );

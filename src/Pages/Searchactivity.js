@@ -50,9 +50,9 @@ const Searchactivity = () => {
       <br />
       <br />
       <div>
-        <div className="container">
+        <div className="">
           <div
-            className="p-5 row "
+            className="p-2 p-md-5 row "
             style={{
               border: "1px solid #F4F6F7",
             }}
@@ -86,7 +86,7 @@ const Searchactivity = () => {
                       <div
                         className="my-2 py-3 px-5  text-left d-flex justify-content-between"
                         style={{
-                          height: "175px",
+                          height: "200px",
                           width: "100%",
                           border: "1px solid gray",
                           borderRadius: "12px",
@@ -94,7 +94,15 @@ const Searchactivity = () => {
                       >
                         <div>
                           {/* <h3>Search Title</h3> */}
-                          <h5>Query : {search.searchValue}</h5>
+                          <h5>
+                            Query :
+                            {search.searchValue.length > 10
+                              ? (search.searchValue = `${search.searchValue.slice(
+                                  0,
+                                  10
+                                )}...`)
+                              : search.searchValue}
+                          </h5>
                           <p>Category : {search.categoryName}</p>
                           <p>Sub Category : {search.subTitle}</p>
                           <p>Date : {new Date(search.date).toDateString()}</p>

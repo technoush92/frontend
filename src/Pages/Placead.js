@@ -87,7 +87,7 @@ const Placead = () => {
     price: "",
     images: [],
     location: "",
-
+    featureAdRequest: false,
     negotiable: false,
     hideNumber: false,
     reviewed: false,
@@ -291,6 +291,12 @@ const Placead = () => {
                       <small id="emailHelp" class="form-text text-muted">
                         Max 100 Characters
                       </small>
+                      <Switchbutton
+                        label="Request for Feature Ad"
+                        name="featureAdRequest"
+                        func={handleSwitch}
+                        checked={values.featureAdRequest}
+                      />
                     </div>
                     <div className="col-12 col-md-6"></div>
                   </div>
@@ -540,7 +546,7 @@ const Placead = () => {
                   <h4>Add Photos</h4>
                   <br />
                   <div className="row">
-                    <div>
+                    <div className="col-12 ">
                       <Imageupload selectedImages={handleSelectedImages} />
                     </div>
                   </div>
