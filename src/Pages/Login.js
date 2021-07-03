@@ -63,7 +63,8 @@ const Login = () => {
     }
   };
 
-  const handleSubmit = async (type) => {
+  const handleSubmit = async (evt, type) => {
+    evt.preventDefault();
     console.log(state);
     console.log(type);
     let res = await loginUser({
@@ -127,10 +128,13 @@ const Login = () => {
             <h2 className="mt-4">Login</h2>
 
             <div className="mt-4 px-4">
-              {phone ? (
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Phone</label>
-                  {/* <input
+              <form
+                onSubmit={(evt) => handleSubmit(evt, phone ? "phone" : "email")}
+              >
+                {phone ? (
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Phone</label>
+                    {/* <input
                     type="number"
                     class="form-control"
                     id="exampleInputEmail1"
@@ -139,77 +143,80 @@ const Login = () => {
                     value={state.emailorphone}
                     onChange={handleState}
                   /> */}
-                  <CurrencyFormat
-                    className="form-control  form-control-lg"
-                    format="+225 (###) ###-####"
-                    mask="_"
-                    onValueChange={(values) => handlePhoneValue(values)}
-                    placeholder="+225 _ _ _ _ _ _ _ _"
-                  />
-                </div>
-              ) : (
+                    <CurrencyFormat
+                      className="form-control  form-control-lg"
+                      format="+225 (###) ###-####"
+                      mask="_"
+                      onValueChange={(values) => handlePhoneValue(values)}
+                      placeholder="+225 _ _ _ _ _ _ _ _"
+                    />
+                  </div>
+                ) : (
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      name="emailorphone"
+                      value={state.emailorphone}
+                      onChange={handleState}
+                    />
+                  </div>
+                )}
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
+                  <label for="exampleInputPassword1">Password</label>
                   <input
-                    type="email"
+                    type="password"
                     class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    name="emailorphone"
-                    value={state.emailorphone}
+                    id="exampleInputPassword1"
+                    name="password"
+                    value={state.password}
                     onChange={handleState}
                   />
                 </div>
-              )}
-              <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="exampleInputPassword1"
-                  name="password"
-                  value={state.password}
-                  onChange={handleState}
-                />
-              </div>
-              <div className="">
-                <p>
-                  <NavLink to="/login">
-                    <span onClick={handlePhone}>
-                      {phone ? "Email?" : "Phone Number?"}
-                    </span>
-                  </NavLink>
-                </p>
-                <NavLink to="/forgot">Forgot Password?</NavLink>
-              </div>
-              {phone ? (
-                <button
-                  class="btn btn-primary w-100 mt-1"
-                  onClick={() => handleSubmit("phone")}
-                >
-                  Login
-                </button>
-              ) : (
-                <button
-                  class="btn btn-primary w-100 mt-1"
-                  onClick={() => handleSubmit("email")}
-                >
-                  Login
-                </button>
-              )}
-              <br />
-              <p>
-                Dont have an account ?{" "}
-                <NavLink to="/signup">Create Account</NavLink>
-              </p>
-              <p className="d-inline mb-2">OR</p>
-              <br />
-              {loaded && (
-                <div className="d-flex justify-content-center">
-                  <Facebook handleFbLogin={handleFbLogin} />
+                <div className="">
+                  <p>
+                    <NavLink to="/login">
+                      <span onClick={handlePhone}>
+                        {phone ? "Email?" : "Phone Number?"}
+                      </span>
+                    </NavLink>
+                  </p>
+                  <NavLink to="/forgot">Forgot Password?</NavLink>
                 </div>
-              )}
-              {/* <Facebook handleFbLogin={handleFbLogin} /> */}
+                {phone ? (
+                  <button
+                    class="btn btn-primary w-100 mt-1"
+                    onClick={(evt) => handleSubmit(evt, "phone")}
+                    type="submit"
+                  >
+                    Login
+                  </button>
+                ) : (
+                  <button
+                    class="btn btn-primary w-100 mt-1"
+                    onClick={(evt) => handleSubmit(evt, "email")}
+                    type="submit"
+                  >
+                    Login
+                  </button>
+                )}
+                <br />
+                <p>
+                  Dont have an account ?{" "}
+                  <NavLink to="/signup">Create Account</NavLink>
+                </p>
+                <p className="d-inline mb-2">OR</p>
+                <br />
+                {loaded && (
+                  <div className="d-flex justify-content-center">
+                    <Facebook handleFbLogin={handleFbLogin} />
+                  </div>
+                )}
+                {/* <Facebook handleFbLogin={handleFbLogin} /> */}
+              </form>
             </div>
           </div>
         </div>
