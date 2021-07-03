@@ -18,7 +18,7 @@ class Mapautocompletehome extends React.Component {
   handleSelect = async (address) => {
     let res;
     console.log(address);
-
+    this.setState({ address });
     await geocodeByAddress(address)
       .then((results) => getLatLng(results[0]))
       .then((latLng) => {

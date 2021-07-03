@@ -12,7 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Mapsautocompletesettings from "../Components/Mapsautocompletesettings";
 import { updateUserLocation } from "../Connection/Users";
 
-export default function Settings({ open, data, handleClose }) {
+export default function Settings({ open, data, handleClose, handleUpdate }) {
   const [username, setUserName] = useState();
   const [passwordUpdate, setPasswordUpdate] = useState({
     oldPassword: "",
@@ -31,6 +31,8 @@ export default function Settings({ open, data, handleClose }) {
       toast.success(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
+      window.localStorage.setItem("username", username);
+      handleUpdate();
     } else {
       toast.error("Something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
@@ -97,7 +99,9 @@ export default function Settings({ open, data, handleClose }) {
         position: toast.POSITION.TOP_RIGHT,
       });
       handleClose();
+      console.log(location);
       window.localStorage.setItem("location", location.address);
+      handleUpdate();
     } else {
       toast.error(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
@@ -106,7 +110,7 @@ export default function Settings({ open, data, handleClose }) {
   };
 
   useEffect(() => {
-    setUserName(data.username);
+    setUserName(window.localStorage.getItem("username"));
   }, []);
   return (
     <div>

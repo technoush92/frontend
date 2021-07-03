@@ -11,6 +11,9 @@ import { Link, NavLink, useHistory } from "react-router-dom";
 import { useAuth } from "../Context/Auth-Context";
 import AutoComplete from "react-google-autocomplete";
 import Mapsautocompletehome from "../Components/Mapsautocompletehome";
+import { getAdsByLocation } from "../Connection/Placead";
+import Loader from "../Components/Loader";
+import { ToastContainer, toast } from "react-toastify";
 
 // const featureAds = [
 //   {
@@ -43,6 +46,8 @@ const Home = () => {
   const [originalMap, setOriginalMap] = useState(Map);
   const history = useHistory();
   const { ads, setAds, featureAds, setFeatureAds } = useAuth();
+  const [location, setLocation] = useState();
+  const [loading, setLoading] = useState(false);
 
   const handleMap = () => {
     setOriginalMap(Maphover);
@@ -58,8 +63,23 @@ const Home = () => {
     // history.push("./search");
   };
 
-  const handlePlaceSelected = (res) => {
+  const handlePlaceSelected = async (res) => {
     console.log(res);
+    setLocation(res);
+    setLoading(true);
+    let response = await getAdsByLocation(res);
+    console.log(response);
+    if (response.data.success) {
+      setAds(response.data.ads);
+      history.push("/search");
+      setLoading(false);
+    } else {
+      toast.error("Something Went Wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setLoading(false);
+    }
+
     // setState({
     //   ...state,
     //   address: res.address,
@@ -107,12 +127,16 @@ const Home = () => {
         </p>
       </div>
       <div style={{ marginTop: "-100px" }} className="container">
-        <Homecard Home={true} handleSearch={handleSearch} />
+        <Homecard Home={true} handleSearch={handleSearch} location={location} />
       </div>
 
       <div style={{ marginTop: "-20px" }}>
         <button className="btn btn-primary  ">
-          Search from {`${ads.length} ad results`}
+          {ads.length > 0 ? (
+            <span>Search from {`${ads.length} ad results`}</span>
+          ) : (
+            <span>Searching For Ads</span>
+          )}
         </button>
       </div>
       <br />
@@ -183,26 +207,10 @@ const Home = () => {
         </div>
         <br />
         <div className="d-flex justify-content-center">
-          {/* <Cityselect /> */}
-          {/* <AutoComplete
-            apiKey="AIzaSyAQLhbqMNW1j54RhL_uDM5yvCXJTFSObE8"
-            style={{
-              height: "40px",
-              backgroundColor: "#F4F6F7",
-              color: "black",
-              width: "350px",
-            }}
-            type={["(regions)"]}
-            // onPlaceSelected={handlePlaceSelected}
-            componentRestrictions={{ country: ["us"] }}
-            className=" form-control mx-3"
-            // onChange={handlePlaceChange}
-          /> */}
-          <Mapsautocompletehome
-            handlePlaceSelected={handlePlaceSelected}
-            // style={{ zIndex: "100000" }}
-          />
+          <Mapsautocompletehome handlePlaceSelected={handlePlaceSelected} />{" "}
         </div>
+        <br />
+        {loading && <Loader />}
       </div>
 
       <br />

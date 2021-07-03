@@ -149,7 +149,11 @@ const Search = ({ location }) => {
       <div style={{ marginTop: "-20px" }}>
         {ads && (
           <button className="btn btn-primary  ">
-            {`Search ( ${ads.length} results )`}
+            {ads.length > 0 ? (
+              <span>Search from {`${ads.length} ad results`}</span>
+            ) : (
+              <span>Searching For Ads</span>
+            )}
           </button>
         )}
       </div>

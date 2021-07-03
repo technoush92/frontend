@@ -5,6 +5,7 @@ import Slider from "@material-ui/core/Slider";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import "../Styles/range.css";
+import CurrencyFormat from "react-currency-format";
 
 const useStyles = makeStyles({
   root: {
@@ -39,14 +40,14 @@ const marks = [
   },
 
   {
-    value: 15000,
-    label: "15,000",
+    value: 10000000,
+    label: "10.000.000",
   },
 ];
 
 export default function Range({ handlePrice }) {
   const classes = useStyles();
-  const [value, setValue] = React.useState([0, 15000]);
+  const [value, setValue] = React.useState([0, 10000000]);
   const [show, setShow] = useState(false);
 
   const handleChange = (event, newValue) => {
@@ -82,7 +83,20 @@ export default function Range({ handlePrice }) {
             }}
           >
             <Typography id="range-slider" gutterBottom>
-              Price range in CFA
+              Price range in CFA Min :{" "}
+              <CurrencyFormat
+                value={value[0]}
+                thousandSeparator={"."}
+                decimalSeparator={","}
+                displayType={"text"}
+              />{" "}
+              , Max :
+              <CurrencyFormat
+                value={value[1]}
+                thousandSeparator={"."}
+                decimalSeparator={","}
+                displayType={"text"}
+              />{" "}
             </Typography>
             <ThemeProvider theme={muiTheme}>
               <Slider
@@ -93,7 +107,7 @@ export default function Range({ handlePrice }) {
                 getAriaValueText={valuetext}
                 marks={marks}
                 min={0}
-                max={15000}
+                max={10000000}
               />
             </ThemeProvider>
           </div>

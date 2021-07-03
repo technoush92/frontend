@@ -7,14 +7,22 @@ import Showadmap from "../Components/Showadmap";
 import { ToastContainer, toast } from "react-toastify";
 import CurrencyFormat from "react-currency-format";
 import { getUserImage } from "../Connection/Users";
+import "../Styles/Showad.css";
+import Carousalviewdialog from "../Components/Carousalviewdialog";
 
 const Showad = ({ location, match }) => {
   const [seeNumber, setSeeNumber] = useState(false);
   const [data, setData] = useState();
   const [userImage, setUserImage] = useState("");
+  const [openView, setOpenView] = useState(false);
 
   const handleSeeNumber = () => {
     setSeeNumber(true);
+  };
+
+  const handleOpenView = () => {
+    console.log("hello");
+    setOpenView(!openView);
   };
 
   const handleMessage = () => {};
@@ -69,7 +77,22 @@ const Showad = ({ location, match }) => {
           {data && (
             <div className="row mx-2">
               <div className="col-12 col-md-8 col-lg-7 text-left">
-                <Carousal image={data.images} />
+                <div className="carousalcontainer">
+                  {" "}
+                  <Carousal image={data.images} />
+                  <button
+                    onClick={handleOpenView}
+                    className="btn btn-primary  btn-sm carousalbutton"
+                  >
+                    View Photos
+                  </button>
+                  <Carousalviewdialog
+                    open={openView}
+                    handleOpen={handleOpenView}
+                    data={data.images}
+                  />
+                </div>
+
                 <br />
                 <h1>{data.title}</h1>
                 <h3 className="mt-3">
@@ -79,14 +102,6 @@ const Showad = ({ location, match }) => {
                     thousandSeparator={"."}
                     decimalSeparator={","}
                     displayType={"text"}
-                    // thousandSeparator={true}
-                    // prefix={"CFA "}
-                    // decimalSeparator={","}
-                    // onValueChange={(values) => {
-                    //   const { formattedValue, value } = values;
-                    //   console.log(formattedValue);
-                    //   setValues({ ...values, price: formattedValue });
-                    // }}
                   />{" "}
                   CFA
                 </h3>

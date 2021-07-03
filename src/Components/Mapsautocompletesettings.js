@@ -12,13 +12,15 @@ class Mapautocompletesettings extends React.Component {
   }
 
   handleChange = (address) => {
+    console.log("hjello");
     this.setState({ address });
+    console.log(address);
   };
 
   handleSelect = async (address) => {
     let res;
     console.log(address);
-
+    this.setState({ address });
     await geocodeByAddress(address)
       .then((results) => getLatLng(results[0]))
       .then((latLng) => {
@@ -39,6 +41,7 @@ class Mapautocompletesettings extends React.Component {
         onSelect={this.handleSelect}
         style={{ background: "#ffffff", color: "red", zIndex: "999999" }}
       >
+        {/* {console.log(this.state.address)} */}
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
             <input
@@ -56,6 +59,7 @@ class Mapautocompletesettings extends React.Component {
               //   width : "100"
               // }}
             >
+              {console.log(this.state.address)}
               {/* {loading && <div>Loading...</div>} */}
               {suggestions.map((suggestion) => {
                 const className = suggestion.active

@@ -12,7 +12,7 @@ import AutoComplete from "react-google-autocomplete";
 import { Input, TextField } from "@material-ui/core";
 import Mapsautocompletehomecard from "../Components/Mapsautocompletehomecard";
 
-const Homecard = ({ handleSearch, Home }) => {
+const Homecard = ({ handleSearch, Home, location }) => {
   const [search, setSearch] = useState({
     searchValue: "",
     location: "",
@@ -143,7 +143,7 @@ const Homecard = ({ handleSearch, Home }) => {
       style={{ height: "240px", backgroundColor: "white" }}
     >
       {console.log(search)}
-
+      {console.log(location)}
       <br />
       <div>
         <div className="row  ">
@@ -214,6 +214,7 @@ const Homecard = ({ handleSearch, Home }) => {
             /> */}
             <Mapsautocompletehomecard
               handlePlaceSelected={handlePlaceSelected}
+              location={location}
               // style={{ zIndex: "100000" }}
             />
           </div>

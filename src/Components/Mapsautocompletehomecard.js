@@ -8,7 +8,9 @@ import "../Styles/Mapautocompletehomecard.css";
 class Mapautocompletehome extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { address: "" };
+    this.state = {
+      address: "",
+    };
   }
 
   handleChange = (address) => {
@@ -18,7 +20,7 @@ class Mapautocompletehome extends React.Component {
   handleSelect = async (address) => {
     let res;
     console.log(address);
-
+    this.setState({ address });
     await geocodeByAddress(address)
       .then((results) => getLatLng(results[0]))
       .then((latLng) => {
@@ -50,6 +52,7 @@ class Mapautocompletehome extends React.Component {
                 // },
               })}
             />
+            {/* {console.log(this.props.location)} */}
             <div
               className=" autocomplete "
               // styles={{

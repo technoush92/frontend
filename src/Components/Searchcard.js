@@ -104,14 +104,6 @@ const Searchcard = ({
                         thousandSeparator={"."}
                         decimalSeparator={","}
                         displayType={"text"}
-                        // thousandSeparator={true}
-                        // prefix={"CFA "}
-                        // decimalSeparator={","}
-                        // onValueChange={(values) => {
-                        //   const { formattedValue, value } = values;
-                        //   console.log(formattedValue);
-                        //   setValues({ ...values, price: formattedValue });
-                        // }}
                       />{" "}
                       CFA
                     </h5>

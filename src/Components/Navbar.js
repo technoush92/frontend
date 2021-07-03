@@ -88,7 +88,7 @@ const Navbar = () => {
                 </button>
               </NavLink>
 
-              <li className="nav-item ml-0 ml-lg-3 mt-0 mt-lg-2 text-left">
+              <li className="nav-item  mt-2">
                 <NavLink
                   style={{ textDecoration: "none", color: "black" }}
                   class="nav-link"

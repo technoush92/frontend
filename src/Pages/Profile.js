@@ -16,7 +16,7 @@ const Profile = () => {
   const handleClickOpenProfileDetails = () => {
     setOpenProfileDetails(!openProfileDetails);
   };
-
+  const [update, setUpdate] = useState(false);
   const [userData, setUserData] = useState();
 
   const handleClickOpenSettings = () => {
@@ -31,6 +31,9 @@ const Profile = () => {
     });
   };
 
+  const handleUpdate = () => {
+    setUpdate(true);
+  };
   const handleSelectedImage = async (image) => {
     console.log(image);
 
@@ -66,7 +69,8 @@ const Profile = () => {
     };
     console.log(data);
     setUserData(data);
-  }, []);
+    setUpdate(false);
+  }, [update === true]);
 
   return (
     <div style={{ backgroundColor: "#ffffff" }}>
@@ -234,6 +238,7 @@ const Profile = () => {
                   open={openSettings}
                   data={userData}
                   handleClose={handleClickOpenSettings}
+                  handleUpdate={handleUpdate}
                 />
               ) : null}
             </div>
