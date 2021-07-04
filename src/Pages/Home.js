@@ -11,6 +11,7 @@ import { Link, NavLink, useHistory } from "react-router-dom";
 import { useAuth } from "../Context/Auth-Context";
 import AutoComplete from "react-google-autocomplete";
 import Mapsautocompletehome from "../Components/Mapsautocompletehome";
+import Mapsautocompletehomemobile from "../Components/Mapsautocompletehomemobile";
 import { getAdsByLocation } from "../Connection/Placead";
 import Loader from "../Components/Loader";
 import { ToastContainer, toast } from "react-toastify";
@@ -207,7 +208,18 @@ const Home = () => {
         </div>
         <br />
         <div className="d-flex justify-content-center">
-          <Mapsautocompletehome handlePlaceSelected={handlePlaceSelected} />{" "}
+          <span className="d-none d-md-block">
+            {" "}
+            <Mapsautocompletehome
+              handlePlaceSelected={handlePlaceSelected}
+            />{" "}
+          </span>
+          <span className="d-block d-md-none">
+            {" "}
+            <Mapsautocompletehomemobile
+              handlePlaceSelected={handlePlaceSelected}
+            />{" "}
+          </span>
         </div>
         <br />
         {loading && <Loader />}
