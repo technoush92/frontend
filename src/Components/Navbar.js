@@ -88,18 +88,16 @@ const Navbar = () => {
                 </button>
               </NavLink>
 
-              <li className="nav-item  mt-2">
+              <li className="nav-item  mt-3  text-left">
                 <NavLink
                   style={{ textDecoration: "none", color: "black" }}
-                  class="nav-link"
+                  className="mt-2"
                   to={{
                     pathname: "/search",
                     // state: ads,
                   }}
-                  href="#"
                 >
-                  <i class="fas fa-search mr-2"></i>
-                  Search
+                  <i class="fas fa-search mr-2"></i>Search
                 </NavLink>
               </li>
             </ul>

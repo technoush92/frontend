@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Facebook from "../Components/Facebook";
 import Phone from "../Components/Phone";
 import CurrencyFormat from "react-currency-format";
+import Loader from "../Components/Loader";
 
 const Login = () => {
   const [phone, setPhone] = useState(false);
@@ -20,6 +21,8 @@ const Login = () => {
     emailorphone: "",
     password: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleState = (e) => {
     const { name, value } = e.target;
@@ -65,6 +68,7 @@ const Login = () => {
 
   const handleSubmit = async (evt, type) => {
     evt.preventDefault();
+    setLoading(true);
     console.log(state);
     console.log(type);
     let res = await loginUser({
@@ -88,16 +92,19 @@ const Login = () => {
           window.localStorage.setItem("favourites", res.data.favourites);
           window.localStorage.setItem("image", res.data.profileImage);
           window.localStorage.setItem("location", res.data.location.address);
+          setLoading(false);
           history.push("/");
         } else {
           toast.error("Your Phone is not verified", {
             position: toast.POSITION.TOP_RIGHT,
           });
+          setLoading(false);
         }
       } else {
         toast.error("Your Email is not verified", {
           position: toast.POSITION.TOP_RIGHT,
         });
+        setLoading(false);
       }
     } else {
       toast.error(res.data.message, {
