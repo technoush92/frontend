@@ -14,7 +14,15 @@ const Card = ({ img, text }) => {
         alt="..."
       />
       <div style={{ marginTop: "-65px", padding: "15px" }} class="shadow">
-        <h3 class="card-text text-white">{text}</h3>
+        <h3
+          style={{
+            WebkitTextStrokeWidth: "0.5px",
+            WebkitTextStrokeColor: "#FF6E14",
+          }}
+          class="card-text text-white"
+        >
+          {text}
+        </h3>
       </div>
     </div>
   );

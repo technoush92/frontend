@@ -106,6 +106,14 @@ const Home = () => {
     // });
   };
 
+  const handleCategoryAds = (res) => {
+    console.log(res);
+    if (res.success === true) {
+      setAds(res.ads);
+      history.push("/search");
+    }
+  };
+
   return (
     <div>
       {console.log(featureAds)}
@@ -192,7 +200,7 @@ const Home = () => {
         <div className="d-flex">
           <h3>Top Categories</h3>
         </div>
-        <Slider />
+        <Slider handleCategoryAds={handleCategoryAds} />
       </div>
       <br />
       <br />

@@ -91,7 +91,10 @@ const Login = () => {
           window.localStorage.setItem("phone", res.data.phone);
           window.localStorage.setItem("favourites", res.data.favourites);
           window.localStorage.setItem("image", res.data.profileImage);
-          window.localStorage.setItem("location", res.data.location.address);
+          window.localStorage.setItem(
+            "location",
+            res.data.location ? res.data.location.address : ""
+          );
           setLoading(false);
           history.push("/");
         } else {

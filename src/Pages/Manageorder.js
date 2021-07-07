@@ -135,9 +135,15 @@ const Manageorders = () => {
     const fetchAds = async () => {
       let userAds = await getUserAds({ id: window.localStorage.getItem("id") });
 
-      console.log(userAds);
-      setAds(userAds.data.ads);
-      setLoading(false);
+      console.log(userAds.data.ads);
+      if (userAds) {
+        let filteredAds = userAds.data.ads.filter((ad) => {
+          return ad.sold === false;
+        });
+        console.log(filteredAds);
+        setAds(filteredAds);
+        setLoading(false);
+      }
     };
 
     fetchAds();
@@ -150,7 +156,7 @@ const Manageorders = () => {
         <br />
         <div className="container">
           <div className="jumbotron jumbotron-orders ">
-            <h1 style={{ color: "#FF6E14" }}>Manage Orders</h1>
+            <h1 style={{ color: "#FF6E14" }}>Manage Ads</h1>
           </div>
         </div>
         <div
@@ -198,7 +204,7 @@ const Manageorders = () => {
               >
                 Active Ads
               </button>
-              <button
+              {/* <button
                 style={{
                   color: "grey",
                   backgroundColor: "#E6EBEF",
@@ -207,7 +213,7 @@ const Manageorders = () => {
                 className="btn mx-2 px-3"
               >
                 Expired Listings
-              </button>
+              </button> */}
             </div>
             <div className="col-12 col-md-5">
               <div class="dropdown ">

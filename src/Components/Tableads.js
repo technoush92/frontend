@@ -152,6 +152,7 @@ export default function Tableads({
                 {row.featureAd === false ? "Not Featured" : "Featured"}
               </TableCell>
               <TableCell align="center">
+                {console.log(row.sold)}
                 {row.sold ? null : (
                   <Switchbutton
                     className="ml-2"

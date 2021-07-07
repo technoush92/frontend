@@ -31,6 +31,13 @@ const Sendmessage = ({ location }) => {
         position: toast.POSITION.TOP_RIGHT,
       });
       setLoader(false);
+      setMessage({
+        phone: "",
+        message: "",
+        adData: location.state.data,
+        userId: window.localStorage.getItem("id"),
+      });
+      history.push("/messages");
     } else {
       toast.error(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,

@@ -270,20 +270,27 @@ const Search = ({ location }) => {
             <div className="col-12 col-md-9 col-lg-6 col-xl-8">
               {adsYoo && (
                 <div>
-                  {adsYoo.map((ad) => (
-                    <Searchcard
-                      image={ad.images[0]}
-                      title={ad.title}
-                      description={ad.description}
-                      price={ad.price}
-                      date={new Date(ad.created).toDateString()}
-                      id={ad._id}
-                      handleFavourite={handleFavourite}
-                      contactDetails={ad.contactDetails}
-                      images={ad.images}
-                      location={ad.location}
-                    />
-                  ))}
+                  {adsYoo.length > 0 ? (
+                    <>
+                      {" "}
+                      {adsYoo.map((ad) => (
+                        <Searchcard
+                          image={ad.images[0]}
+                          title={ad.title}
+                          description={ad.description}
+                          price={ad.price}
+                          date={new Date(ad.created).toDateString()}
+                          id={ad._id}
+                          handleFavourite={handleFavourite}
+                          contactDetails={ad.contactDetails}
+                          images={ad.images}
+                          location={ad.location}
+                        />
+                      ))}
+                    </>
+                  ) : (
+                    "No Ads Found"
+                  )}
                 </div>
               )}
             </div>

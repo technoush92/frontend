@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from "react";
 import { getCategories } from "../Connection/Categories";
-
+import { getAdsByCategories } from "../Connection/Placead";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import p1 from "../Assets/p1.jpg";
@@ -16,7 +16,7 @@ import p10 from "../Assets/p10.jpg";
 
 import Card from "./Card";
 
-const Slider = () => {
+const Slider = ({ handleCategoryAds }) => {
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -35,6 +35,13 @@ const Slider = () => {
     },
   };
   const [categories, setCategories] = useState();
+
+  const handleClick = async (id) => {
+    console.log(id);
+    let res = await getAdsByCategories({ id });
+    console.log(res);
+    handleCategoryAds(res.data);
+  };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -69,8 +76,11 @@ const Slider = () => {
         >
           {categories.map((obj) => {
             return (
-              <div className="d-flex justify-content-center">
-                {console.log(obj)}
+              <div
+                onClick={() => handleClick(obj._id)}
+                className="d-flex justify-content-center"
+              >
+                {/* {console.log(obj)} */}
                 <Card img={obj.image} text={obj.title} />
               </div>
             );
