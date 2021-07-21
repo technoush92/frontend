@@ -11,11 +11,26 @@ const AuthProvider = (props) => {
   const [ads, setAds] = useState([]);
   const [featureAds, setFeatureAds] = useState([]);
   const [categories, setCategories] = useState([]);
-  console.log(loggedIn);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [popupViewed, setPopupViewed] = useState(false);
+  const [notify, setNotify] = useState(true);
+  console.log(notify);
+
+  const handleOpenPopup = () => {
+    setOpenPopup(!openPopup);
+  };
+
+  const handleNotify = (status) => {
+    console.log("I am called");
+    setNotify(status);
+  };
+
   useEffect(() => {
     if (window.localStorage.getItem("accessToken")) {
       setLoggedIn(true);
     }
+
+    handleOpenPopup();
   }, []);
 
   const login = () => {
@@ -42,6 +57,12 @@ const AuthProvider = (props) => {
     setCategories,
     featureAds,
     setFeatureAds,
+    openPopup,
+    setOpenPopup,
+    handleOpenPopup,
+    notify,
+    setNotify,
+    handleNotify,
   };
 
   return <AuthContext.Provider value={authContextValue} {...props} />;

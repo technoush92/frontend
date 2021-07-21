@@ -15,7 +15,7 @@ import Loader from "../Components/Loader";
 const Login = () => {
   const [phone, setPhone] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const { login, loggedIn } = useAuth();
+  const { login, loggedIn, notify, setNotify, handleNotify } = useAuth();
   const history = useHistory();
   const [state, setState] = useState({
     emailorphone: "",
@@ -58,6 +58,7 @@ const Login = () => {
       window.localStorage.setItem("phone", res.data.phone);
       window.localStorage.setItem("favourites", res.data.favourites);
       window.localStorage.setItem("image", res.data.profileImage);
+      handleNotify(false);
       history.push("/");
     } else {
       toast.error(res.data.message, {
@@ -83,7 +84,9 @@ const Login = () => {
           toast.success(res.data.message, {
             position: toast.POSITION.TOP_RIGHT,
           });
+          console.log(res.data.notify);
           login();
+          handleNotify(res.data.notify);
           window.localStorage.setItem("username", res.data.username);
           window.localStorage.setItem("accessToken", res.data.access_token);
           window.localStorage.setItem("email", res.data.email);

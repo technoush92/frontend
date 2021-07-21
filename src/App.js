@@ -21,6 +21,9 @@ function App() {
     categories,
     setCategories,
     setFeatureAds,
+    notify,
+    setNotify,
+    handleNotify,
   } = useAuth();
   // const [ads, setAds] = useState();
   useEffect(() => {
@@ -44,6 +47,7 @@ function App() {
 
   console.log(loggedIn);
   console.log(login);
+  console.log(handleNotify);
 
   if (loggedIn) {
     console.log("I am here");

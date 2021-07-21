@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Avatarimage from "../Components/Avatarimage";
 import { Link } from "react-router-dom";
-import { getMessages } from "../Connection/Users";
-import { sendMessage } from "../Connection/Placead";
+import {
+  getConversations,
+  getChat,
+  disableNotify,
+} from "../Connection/Messages";
+import { sendChatMessage } from "../Connection/Messages";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../Components/Loader";
 import Alert from "../Components/Alert";
+import { useAuth } from "../Context/Auth-Context";
+import { io } from "socket.io-client";
 import "../Styles/Messages.css";
 
 const Messages = () => {
@@ -14,29 +20,74 @@ const Messages = () => {
   const [messages, setMessages] = useState();
   const [showMessageData, setShowMessageData] = useState();
   const [chat, setChat] = useState([]);
+  const [chatTitle, setChatTitle] = useState("");
   const [newMessage, setNewMessage] = useState("");
   const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
+  const { login, loggedIn, notify, setNotify, handleNotify } = useAuth();
+  const scrollRef = useRef();
+  // const [socket, setSocket] = useState(null);
+  const socket = useRef();
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+    socket.current.on("getMessage", (data) => {
+      console.log(data);
+      setArrivalMessage(data.message);
+    });
+  }, []);
+
+  useEffect(() => {
+    setChat((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
+
+  useEffect(() => {
+    socket.current?.emit("addUser", window.localStorage.getItem("email"));
+    socket.current?.on("getUsers", (users) => {
+      console.log(users);
+    });
+  }, []);
+
+  // useEffect(() => {
+  //   socket?.on("Welcome", (message) => {
+  //     console.log(message);
+  //   });
+  // }, [socket]);
 
   const handleOpen = (type) => {
     setOpen(type);
   };
 
-  const handleClickLarge = (data) => {
+  const handleClickLarge = async (data) => {
     console.log(data);
-    setSelected(data.email);
-    setShowMessage(true);
+    // setSelected(data.senderEmail);
     setShowMessageData(data);
-    setChat(data.messages);
-  };
-  const handleClickMobile = (data) => {
-    setSelected(data.email);
+    setChatTitle(data.title);
     setShowMessage(true);
+    let chat = await getChat({ conversationId: data._id });
+    console.log(chat);
+    if (chat.data.success === true) {
+      // setShowMessageData(chat.data.foundMessages);
+      setChat(chat.data.foundMessages.messages);
+    }
+  };
+  const handleClickMobile = async (data) => {
+    // setSelected(data.email);
+    // setShowMessage(true);
     setShowMobile(false);
     setShowMessageData(data);
-    setChat(data.messages);
+    setChatTitle(data.title);
+    // setChat(data.messages);
+    setShowMessage(true);
+    let chat = await getChat({ conversationId: data._id });
+    console.log(chat);
+    if (chat.data.success === true) {
+      // setShowMessageData(chat.data.foundMessages);
+      setChat(chat.data.foundMessages.messages);
+    }
   };
 
   const handleBack = () => {
@@ -52,11 +103,26 @@ const Messages = () => {
     setNewMessage("");
     setChat([...chat, newMessage]);
     console.log(showMessageData);
-    let res = await sendMessage({
-      email: showMessageData.email,
+    console.log(showMessageData.membersEmails);
+
+    socket.current.emit("sendMessage", {
+      senderEmail: window.localStorage.getItem("email"),
+      receiverEmail:
+        showMessageData.membersEmails[0] ===
+        window.localStorage.getItem("email")
+          ? showMessageData.membersEmails[1]
+          : showMessageData.membersEmails[0],
       message: newMessage,
-      userId: window.localStorage.getItem("id"),
-      adData: showMessageData.adData,
+    });
+
+    let res = await sendChatMessage({
+      conversationId: showMessageData._id,
+      message: newMessage,
+      receiver:
+        showMessageData.membersEmails[0] ===
+        window.localStorage.getItem("email")
+          ? showMessageData.membersEmails[1]
+          : showMessageData.membersEmails[0],
     });
     console.log(res);
     if (res.data.success === true) {
@@ -71,17 +137,28 @@ const Messages = () => {
 
   useEffect(() => {
     const fetchMessages = async () => {
-      let foundMessages = await getMessages({
-        id: window.localStorage.getItem("id"),
+      let foundMessages = await getConversations({
+        email: window.localStorage.getItem("email"),
       });
 
       console.log(foundMessages);
-      setMessages(foundMessages.data.messages);
+      setMessages(foundMessages.data.conversations);
       setLoading(false);
     };
     fetchMessages();
+
+    const notifyFunction = async () => {
+      handleNotify(true);
+      await disableNotify({ email: window.localStorage.getItem("email") });
+    };
+    notifyFunction();
     setUpdate(false);
   }, [update]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat]);
+
   return (
     <div style={{ backgroundColor: "#ffffff", height: "100vh" }}>
       <br />
@@ -130,17 +207,17 @@ const Messages = () => {
                                   <div className="col-5">
                                     <img
                                       className="imgstylemessages"
-                                      src={msg.adData.images[0]}
+                                      src={msg.image}
                                     />
                                   </div>
                                   <div className="col-7">
                                     <h5>
-                                      {msg.adData.title.length > 10
-                                        ? (msg.adData.title = `${msg.adData.title.slice(
+                                      {msg.title.length > 10
+                                        ? (msg.title = `${msg.title.slice(
                                             0,
                                             12
                                           )}...`)
-                                        : msg.adData.title}
+                                        : msg.title}
                                     </h5>
                                   </div>
                                 </div>
@@ -193,17 +270,17 @@ const Messages = () => {
                                 <div className="col-5 imgcontainermessages">
                                   <img
                                     className="imgstylemessages "
-                                    src={msg.adData.images[0]}
+                                    src={msg.image}
                                   />
                                 </div>
                                 <div className="col-7">
                                   <h5>
-                                    {msg.adData.title.length > 10
-                                      ? (msg.adData.title = `${msg.adData.title.slice(
+                                    {msg.title.length > 10
+                                      ? (msg.title = `${msg.title.slice(
                                           0,
                                           12
                                         )}...`)
-                                      : msg.adData.title}
+                                      : msg.title}
                                   </h5>
                                 </div>
                               </div>
@@ -218,7 +295,6 @@ const Messages = () => {
             </div>
             {showMessage && (
               <div className="col-12 col-lg-7  ">
-                {console.log(chat)}
                 <div
                   className=" "
                   style={{
@@ -251,38 +327,39 @@ const Messages = () => {
                         ></i>
                         <Avatarimage
                           style={{ width: "10px" }}
-                          username={
-                            showMessageData.adData.contactDetails.firstName
-                          }
+                          username={chatTitle}
                         />
                       </div>
                       {/* {console.log(showMessageData.)} */}
                       <div className="my-3 px-3">
-                        <Link to={`/showad/${showMessageData.adData.id}`}>
+                        {/* <Link to={`/showad/${showMessageData.adData.id}`}>
                           <h5 className="mt-5">Visit Ad</h5>
-                        </Link>
+                        </Link> */}
                       </div>
                     </div>
-                    <div style={{ overflowX: "hidden", overflowY: "auto" }}>
-                      {chat.map((msg) => {
-                        return (
-                          <div
-                            style={{
-                              width: "auto",
-                              height: "100px",
-                              backgroundColor: "#F4F6F7",
-                              // textOverFlow: "ellipsis",
-                              // whiteSpace: "nowrap",
-                              wordWrap: "break-word",
-                            }}
-                            className="mx-4 my-4 p-4"
-                          >
-                            {console.log(msg)}
-                            <p> {msg}</p>
-                          </div>
-                        );
-                      })}
-                    </div>
+                    {chat && (
+                      <div style={{ overflowX: "hidden", overflowY: "auto" }}>
+                        {chat.map((msg) => {
+                          return (
+                            <div
+                              style={{
+                                width: "auto",
+                                height: "100px",
+                                backgroundColor: "#F4F6F7",
+                                // textOverFlow: "ellipsis",
+                                // whiteSpace: "nowrap",
+                                wordWrap: "break-word",
+                              }}
+                              className="mx-4 my-4 p-4"
+                              ref={scrollRef}
+                            >
+                              <p> {msg}</p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
                     <div>
                       <div
                         style={{

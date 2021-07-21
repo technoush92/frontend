@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { sendMessage } from "../Connection/Placead";
+import { sendMessage } from "../Connection/Messages";
 import { ToastContainer, toast } from "react-toastify";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import Loader from "../Components/Loader";
@@ -24,6 +24,10 @@ const Sendmessage = ({ location }) => {
     let res = await sendMessage({
       ...message,
       email: data.contactDetails.email,
+      membersEmails: [
+        window.localStorage.getItem("email"),
+        data.contactDetails.email,
+      ],
     });
     if (res.data.success === true) {
       // history.push("/");

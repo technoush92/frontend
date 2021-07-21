@@ -1,13 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
-
+import { makeStyles } from "@material-ui/core/styles";
+import Badge from "@material-ui/core/Badge";
 import Logo from "../Assets/2nd hand logo 3.png";
 import { useAuth } from "../Context/Auth-Context";
 import { ToastContainer, toast } from "react-toastify";
 import { getAds } from "../Connection/Placead";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    "& > *": {
+      marginBottom: theme.spacing(2),
+    },
+    "& .MuiBadge-root": {
+      marginRight: theme.spacing(4),
+    },
+  },
+}));
+
 const Navbar = () => {
-  const { loggedIn, logout } = useAuth();
+  const classes = useStyles();
+  const { loggedIn, logout, notify, setNotify } = useAuth();
   const [ads, setAds] = useState();
 
   const history = useHistory();
@@ -144,7 +159,10 @@ const Navbar = () => {
                 className="mr-3"
                 onClick={handleRedirection}
               >
-                <i class="far fa-envelope-open mr-2"></i>
+                {console.log(notify)}
+                <Badge color="secondary" variant="dot" invisible={notify}>
+                  <i class="far fa-envelope-open mr-2"></i>
+                </Badge>
                 <br className="d-none d-lg-block" />
                 Messages
               </NavLink>

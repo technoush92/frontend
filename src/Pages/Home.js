@@ -15,6 +15,7 @@ import Mapsautocompletehomemobile from "../Components/Mapsautocompletehomemobile
 import { getAdsByLocation } from "../Connection/Placead";
 import Loader from "../Components/Loader";
 import { ToastContainer, toast } from "react-toastify";
+import Popup from "../Components/Popup";
 
 // const featureAds = [
 //   {
@@ -114,6 +115,10 @@ const Home = () => {
     }
   };
 
+  // useEffect(() => {
+  //   handleOpenPopup();
+  // }, []);
+
   return (
     <div>
       {console.log(featureAds)}
@@ -127,6 +132,7 @@ const Home = () => {
         }}
       >
         {console.log(ads)}
+
         <h4 className=" pt-3">
           With delivery at your house pickup point everything is at your
           fingertips!
@@ -166,7 +172,7 @@ const Home = () => {
         </NavLink>
       </div>
       <br />
-
+      <Popup />
       <div className="container">
         <h2>Feature Ads</h2>
         <br />

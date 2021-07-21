@@ -1,6 +1,6 @@
 import axios from "axios";
-// let url = "http://localhost:3001";
-let url = "https://adsbackendapp.herokuapp.com";
+let url = "http://localhost:3001";
+// let url = "https://adsbackendapp.herokuapp.com";
 
 const signupUser = async (data) => {
   console.log(data);
@@ -64,4 +64,18 @@ const fbLogin = async (data) => {
   return res;
 };
 
-export { signupUser, emailVerification, phoneVerification, loginUser, fbLogin };
+const getPopupData = async () => {
+  // console.log(data);
+  let res = await axios.get(`${url}/api/popup`);
+  console.log(res);
+  return res;
+};
+
+export {
+  signupUser,
+  emailVerification,
+  phoneVerification,
+  loginUser,
+  fbLogin,
+  getPopupData,
+};
