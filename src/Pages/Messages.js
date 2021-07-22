@@ -33,7 +33,7 @@ const Messages = () => {
   const [arrivalMessage, setArrivalMessage] = useState(null);
 
   useEffect(() => {
-    socket.current = io("ws://localhost:3010");
+    socket.current = io("https://socketadplatform.herokuapp.com");
     socket.current.on("getMessage", (data) => {
       console.log(data);
       setArrivalMessage(data.message);

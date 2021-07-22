@@ -8,7 +8,11 @@ import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import { UnAuthenticatedRoutes, AuthenticatedRoutes } from "./Routes/routes";
 import { useAuth } from "./Context/Auth-Context";
-import { getAds, getFeatureAds, getActiveAds } from "./Connection/Placead";
+import {
+  getAds,
+  getActiveFeatureAds,
+  getActiveAds,
+} from "./Connection/Placead";
 import { getCategories } from "./Connection/Categories";
 
 function App() {
@@ -35,7 +39,8 @@ function App() {
     fetchAds();
 
     const fetchFeatureAds = async () => {
-      let foundAds = await getFeatureAds();
+      console.log("hello");
+      let foundAds = await getActiveFeatureAds();
       console.log(foundAds);
       setFeatureAds(foundAds.data.ads);
     };

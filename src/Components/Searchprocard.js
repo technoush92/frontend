@@ -45,7 +45,7 @@ const Searchprocard = ({
           }}
         >
           <img
-            src={image}
+            src={image[0]}
             class=" imgstylessearchoprocard  "
             alt="..."
             // style={{ height: "100%" }}

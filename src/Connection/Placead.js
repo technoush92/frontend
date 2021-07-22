@@ -99,6 +99,13 @@ const getFeatureAds = async (data) => {
   return res;
 };
 
+const getActiveFeatureAds = async (data) => {
+  console.log("han g");
+  let res = await axios.get(`${url}/api/placead/getactivefeatureads`);
+  console.log(res);
+  return res;
+};
+
 const getFeatureAd = async (data) => {
   console.log(data);
   let res = await axios.post(`${url}/api/placead/getfeaturead`, data);
@@ -134,6 +141,7 @@ export {
   featureAdRequest,
   soldAd,
   getFeatureAds,
+  getActiveFeatureAds,
   getActiveAds,
   getFeatureAd,
   getAdsByLocation,
