@@ -6,6 +6,18 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import "../Styles/range.css";
 import CurrencyFormat from "react-currency-format";
+// import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import NumberFormat from "react-number-format";
+
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     "& > *": {
+//       margin: theme.spacing(1),
+//       width: "25ch",
+//     },
+//   },
+// }));
 
 const useStyles = makeStyles({
   root: {
@@ -49,20 +61,40 @@ export default function Range({ handlePrice }) {
   const classes = useStyles();
   const [value, setValue] = React.useState([0, 10000000]);
   const [show, setShow] = useState(false);
+  const [min, setMin] = useState("");
+  const [max, setMax] = useState("");
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    handlePrice(newValue);
+  const handleChange = (evt, price) => {
+    console.log(price);
+  };
+
+  const handleMin = (price) => {
+    console.log(price);
+    setMin(price.floatValue);
+  };
+
+  const handleMax = (price) => {
+    console.log(price);
+    setMax(price.floatValue);
   };
 
   const handleShow = () => {
+    handlePrice([min < max ? min : max, max > min ? max : min]);
     setShow(!show);
   };
+
+  // const handlePriceChange = (price) => {
+  //   console.log(price);
+  //   // setValues({
+  //   //   ...values,
+  //   //   price: price.value,
+  //   // });
+  // };
 
   return (
     <div>
       <div className={classes.root}>
-        {console.log(value)}
+        {/* {console.log(value)} */}
         <button
           className="btn range"
           style={{
@@ -83,22 +115,22 @@ export default function Range({ handlePrice }) {
             }}
           >
             <Typography id="range-slider" gutterBottom>
-              Price range in CFA Min :{" "}
+              Price range in CFA Min{" "}
               <CurrencyFormat
-                value={value[0]}
+                value={min}
                 thousandSeparator={"."}
                 decimalSeparator={","}
                 displayType={"text"}
               />{" "}
-              , Max :
+              , Max
               <CurrencyFormat
-                value={value[1]}
+                value={max}
                 thousandSeparator={"."}
                 decimalSeparator={","}
                 displayType={"text"}
               />{" "}
             </Typography>
-            <ThemeProvider theme={muiTheme}>
+            {/* <ThemeProvider theme={muiTheme}>
               <Slider
                 value={value}
                 onChange={handleChange}
@@ -109,7 +141,44 @@ export default function Range({ handlePrice }) {
                 min={0}
                 max={10000000}
               />
-            </ThemeProvider>
+            </ThemeProvider> */}
+            MIN :{" "}
+            {/* <TextField
+              value={min}
+              onChange={handleMin}
+              id="outlined-basic"
+              label="MIN"
+              variant="outlined"
+            /> */}
+            <NumberFormat
+              className="form-control  form-control-lg  "
+              thousandSeparator={"."}
+              decimalSeparator={","}
+              onValueChange={(values) => handleMin(values)}
+            />
+            <p>to</p>
+            MAX :{" "}
+            {/* <TextField
+              value={max}
+              onChange={handleMax}
+              id="outlined-basic"
+              label="MAX"
+              variant="outlined"
+            /> */}
+            <NumberFormat
+              className="form-control  form-control-lg  "
+              thousandSeparator={"."}
+              decimalSeparator={","}
+              onValueChange={(values) => handleMax(values)}
+            />
+            <div>
+              <button
+                onClick={handleShow}
+                className="btn btn-primary btn-sm mt-3 "
+              >
+                Set Price
+              </button>
+            </div>
           </div>
         )}
       </div>
