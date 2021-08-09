@@ -3,6 +3,7 @@ import React, { createContext, useState, useEffect } from "react";
 // import { API_BASE_URL } from 'src/utils/API_URLS';
 // import { withRouter } from 'react-router';
 // import { toast } from "react-toastify";
+import { setPopupView } from "../Connection/Auth";
 
 const AuthContext = createContext({});
 
@@ -12,12 +13,29 @@ const AuthProvider = (props) => {
   const [featureAds, setFeatureAds] = useState([]);
   const [categories, setCategories] = useState([]);
   const [openPopup, setOpenPopup] = useState(false);
-  const [popupViewed, setPopupViewed] = useState(false);
+  const [popupViewedStatus, setPopupViewedStatus] = useState();
   const [notify, setNotify] = useState(true);
   console.log(notify);
 
   const handleOpenPopup = () => {
-    setOpenPopup(!openPopup);
+    console.log("opening");
+    // let status = window.localStorage.getItem("popupView");
+    // console.log(status);
+    setOpenPopup(true);
+  };
+
+  const handleClosePopup = async () => {
+    setOpenPopup(false);
+    window.localStorage.setItem("popupView", true);
+    setPopupView({ id: window.localStorage.getItem("id") });
+    setPopupViewedStatus(true);
+  };
+
+  const handlePopupViewedStatus = () => {
+    let status = window.localStorage.getItem("popupView");
+    console.log("status is new", status);
+    setPopupViewedStatus(status === "false" ? false : true);
+    // window.location.reload();
   };
 
   const handleNotify = (status) => {
@@ -29,8 +47,6 @@ const AuthProvider = (props) => {
     if (window.localStorage.getItem("accessToken")) {
       setLoggedIn(true);
     }
-
-    handleOpenPopup();
   }, []);
 
   const login = () => {
@@ -63,6 +79,10 @@ const AuthProvider = (props) => {
     notify,
     setNotify,
     handleNotify,
+    handleClosePopup,
+    popupViewedStatus,
+    setPopupViewedStatus,
+    handlePopupViewedStatus,
   };
 
   return <AuthContext.Provider value={authContextValue} {...props} />;

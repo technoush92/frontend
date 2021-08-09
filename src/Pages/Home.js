@@ -16,6 +16,7 @@ import { getAdsByLocation } from "../Connection/Placead";
 import Loader from "../Components/Loader";
 import { ToastContainer, toast } from "react-toastify";
 import Popup from "../Components/Popup";
+import { withRouter } from "react-router-dom";
 
 // const featureAds = [
 //   {
@@ -44,10 +45,17 @@ import Popup from "../Components/Popup";
 //   },
 // ];
 
-const Home = () => {
+const Home = (props) => {
   const [originalMap, setOriginalMap] = useState(Map);
   const history = useHistory();
-  const { ads, setAds, featureAds, setFeatureAds } = useAuth();
+  const {
+    ads,
+    setAds,
+    featureAds,
+    setFeatureAds,
+    handleOpenPopup,
+    popupViewedStatus,
+  } = useAuth();
   const [location, setLocation] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -73,7 +81,7 @@ const Home = () => {
     console.log(response);
     if (response.data.success) {
       setAds(response.data.ads);
-      history.push("/search");
+      history.push({ pathname: "/search" });
       setLoading(false);
     } else {
       toast.error("Something Went Wrong", {
@@ -81,30 +89,6 @@ const Home = () => {
       });
       setLoading(false);
     }
-
-    // setState({
-    //   ...state,
-    //   address: res.address,
-    //   markerPosition: {
-    //     lat: res.lat,
-    //     lng: res.lng,
-    //   },
-    //   mapPosition: {
-    //     lat: res.lat,
-    //     lng: res.lng,
-    //   },
-    // });
-    // handleAddress({
-    //   address: res.address,
-    //   markerPosition: {
-    //     lat: res.lat,
-    //     lng: res.lng,
-    //   },
-    //   mapPosition: {
-    //     lat: res.lat,
-    //     lng: res.lng,
-    //   },
-    // });
   };
 
   const handleCategoryAds = (res) => {
@@ -115,13 +99,20 @@ const Home = () => {
     }
   };
 
-  // useEffect(() => {
-  //   handleOpenPopup();
-  // }, []);
+  useEffect(() => {
+    if (props.history.action === "REPLACE") {
+      window.location.reload();
+    } else {
+      let status = window.localStorage.getItem("popupView");
+      console.log("status is here", status);
+      if (status === "false") {
+        handleOpenPopup();
+      }
+    }
+  }, []);
 
   return (
     <div>
-      {console.log(featureAds)}
       <div
         className="homecarddiv"
         style={{
@@ -274,4 +265,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withRouter(Home);

@@ -129,6 +129,7 @@ const Search = ({ location }) => {
     // fetchAds();
 
     setAdsYoo(ads);
+    console.log(location, "location is here");
   }, [ads]);
   return (
     <div>

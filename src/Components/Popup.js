@@ -57,7 +57,7 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 export default function Popup() {
-  const { openPopup, handleOpenPopup } = useAuth();
+  const { openPopup, handleOpenPopup, handleClosePopup } = useAuth();
   const [data, setData] = useState();
 
   useEffect(() => {
@@ -76,11 +76,11 @@ export default function Popup() {
     <div>
       {data && (
         <Dialog
-          onClose={handleOpenPopup}
+          onClose={handleClosePopup}
           aria-labelledby="customized-dialog-title"
           open={openPopup}
         >
-          <DialogTitle id="customized-dialog-title" onClose={handleOpenPopup}>
+          <DialogTitle id="customized-dialog-title" onClose={handleClosePopup}>
             {data.title}
           </DialogTitle>
           <DialogContent dividers>

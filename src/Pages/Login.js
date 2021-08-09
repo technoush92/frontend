@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Loginback1 from "../Assets/loginback.jpg";
 import Loginback2 from "../Assets/loginback2.jpg";
-import { Link, NavLink, useHistory } from "react-router-dom";
+import { Link, NavLink, useHistory, withRouter } from "react-router-dom";
 import { loginUser, fbLogin } from "../Connection/Auth";
 import { useAuth } from "../Context/Auth-Context";
 import Toast from "../Components/Toast";
@@ -15,7 +15,15 @@ import Loader from "../Components/Loader";
 const Login = () => {
   const [phone, setPhone] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const { login, loggedIn, notify, setNotify, handleNotify } = useAuth();
+  const {
+    login,
+    loggedIn,
+    notify,
+    setNotify,
+    handleNotify,
+    setPopupViewedStatus,
+    handlePopupViewedStatus,
+  } = useAuth();
   const history = useHistory();
   const [state, setState] = useState({
     emailorphone: "",
@@ -58,13 +66,20 @@ const Login = () => {
       window.localStorage.setItem("phone", res.data.phone);
       window.localStorage.setItem("favourites", res.data.favourites);
       window.localStorage.setItem("image", res.data.profileImage);
+      window.localStorage.setItem("popupView", res.data.popupView);
       handleNotify(false);
-      history.push("/");
+      // history.push("/");
     } else {
       toast.error(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
+  };
+
+  const handleRoute = (route, status) => {
+    // setPopupViewedStatus(status);
+    handlePopupViewedStatus();
+    history.push("/");
   };
 
   const handleSubmit = async (evt, type) => {
@@ -94,12 +109,18 @@ const Login = () => {
           window.localStorage.setItem("phone", res.data.phone);
           window.localStorage.setItem("favourites", res.data.favourites);
           window.localStorage.setItem("image", res.data.profileImage);
+          await window.localStorage.setItem("popupView", res.data.popupView);
           window.localStorage.setItem(
             "location",
             res.data.location ? res.data.location.address : ""
           );
           setLoading(false);
-          history.push("/");
+          console.log("before history");
+          // handleRoute("/", res.data.popupView);
+          history.push({
+            pathname: "/",
+            state: { popupView: res.data.popupView },
+          });
         } else {
           toast.error("Your Phone is not verified", {
             position: toast.POSITION.TOP_RIGHT,
@@ -241,4 +262,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withRouter(Login);

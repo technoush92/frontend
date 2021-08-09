@@ -34,7 +34,11 @@ export const AuthenticatedRoutes = () => {
           }}
         />
         <Switch>
-          <Route exact path="/" render={(routeProps) => <Home />} />
+          <Route
+            exact
+            path="/"
+            render={(routeProps) => <Home {...routeProps} />}
+          />
           <Route
             exact
             path="/search"
