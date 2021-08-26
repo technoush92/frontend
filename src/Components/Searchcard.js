@@ -91,13 +91,23 @@ const Searchcard = ({
                 >
                   <div className="  w-100 ">
                     {title && (
-                      <h5 className="mt-2">
+                      <>
                         {" "}
-                        {title.length > 10
-                          ? (title = `${title.slice(0, 10)}...`)
-                          : title}
-                      </h5>
+                        <h5 className="mt-2 ">
+                          {" "}
+                          {title.length > 10
+                            ? (title = `${title.slice(0, 10)}...`)
+                            : title}
+                        </h5>
+                        {/* <h5 className="mt-2 d-none d-lg-block">
+                          {" "}
+                          {title.length > 10
+                            ? (title = `${title.slice(0, 10)}...`)
+                            : title}
+                        </h5> */}
+                      </>
                     )}
+
                     <h5 className="m-0 p-0">
                       <CurrencyFormat
                         value={price}

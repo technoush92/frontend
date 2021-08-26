@@ -290,7 +290,13 @@ const Search = ({ location }) => {
                       ))}
                     </>
                   ) : (
-                    "No Ads Found"
+                    <>
+                      {" "}
+                      <p>No Ads Found</p>
+                      <br />
+                      <br />
+                      <br />
+                    </>
                   )}
                 </div>
               )}

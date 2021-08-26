@@ -173,6 +173,7 @@ const Home = (props) => {
               if (i < 4) {
                 return (
                   <div className="col-6 col-md-6 col-lg-3 d-flex justify-content-center">
+                    {console.log(prod.images)}
                     <Searchprocard
                       image={prod.images}
                       title={prod.title}
