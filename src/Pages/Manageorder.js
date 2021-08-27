@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../Styles/Manageorders.css";
 import {
-  getUserAds,
+  getSingleUserAds,
   deleteAd,
   activeAd,
   featureAdRequest,
@@ -133,7 +133,9 @@ const Manageorders = () => {
     setUserData(data);
 
     const fetchAds = async () => {
-      let userAds = await getUserAds({ id: window.localStorage.getItem("id") });
+      let userAds = await getSingleUserAds({
+        id: window.localStorage.getItem("id"),
+      });
 
       console.log(userAds.data.ads);
       if (userAds) {
