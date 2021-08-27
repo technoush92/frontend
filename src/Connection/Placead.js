@@ -1,6 +1,6 @@
 import axios from "axios";
 // let url = "http://localhost:3001";
-let url = "https://adsbackend2.herokuapp.com/";
+let url = "https://adsbackend2.herokuapp.com";
 
 const placeAd = async (data) => {
   console.log(data);
@@ -11,10 +11,10 @@ const placeAd = async (data) => {
 };
 
 const getUserAds = async (data) => {
-  console.log(data);
-  let res = await axios.post(`${url}/api/placead/getuserads`, data);
-  console.log(res);
-  return res;
+  // console.log(data);
+  // let res = await axios.post(`${url}/api/placead/getuserads`, data);
+  // console.log(res);
+  // return res;
 };
 
 const getSingleUserAds = async (data) => {
