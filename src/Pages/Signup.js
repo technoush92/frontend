@@ -8,6 +8,8 @@ import {
   signupUser,
   emailVerification,
   phoneVerification,
+  requestEmailOtp,
+  requestPhoneOtp,
 } from "../Connection/Auth";
 import { useAuth } from "../Context/Auth-Context";
 import { ToastContainer, toast } from "react-toastify";
@@ -27,7 +29,7 @@ const Signup = () => {
   const [phoneVerify, setPhoneVerify] = useState(false);
   const [emailOtp, setEmailOtp] = useState("");
   const [phoneOtp, setPhoneOtp] = useState("");
-
+  const [user, setUser] = useState();
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
@@ -76,6 +78,34 @@ const Signup = () => {
     }
   };
 
+  const handleRequestEmailOtp = async () => {
+    const res = await requestEmailOtp(user.id, user.email);
+    console.log(res);
+
+    if (res.data.success === true) {
+      toast.success("New OTP sent to your Email", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else {
+      toast.error("Error genrating new OTP", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
+  const handleRequestPhoneOtp = async () => {
+    const res = await requestPhoneOtp(user.id, user.phone);
+    console.log(res);
+    if (res.data.success === true) {
+      toast.success("New OTP sent to your Phone", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else {
+      toast.error("Error genrating new OTP", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({
@@ -113,6 +143,7 @@ const Signup = () => {
         setEmailVerify(true);
         setEmail(res.data.email);
         setPhone(res.data.phone);
+        setUser(res.data);
       } else if (res.data.success === false) {
         toast.error(res.data.message, {
           position: toast.POSITION.TOP_RIGHT,
@@ -266,6 +297,14 @@ const Signup = () => {
                       Verify Email
                     </button>
                   </div>
+                  Didn't get OTP ?{" "}
+                  <button
+                    // type="submit"
+                    class="btn btn-primary btn-sm"
+                    onClick={handleRequestEmailOtp}
+                  >
+                    Request New
+                  </button>
                 </div>
               )}
 
@@ -300,6 +339,14 @@ const Signup = () => {
                       back
                     </p> */}
                   </div>
+                  Didn't get OTP ?{" "}
+                  <button
+                    // type="submit"
+                    class="btn btn-primary btn-sm"
+                    onClick={handleRequestPhoneOtp}
+                  >
+                    Request New
+                  </button>
                 </div>
               )}
             </div>

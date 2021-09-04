@@ -21,10 +21,32 @@ const emailVerification = async (otp, email) => {
   return res;
 };
 
+const requestEmailOtp = async (id, email) => {
+  console.log(id, email);
+
+  let res = await axios.post(`${url}/api/users/register/requestemailotp`, {
+    userId: id,
+    email,
+  });
+  console.log(res);
+  return res;
+};
+
 const phoneVerification = async (otp, phone) => {
   console.log(otp, phone);
   let res = await axios.post(`${url}/api/users/register/phoneverify`, {
     otp,
+    phone,
+  });
+  console.log(res);
+  return res;
+};
+
+const requestPhoneOtp = async (id, phone) => {
+  console.log(id, phone);
+
+  let res = await axios.post(`${url}/api/users/register/requestphoneotp`, {
+    userId: id,
     phone,
   });
   console.log(res);
@@ -85,4 +107,6 @@ export {
   fbLogin,
   getPopupData,
   setPopupView,
+  requestEmailOtp,
+  requestPhoneOtp,
 };
