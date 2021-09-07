@@ -129,7 +129,7 @@ const Home = (props) => {
           fingertips!
         </h4>
         <p className="pt-2 d-none d-sm-block">
-          Find the right deal among the millions of leboncoin classifieds
+          Find the right deal among the millions right of leboncoin classifieds
         </p>
       </div>
       <div style={{ marginTop: "-100px" }} className="container">
